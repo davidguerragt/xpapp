@@ -14,11 +14,11 @@ final router = GoRouter(
       builder: (context, state) => const ECommerceHomeView(),
     ),
     GoRoute(
-      name: Routes.ecommerceItem,
-      path: '/ecommerce/item',
-      builder: (context, state) => const ECommerceItemView(),
+      name: Routes.itemView,
+      path: '/ecommerce/item/:id',
+      builder: (context, state) =>
+          ECommerceItemView(id: state.pathParameters['id']!),
     ),
-    // OnBoarding Routes
     GoRoute(
       name: Routes.onboarding,
       path: '/onboarding',
@@ -44,13 +44,8 @@ abstract class Routes {
 
   // E-commerce routes
   static const String ecommerceHome = '/ecommerce/home';
-  static const String ecommerceItem = '/ecommerce/item';
+  static const String itemView = '/ecommerce/item';
 
   // Navigation destinatios
   static const String explore = '/explore';
-  static const String categories = '/categories';
-  static const String stores = '/stores';
-  static const String profile = '/profile';
-
-  //
 }

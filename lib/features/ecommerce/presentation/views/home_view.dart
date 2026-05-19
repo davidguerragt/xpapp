@@ -101,7 +101,7 @@ class _SuggerencesSection extends ConsumerWidget {
 
         ...sections.map((section) {
           final title = section['title'] as String;
-          final products = List<Map<String, String>>.from(section['products']);
+          final products = List<Map<String, dynamic>>.from(section['products']);
           return _ProductSection(title: title, products: products);
         }),
       ],
@@ -111,7 +111,7 @@ class _SuggerencesSection extends ConsumerWidget {
 
 class _ProductSection extends StatelessWidget {
   final String title;
-  final List<Map<String, String>> products;
+  final List<Map<String, dynamic>> products;
   const _ProductSection({required this.title, required this.products});
 
   @override
@@ -154,56 +154,61 @@ class _ProductSection extends StatelessWidget {
             itemBuilder: (context, index) {
               final product = products[index];
 
-              return InkWell(
-                onTap: () {
-                  router.goNamed(Routes.ecommerceItem);
-                },
-                child: Container(
-                  width: 190,
-                  margin: const EdgeInsets.only(right: 14),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(18),
+              return Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(18),
+                  onTap: () => router.goNamed(
+                    Routes.itemView,
+                    pathParameters: {'id': product['id']!},
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // IMAGE
-                      Expanded(
-                        child: SizedBox(
-                          width: 200,
-                          height: 120,
-                          child: Image.asset(
-                            product["image"]!,
-                            fit: BoxFit.cover,
+                  child: Container(
+                    width: 190,
+                    margin: const EdgeInsets.only(right: 14),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // IMAGE
+                        Expanded(
+                          child: SizedBox(
+                            width: 200,
+                            height: 120,
+                            child: Image.asset(
+                              product["image"]!,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
 
-                      Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              product["title"]!,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-
-                            const SizedBox(height: 6),
-
-                            Text(
-                              product["price"]!,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                        Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product["title"]!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                          ],
+
+                              const SizedBox(height: 6),
+
+                              Text(
+                                product["price"]!,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

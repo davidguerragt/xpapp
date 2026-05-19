@@ -8,4 +8,5 @@ abstract class Assets {
   static const String portablePool = 'assets/images/portable_pool.jpg';
   static const String swimmitSuit = 'assets/images/swimming_suit.jpg';
   static const String tshirt = 'assets/images/tshirt.jpg';
+  static const String umbrella = 'assets/images/umbrella.jpg';
 }
