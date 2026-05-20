@@ -3,7 +3,6 @@ import 'package:xpapp/features/ecommerce/data/data_sources/get_products_data_sou
 import 'package:xpapp/features/ecommerce/data/data_sources/get_sections_data_source.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/get_products_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/get_sections_repository_impl.dart';
-import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_productos_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_sections_use_case.dart';

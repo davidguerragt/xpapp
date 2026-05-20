@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
-import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dart';
 
@@ -40,6 +39,8 @@ class _MainCarrouselSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentBanner = ref.watch(bannerProvider);
+    final homeState = ref.watch(homeProvider);
+    final sections = homeState.sections;
 
     return Stack(
       alignment: Alignment.center,
@@ -47,16 +48,28 @@ class _MainCarrouselSection extends ConsumerWidget {
         SizedBox(
           height: 214,
           child: PageView.builder(
-            itemCount: 5,
+            itemCount: sections.isNotEmpty ? sections.length : 1,
             onPageChanged: (index) {
               ref.read(bannerProvider.notifier).state = index;
             },
             itemBuilder: (context, index) {
+              final section = sections.isNotEmpty ? sections[index] : null;
+              final imageAsset = section != null && section.image.isNotEmpty
+                  ? section.image
+                  : 'assets/placeholder.png';
+
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
-                color: Colors.blueGrey.shade100,
-                child: const Center(
-                  child: Icon(Icons.image, size: 50, color: Colors.lightBlue),
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey.shade100,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Image.asset(
+                  imageAsset,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               );
             },
@@ -69,7 +82,7 @@ class _MainCarrouselSection extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
-              5,
+              sections.isNotEmpty ? sections.length : 1,
               (index) => Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 width: currentBanner == index ? 8 : 6,

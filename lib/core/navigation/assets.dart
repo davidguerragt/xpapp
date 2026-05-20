@@ -14,4 +14,14 @@ abstract class Assets {
   static const String hat = 'assets/images/hat.jpg';
   static const String beachTowel = 'assets/images/beach_towel.jpg';
   static const String beachBall = 'assets/images/beach_ball.jpg';
+
+  // Sections
+  static const String perfectForYouSection =
+      'assets/images/perfect_for_you_section.jpg';
+  static const String forThisSummerSection =
+      'assets/images/for_this_summer_section.jpg';
+  static const String newArrivalsSection =
+      'assets/images/new_arrivals_section.jpg';
+  static const String bestSellersSection =
+      'assets/images/best_sellers_section.jpg';
 }

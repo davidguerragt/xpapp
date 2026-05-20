@@ -15,8 +15,8 @@ class GetSectionsRepositoryImpl implements GetSectionsRepository {
           (section) => SectionEntity(
             id: section['id'].toString(),
             title: section['name'] as String,
-            description: '',
-            image: '',
+            description: section['description'] as String,
+            image: section['image'] as String,
           ),
         )
         .toList();
