@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dart';
 
@@ -92,18 +94,21 @@ class _SuggerencesSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sections = ref.watch(sectionsProvider);
+    final homeState = ref.watch(homeProvider);
+    final sections = homeState.sections;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20),
-
-        ...sections.map((section) {
-          final title = section['title'] as String;
-          final products = List<Map<String, dynamic>>.from(section['products']);
-          return _ProductSection(title: title, products: products);
-        }),
+        ...sections.map(
+          (section) => section.products.isNotEmpty
+              ? _ProductSection(
+                  title: section.title,
+                  products: section.products,
+                )
+              : const SizedBox.shrink(),
+        ),
       ],
     );
   }
@@ -111,7 +116,7 @@ class _SuggerencesSection extends ConsumerWidget {
 
 class _ProductSection extends StatelessWidget {
   final String title;
-  final List<Map<String, dynamic>> products;
+  final List<ProductEntity> products;
   const _ProductSection({required this.title, required this.products});
 
   @override
@@ -160,7 +165,7 @@ class _ProductSection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(18),
                   onTap: () => router.goNamed(
                     Routes.itemView,
-                    pathParameters: {'id': product['id']!},
+                    pathParameters: {'id': product.id},
                   ),
                   child: Container(
                     width: 190,
@@ -178,7 +183,7 @@ class _ProductSection extends StatelessWidget {
                             width: 200,
                             height: 120,
                             child: Image.asset(
-                              product["image"]!,
+                              product.image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -190,7 +195,7 @@ class _ProductSection extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                product["title"]!,
+                                product.title,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -198,7 +203,7 @@ class _ProductSection extends StatelessWidget {
                               const SizedBox(height: 6),
 
                               Text(
-                                product["price"]!,
+                                product.price,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
 
 class ECommerceItemView extends ConsumerWidget {
@@ -9,10 +10,9 @@ class ECommerceItemView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final products = ref
-        .watch(sectionsProvider)
-        .expand((section) => section['products'] as List<Map<String, dynamic>>);
-    final product = products.firstWhere((product) => product['id'] == id);
+    final sections = ref.read(homeProvider).sections;
+    final products = sections.expand((section) => section.products).toList();
+    final product = products.firstWhere((product) => product.id == id);
 
     return Scaffold(
       appBar: AppBar(
@@ -41,18 +41,18 @@ class ECommerceItemView extends ConsumerWidget {
 }
 
 class _ItemImageSection extends StatelessWidget {
-  final Map<String, dynamic> product;
+  final ProductEntity product;
 
   const _ItemImageSection({required this.product});
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(product['image']!);
+    return Image.asset(product.image);
   }
 }
 
 class _ItemDetailsSection extends StatefulWidget {
-  final Map<String, dynamic> product;
+  final ProductEntity product;
 
   const _ItemDetailsSection({required this.product});
 
@@ -69,8 +69,8 @@ class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
   @override
   void initState() {
     super.initState();
-    sizes = List<String>.from(widget.product['sizes'] as List<dynamic>);
-    colors = List<String>.from(widget.product['colors'] ?? <dynamic>[]);
+    sizes = widget.product.sizes;
+    colors = widget.product.colors;
     selectedSize = sizes.isNotEmpty ? sizes.first : '';
     selectedColor = colors.isNotEmpty ? colors.first : '';
   }
@@ -94,7 +94,7 @@ class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
                   Row(
                     children: [
                       Text(
-                        product['title']!,
+                        product.title,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w800,
@@ -111,7 +111,7 @@ class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
                   Row(
                     children: [
                       Text(
-                        product['price']!,
+                        product.price,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -125,7 +125,7 @@ class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    product['description']!,
+                    product.description,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade800,

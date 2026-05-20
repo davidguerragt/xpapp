@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SectionEntity {
 
- String get id; String get title; String get description; String get image;
+ String get id; String get title; String get description; String get image; List<ProductEntity> get products;
 /// Create a copy of SectionEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SectionEntityCopyWith<SectionEntity> get copyWith => _$SectionEntityCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.image, image) || other.image == image));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other.products, products));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,image);
+int get hashCode => Object.hash(runtimeType,id,title,description,image,const DeepCollectionEquality().hash(products));
 
 @override
 String toString() {
-  return 'SectionEntity(id: $id, title: $title, description: $description, image: $image)';
+  return 'SectionEntity(id: $id, title: $title, description: $description, image: $image, products: $products)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SectionEntityCopyWith<$Res>  {
   factory $SectionEntityCopyWith(SectionEntity value, $Res Function(SectionEntity) _then) = _$SectionEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String description, String image
+ String id, String title, String description, String image, List<ProductEntity> products
 });
 
 
@@ -62,13 +62,14 @@ class _$SectionEntityCopyWithImpl<$Res>
 
 /// Create a copy of SectionEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? image = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? image = null,Object? products = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as String,
+as String,products: null == products ? _self.products : products // ignore: cast_nullable_to_non_nullable
+as List<ProductEntity>,
   ));
 }
 
@@ -153,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String image)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String image,  List<ProductEntity> products)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SectionEntity() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.image);case _:
+return $default(_that.id,_that.title,_that.description,_that.image,_that.products);case _:
   return orElse();
 
 }
@@ -174,10 +175,10 @@ return $default(_that.id,_that.title,_that.description,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String image)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String image,  List<ProductEntity> products)  $default,) {final _that = this;
 switch (_that) {
 case _SectionEntity():
-return $default(_that.id,_that.title,_that.description,_that.image);case _:
+return $default(_that.id,_that.title,_that.description,_that.image,_that.products);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +195,10 @@ return $default(_that.id,_that.title,_that.description,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String image)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String image,  List<ProductEntity> products)?  $default,) {final _that = this;
 switch (_that) {
 case _SectionEntity() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.image);case _:
+return $default(_that.id,_that.title,_that.description,_that.image,_that.products);case _:
   return null;
 
 }
@@ -209,13 +210,20 @@ return $default(_that.id,_that.title,_that.description,_that.image);case _:
 
 
 class _SectionEntity implements SectionEntity {
-  const _SectionEntity({required this.id, required this.title, required this.description, required this.image});
+  const _SectionEntity({required this.id, required this.title, required this.description, required this.image, final  List<ProductEntity> products = const []}): _products = products;
   
 
 @override final  String id;
 @override final  String title;
 @override final  String description;
 @override final  String image;
+ final  List<ProductEntity> _products;
+@override@JsonKey() List<ProductEntity> get products {
+  if (_products is EqualUnmodifiableListView) return _products;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_products);
+}
+
 
 /// Create a copy of SectionEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +235,16 @@ _$SectionEntityCopyWith<_SectionEntity> get copyWith => __$SectionEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.image, image) || other.image == image));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other._products, _products));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,image);
+int get hashCode => Object.hash(runtimeType,id,title,description,image,const DeepCollectionEquality().hash(_products));
 
 @override
 String toString() {
-  return 'SectionEntity(id: $id, title: $title, description: $description, image: $image)';
+  return 'SectionEntity(id: $id, title: $title, description: $description, image: $image, products: $products)';
 }
 
 
@@ -247,7 +255,7 @@ abstract mixin class _$SectionEntityCopyWith<$Res> implements $SectionEntityCopy
   factory _$SectionEntityCopyWith(_SectionEntity value, $Res Function(_SectionEntity) _then) = __$SectionEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String description, String image
+ String id, String title, String description, String image, List<ProductEntity> products
 });
 
 
@@ -264,13 +272,14 @@ class __$SectionEntityCopyWithImpl<$Res>
 
 /// Create a copy of SectionEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? image = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? image = null,Object? products = null,}) {
   return _then(_SectionEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as String,
+as String,products: null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
+as List<ProductEntity>,
   ));
 }
 

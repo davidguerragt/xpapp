@@ -1,90 +1,62 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:xpapp/core/navigation/assets.dart';
+import 'package:xpapp/features/ecommerce/data/data_sources/get_products_data_source.dart';
+import 'package:xpapp/features/ecommerce/data/data_sources/get_sections_data_source.dart';
+import 'package:xpapp/features/ecommerce/data/repositories/get_products_repository_impl.dart';
+import 'package:xpapp/features/ecommerce/data/repositories/get_sections_repository_impl.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/use_cases/get_productos_use_case.dart';
+import 'package:xpapp/features/ecommerce/domain/use_cases/get_sections_use_case.dart';
 
 final bottomNavProvider = StateProvider<int>((ref) => 0);
 final bannerProvider = StateProvider<int>((ref) => 0);
-final sectionsProvider = Provider<List<Map<String, dynamic>>>((ref) {
-  return [
-    {
-      'title': 'Perfect for you',
-      'products': [
-        {
-          "id": "1",
-          "title": "Amazing T-shirt",
-          "price": "€ 12.00",
-          "image": Assets.tshirt,
-          "description":
-              "The perfect t-shirt for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.",
-          "sizes": ["XS", "S", "M", "L", "XL"],
-          "colors": ["Black", "DarkGrey", "LightGrey", "White", "Green"],
-        },
-        {
-          "id": "2",
-          "title": "Fabolous Pants",
-          "price": "€ 15.00",
-          "image": Assets.pants,
-          "description":
-              "The perfect pants for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.",
-          "sizes": ["36", "38", "40", "42", "44", "46"],
-          "colors": ["Black", "DarkGrey", "LightGrey", "White"],
-        },
-        {
-          "id": "3",
-          "title": "Premium Boots",
-          "price": "€ 60.00",
-          "image": Assets.boots,
-          "description":
-              "The perfect boots for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% leather fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.",
-          "sizes": ["38", "40", "42", "44", "46"],
-          "colors": ["Black", "Yellow", "Grey", "Brown"],
-        },
-      ],
-    },
-    {
-      'title': 'For this summer',
-      'products': [
-        {
-          "id": "4",
-          "title": "Swimming suit",
-          "price": "€ 12.00",
-          "image": Assets.swimmitSuit,
-          "description":
-              "The perfect swimming suit for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.",
-          "sizes": ["XS", "S", "M", "L", "XL"],
-          "colors": ["Black", "DarkGrey", "LightGrey", "White"],
-        },
-        {
-          "id": "5",
-          "title": "Portable pool",
-          "price": "€ 15.00",
-          "image": Assets.portablePool,
-          "description":
-              "The perfect portable pool for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.",
-          "sizes": ["5x8 feet", "8x10 feet", "10x15 feet"],
-          "colors": ["Blue", "Pink", "Yellow", "Green"],
-        },
-        {
-          "id": "6",
-          "title": "Ice box",
-          "price": "€ 60.00",
-          "image": Assets.icebox,
-          "description":
-              "The perfect ice box for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.",
-          "sizes": ["5 liters", "10 liters", "15 liters"],
-          "colors": ["Blue", "Pink", "Yellow", "Green"],
-        },
-        {
-          "id": "7",
-          "title": "Red Umbrella",
-          "price": "€ 5.75",
-          "image": Assets.umbrella,
-          "description":
-              "The perfect umbrella for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.",
-          "sizes": ["S", "M", "L"],
-          "colors": ["Red", "Pink", "Yellow", "Green"],
-        },
-      ],
-    },
-  ];
-});
+final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
+  (ref) => HomeNotifier(
+    GetProductsUseCase(GetProductsRepositoryImpl(GetProductsDataSource())),
+    GetSectionsUseCase(GetSectionsRepositoryImpl(GetSectionsDataSource())),
+  )..loadSections(),
+);
+
+class HomeState {
+  final List<SectionEntity> sections;
+
+  const HomeState({this.sections = const []});
+
+  HomeState copyWith({List<SectionEntity>? sections}) {
+    return HomeState(sections: sections ?? this.sections);
+  }
+}
+
+class HomeNotifier extends StateNotifier<HomeState> {
+  final GetProductsUseCase _getProductosUseCase;
+  final GetSectionsUseCase _getSectionsUseCase;
+
+  HomeNotifier(this._getProductosUseCase, this._getSectionsUseCase)
+    : super(const HomeState());
+
+  Future<void> loadSections() async {
+    final sectionEntities = await _getSectionsUseCase.getSections();
+
+    final sectionsWithProducts = await Future.wait(
+      sectionEntities.map((section) async {
+        final products = await _getProductosUseCase.getProductsBySection(
+          int.parse(section.id),
+        );
+        return section.copyWith(products: products);
+      }),
+    );
+
+    state = state.copyWith(sections: sectionsWithProducts);
+  }
+
+  Future<void> loadProductsBySection(int sectionId) async {
+    final products = await _getProductosUseCase.getProductsBySection(sectionId);
+    final updatedSections = state.sections.map((section) {
+      if (int.parse(section.id) == sectionId) {
+        return section.copyWith(products: products);
+      }
+      return section;
+    }).toList();
+    state = state.copyWith(sections: updatedSections);
+  }
+}

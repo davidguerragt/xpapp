@@ -9,4 +9,9 @@ abstract class Assets {
   static const String swimmitSuit = 'assets/images/swimming_suit.jpg';
   static const String tshirt = 'assets/images/tshirt.jpg';
   static const String umbrella = 'assets/images/umbrella.jpg';
+  static const String jacket = 'assets/images/jacket.jpg';
+  static const String sunglasses = 'assets/images/sunglasses.jpg';
+  static const String hat = 'assets/images/hat.jpg';
+  static const String beachTowel = 'assets/images/beach_towel.jpg';
+  static const String beachBall = 'assets/images/beach_ball.jpg';
 }
