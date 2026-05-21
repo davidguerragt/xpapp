@@ -10,15 +10,6 @@ class GetSectionsRepositoryImpl implements GetSectionsRepository {
   @override
   Future<List<SectionEntity>> getSections() async {
     final sections = await _sectionsDataSource.getSections();
-    return sections
-        .map(
-          (section) => SectionEntity(
-            id: section['id'].toString(),
-            title: section['name'] as String,
-            description: section['description'] as String,
-            image: section['image'] as String,
-          ),
-        )
-        .toList();
+    return sections.map(SectionEntity.fromModel).toList();
   }
 }
