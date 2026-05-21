@@ -1,4 +1,4 @@
-import 'package:xpapp/features/ecommerce/data/data_sources/get_sections_data_source.dart';
+import 'package:xpapp/features/ecommerce/data/data_sources/remote_get_sections_data_source.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/repositories/section_repository.dart';
 

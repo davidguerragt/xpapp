@@ -255,7 +255,7 @@ class _AddToBagButtonSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //router.goNamed(Routes.personalise);
+        router.goNamed(Routes.yourBag);
       },
       child: Container(
         width: double.infinity,

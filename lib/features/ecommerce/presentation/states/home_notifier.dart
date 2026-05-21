@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:xpapp/features/ecommerce/data/data_sources/get_products_data_source.dart';
-import 'package:xpapp/features/ecommerce/data/data_sources/get_sections_data_source.dart';
+import 'package:xpapp/features/ecommerce/data/data_sources/remote_get_products_data_source.dart';
+import 'package:xpapp/features/ecommerce/data/data_sources/remote_get_sections_data_source.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/get_products_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/get_sections_repository_impl.dart';
-import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_productos_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_sections_use_case.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/home_state.dart';
 
 final bottomNavProvider = StateProvider<int>((ref) => 0);
 final bannerProvider = StateProvider<int>((ref) => 0);
@@ -15,16 +15,6 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
     GetSectionsUseCase(GetSectionsRepositoryImpl(GetSectionsDataSource())),
   )..loadSections(),
 );
-
-class HomeState {
-  final List<SectionEntity> sections;
-
-  const HomeState({this.sections = const []});
-
-  HomeState copyWith({List<SectionEntity>? sections}) {
-    return HomeState(sections: sections ?? this.sections);
-  }
-}
 
 class HomeNotifier extends StateNotifier<HomeState> {
   final GetProductsUseCase _getProductosUseCase;

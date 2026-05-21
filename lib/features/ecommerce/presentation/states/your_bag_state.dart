@@ -1,0 +1,3 @@
+class YourBagState {
+  const YourBagState();
+}

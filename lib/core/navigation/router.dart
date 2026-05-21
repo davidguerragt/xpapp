@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/personalise_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/subscription_view.dart';
@@ -18,6 +19,11 @@ final router = GoRouter(
       path: '/ecommerce/item/:id',
       builder: (context, state) =>
           ECommerceItemView(id: state.pathParameters['id']!),
+    ),
+    GoRoute(
+      name: Routes.yourBag,
+      path: '/ecommerce/your-bag',
+      builder: (context, state) => const YourBagView(),
     ),
     GoRoute(
       name: Routes.onboarding,
@@ -45,6 +51,7 @@ abstract class Routes {
   // E-commerce routes
   static const String ecommerceHome = '/ecommerce/home';
   static const String itemView = '/ecommerce/item';
+  static const String yourBag = '/ecommerce/your-bag';
 
   // Navigation destinatios
   static const String explore = '/explore';
