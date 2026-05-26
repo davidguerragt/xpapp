@@ -48,4 +48,8 @@ class HomeNotifier extends StateNotifier<HomeState> {
     }).toList();
     state = state.copyWith(sections: updatedSections);
   }
+
+  void updateSelectedSize(String size) {}
+
+  void updateSelectedColor(String color) {}
 }

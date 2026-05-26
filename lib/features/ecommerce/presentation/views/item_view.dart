@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/bag_product_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 
 class ECommerceItemView extends ConsumerWidget {
   final String id;
@@ -30,7 +32,7 @@ class ECommerceItemView extends ConsumerWidget {
             Expanded(flex: 2, child: _ItemDetailsSection(product: product)),
             Padding(
               padding: const EdgeInsets.all(24),
-              child: _AddToBagButtonSection(),
+              child: _AddToBagButtonSection(product: product),
             ),
             SizedBox(height: 32),
           ],
@@ -51,33 +53,17 @@ class _ItemImageSection extends StatelessWidget {
   }
 }
 
-class _ItemDetailsSection extends StatefulWidget {
+class _ItemDetailsSection extends ConsumerWidget {
   final ProductEntity product;
 
   const _ItemDetailsSection({required this.product});
 
   @override
-  State<_ItemDetailsSection> createState() => _ItemDetailsSectionState();
-}
-
-class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
-  late final List<String> sizes;
-  late final List<String> colors;
-  late String selectedSize;
-  late String selectedColor;
-
-  @override
-  void initState() {
-    super.initState();
-    sizes = widget.product.sizes;
-    colors = widget.product.colors;
-    selectedSize = sizes.isNotEmpty ? sizes.first : '';
-    selectedColor = colors.isNotEmpty ? colors.first : '';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final product = widget.product;
+  Widget build(BuildContext context, WidgetRef ref) {
+    var selectedSize = ref.watch(selectedSizeProvider);
+    var selectedColor = ref.watch(selectedColorProvider);
+    final List<String> sizes = product.sizes;
+    final List<String> colors = product.colors;
 
     return Container(
       padding: EdgeInsets.all(16),
@@ -177,9 +163,7 @@ class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
                           : Colors.grey.shade300,
                     ),
                     onSelected: (_) {
-                      setState(() {
-                        selectedSize = size;
-                      });
+                      ref.read(selectedSizeProvider.notifier).state = size;
                     },
                   );
                 }).toList(),
@@ -203,9 +187,7 @@ class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
                   final isSelected = selectedColor == color;
                   return GestureDetector(
                     onTap: () {
-                      setState(() {
-                        selectedColor = color;
-                      });
+                      ref.read(selectedColorProvider.notifier).state = color;
                     },
                     child: Tooltip(
                       message: color.trim(),
@@ -248,11 +230,14 @@ class _ItemDetailsSectionState extends State<_ItemDetailsSection> {
   }
 }
 
-class _AddToBagButtonSection extends StatelessWidget {
-  const _AddToBagButtonSection();
+class _AddToBagButtonSection extends ConsumerWidget {
+  final ProductEntity product;
+  final int quantity = 1;
+  const _AddToBagButtonSection({required this.product});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedProduct = ref.watch(selectedProductProvider);
     return InkWell(
       onTap: () {
         router.goNamed(Routes.yourBag);
@@ -264,10 +249,30 @@ class _AddToBagButtonSection extends StatelessWidget {
           color: Colors.indigoAccent,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: const Center(
-          child: Text(
-            '+ Add to bag',
-            style: TextStyle(color: Colors.white, fontSize: 16),
+        child: InkWell(
+          onTap: () {
+            final bagNotifier = ref.watch(yourBagProvider.notifier);
+
+            bagNotifier.addItemToBag(
+              BagProductEntity(
+                id: product.id,
+                name: product.title,
+                price:
+                    double.tryParse(product.price.replaceAll('\$', '')) ?? 0.0,
+                imageUrl: product.image,
+                quantity: quantity,
+                size: ref.watch(selectedSizeProvider),
+                color: ref.watch(selectedColorProvider),
+              ),
+              double.tryParse(product.price.replaceAll('\$', '')) ?? 0.0,
+            );
+            router.goNamed(Routes.yourBag);
+          },
+          child: const Center(
+            child: Text(
+              '+ Add to bag',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
           ),
         ),
       ),

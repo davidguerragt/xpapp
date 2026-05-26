@@ -5,12 +5,21 @@ import 'package:xpapp/features/ecommerce/domain/repositories/your_bag_repository
 class YourBagRepositoryImpl implements YourBagRepository {
   final LocalYourBagDataSource _localDataSource;
 
-  YourBagRepositoryImpl({LocalYourBagDataSource? localDataSource})
-    : _localDataSource = localDataSource ?? LocalYourBagDataSource();
+  YourBagRepositoryImpl(
+    LocalYourBagDataSource localYourBagDataSource, {
+    LocalYourBagDataSource? localDataSource,
+  }) : _localDataSource = localDataSource ?? localYourBagDataSource;
 
   @override
   Future<void> saveYourBag(List<BagProductEntity> bag) async {
     _localDataSource.saveBag(bag.map((product) => product.toModel()).toList());
     // Implement the logic to save the bag, e.g., using local storage or an API
+  }
+
+  @override
+  Future<List<BagProductEntity>> getYourBag() async {
+    final bagModels = await _localDataSource.getBag();
+    return bagModels.map(BagProductEntity.fromModel).toList();
+    // Implement the logic to retrieve the bag, e.g., from local storage or an API
   }
 }

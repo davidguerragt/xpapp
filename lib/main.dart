@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/core/navigation/local_storage.dart';
 import 'package:xpapp/core/navigation/router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorage().init();
   runApp(ProviderScope(child: const MyApp()));
 }
 

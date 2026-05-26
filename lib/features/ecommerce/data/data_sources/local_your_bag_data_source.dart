@@ -5,8 +5,10 @@ import 'package:xpapp/features/ecommerce/data/models/bag_product_model.dart';
 class LocalYourBagDataSource {
   final SharedPreferences _prefs;
 
-  LocalYourBagDataSource({SharedPreferences? sharedPreferences})
-    : _prefs = sharedPreferences ?? LocalStorage().prefs;
+  LocalYourBagDataSource(
+    Future<SharedPreferences> instance, {
+    SharedPreferences? sharedPreferences,
+  }) : _prefs = sharedPreferences ?? LocalStorage().prefs;
 
   Future<void> saveBag(List<BagProductModel> bagProducts) async {
     await Future.delayed(const Duration(seconds: 1));

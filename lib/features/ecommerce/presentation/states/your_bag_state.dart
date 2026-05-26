@@ -6,7 +6,6 @@ class YourBagState {
 
   YourBagState copyWith({
     List<BagProductEntity>? bagProducts,
-    required List<dynamic> bagItems,
     required double totalPrice,
   }) {
     return YourBagState(bagProducts: bagProducts ?? this.bagProducts);

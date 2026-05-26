@@ -1,37 +1,69 @@
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:xpapp/features/ecommerce/data/data_sources/local_your_bag_data_source.dart';
+import 'package:xpapp/features/ecommerce/data/repositories/your_bag_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/bag_product_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/use_cases/get_bag_products_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/save_your_bag_use_case.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_state.dart';
 
+final selectedProductProvider = StateProvider<BagProductEntity?>((ref) => null);
+final selectedSizeProvider = StateProvider<String>((ref) => '');
+final selectedColorProvider = StateProvider<String>((ref) => '');
+final yourBagProvider = StateNotifierProvider<YourBagNotifier, YourBagState>(
+  (ref) => YourBagNotifier(
+    SaveYourBagUseCase(
+      YourBagRepositoryImpl(
+        LocalYourBagDataSource(SharedPreferences.getInstance()),
+      ),
+    ),
+    GetBagProductsUseCase(
+      YourBagRepositoryImpl(
+        LocalYourBagDataSource(SharedPreferences.getInstance()),
+      ),
+    ),
+  )..loadBag(),
+);
+
 class YourBagNotifier extends StateNotifier<YourBagState> {
   //final YourBagState _initialState = const YourBagState();
-  final List<BagProductEntity> _bagItems = [];
+  final List<BagProductEntity> _bagProducts = [];
   double totalPrice = 0.0;
   final SaveYourBagUseCase _saveYourBagUseCase;
+  final GetBagProductsUseCase _getBagProductsUseCase;
 
-  YourBagNotifier({required SaveYourBagUseCase saveYourBagUseCase})
-    : _saveYourBagUseCase = saveYourBagUseCase,
-      super(const YourBagState());
+  YourBagNotifier(this._saveYourBagUseCase, this._getBagProductsUseCase)
+    : super(const YourBagState());
 
   Future<void> addItemToBag(BagProductEntity item, double price) async {
-    _bagItems.add(item);
+    _bagProducts.add(item);
     totalPrice += price;
     state = state.copyWith(
-      bagItems: List.from(_bagItems),
+      bagProducts: List.from(_bagProducts),
       totalPrice: totalPrice,
     );
   }
 
   Future<void> removeItemFromBag(BagProductEntity item, double price) async {
-    _bagItems.remove(item);
+    _bagProducts.remove(item);
     totalPrice -= price;
     state = state.copyWith(
-      bagItems: List.from(_bagItems),
+      bagProducts: List.from(_bagProducts),
       totalPrice: totalPrice,
     );
   }
 
   Future<void> saveBag() async {
-    await _saveYourBagUseCase(_bagItems);
+    await _saveYourBagUseCase(state.bagProducts);
+  }
+
+  Future<void> loadBag() async {
+    final bagItems = await _getBagProductsUseCase.getBagProducts();
+    _bagProducts.addAll(bagItems);
+    totalPrice = _bagProducts.fold(0.0, (sum, item) => sum + item.price);
+    state = state.copyWith(
+      bagProducts: List.from(_bagProducts),
+      totalPrice: totalPrice,
+    );
   }
 }
