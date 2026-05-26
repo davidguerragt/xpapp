@@ -40,7 +40,6 @@ class BagItemsArea extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bagProducts = ref.watch(yourBagProvider).bagProducts;
-
     return Column(
       children: [
         Expanded(
@@ -64,26 +63,26 @@ class BagItemsArea extends ConsumerWidget {
             },
           ),
         ),
-        const Divider(height: 1),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Total',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
-              ),
-              Text(
-                '€ ${_total.toStringAsFixed(2)}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-        ),
+        // const Divider(height: 1),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       const Text(
+        //         'Total',
+        //         style: TextStyle(color: Colors.grey, fontSize: 16),
+        //       ),
+        //       Text(
+        //         '€ ${_total.toStringAsFixed(2)}',
+        //         style: const TextStyle(
+        //           fontWeight: FontWeight.bold,
+        //           fontSize: 16,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: ElevatedButton(

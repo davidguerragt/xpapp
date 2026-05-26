@@ -216,7 +216,7 @@ class _ProductSection extends StatelessWidget {
                               const SizedBox(height: 6),
 
                               Text(
-                                product.price,
+                                "\$ ${product.price}",
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,

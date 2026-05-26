@@ -119,7 +119,7 @@ class BagItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '€ ${price.toStringAsFixed(2)}',
+                '\$ ${price.toStringAsFixed(2)}',
                 style: const TextStyle(fontWeight: FontWeight.w600),
               ),
             ],

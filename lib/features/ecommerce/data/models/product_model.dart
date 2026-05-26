@@ -8,7 +8,7 @@ abstract class ProductModel with _$ProductModel {
   factory ProductModel({
     required String id,
     required String title,
-    required String price,
+    required double price,
     required String image,
     required String description,
     required List<String> sizes,

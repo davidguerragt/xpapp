@@ -60,8 +60,8 @@ class _ItemDetailsSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var selectedSize = ref.watch(selectedSizeProvider);
-    var selectedColor = ref.watch(selectedColorProvider);
+    final String? selectedColor = ref.watch(selectedColorProvider);
+    final String? selectedSize = ref.watch(selectedSizeProvider);
     final List<String> sizes = product.sizes;
     final List<String> colors = product.colors;
 
@@ -97,7 +97,7 @@ class _ItemDetailsSection extends ConsumerWidget {
                   Row(
                     children: [
                       Text(
-                        product.price,
+                        "\$ ${product.price}",
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -257,14 +257,13 @@ class _AddToBagButtonSection extends ConsumerWidget {
               BagProductEntity(
                 id: product.id,
                 name: product.title,
-                price:
-                    double.tryParse(product.price.replaceAll('\$', '')) ?? 0.0,
+                price: product.price,
                 imageUrl: product.image,
                 quantity: quantity,
                 size: ref.watch(selectedSizeProvider),
                 color: ref.watch(selectedColorProvider),
               ),
-              double.tryParse(product.price.replaceAll('\$', '')) ?? 0.0,
+              product.price,
             );
             router.goNamed(Routes.yourBag);
           },

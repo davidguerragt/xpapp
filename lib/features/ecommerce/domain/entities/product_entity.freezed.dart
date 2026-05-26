@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProductEntity {
 
- String get id; String get title; String get price; String get image; String get description; List<String> get sizes; List<String> get colors;
+ String get id; String get title; double get price; String get image; String get description; List<String> get sizes; List<String> get colors;
 /// Create a copy of ProductEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ProductEntityCopyWith<$Res>  {
   factory $ProductEntityCopyWith(ProductEntity value, $Res Function(ProductEntity) _then) = _$ProductEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String price, String image, String description, List<String> sizes, List<String> colors
+ String id, String title, double price, String image, String description, List<String> sizes, List<String> colors
 });
 
 
@@ -67,7 +67,7 @@ class _$ProductEntityCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as double,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,sizes: null == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String price,  String image,  String description,  List<String> sizes,  List<String> colors)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  double price,  String image,  String description,  List<String> sizes,  List<String> colors)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProductEntity() when $default != null:
 return $default(_that.id,_that.title,_that.price,_that.image,_that.description,_that.sizes,_that.colors);case _:
@@ -177,7 +177,7 @@ return $default(_that.id,_that.title,_that.price,_that.image,_that.description,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String price,  String image,  String description,  List<String> sizes,  List<String> colors)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  double price,  String image,  String description,  List<String> sizes,  List<String> colors)  $default,) {final _that = this;
 switch (_that) {
 case _ProductEntity():
 return $default(_that.id,_that.title,_that.price,_that.image,_that.description,_that.sizes,_that.colors);case _:
@@ -197,7 +197,7 @@ return $default(_that.id,_that.title,_that.price,_that.image,_that.description,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String price,  String image,  String description,  List<String> sizes,  List<String> colors)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  double price,  String image,  String description,  List<String> sizes,  List<String> colors)?  $default,) {final _that = this;
 switch (_that) {
 case _ProductEntity() when $default != null:
 return $default(_that.id,_that.title,_that.price,_that.image,_that.description,_that.sizes,_that.colors);case _:
@@ -217,7 +217,7 @@ class _ProductEntity implements ProductEntity {
 
 @override final  String id;
 @override final  String title;
-@override final  String price;
+@override final  double price;
 @override final  String image;
 @override final  String description;
  final  List<String> _sizes;
@@ -265,7 +265,7 @@ abstract mixin class _$ProductEntityCopyWith<$Res> implements $ProductEntityCopy
   factory _$ProductEntityCopyWith(_ProductEntity value, $Res Function(_ProductEntity) _then) = __$ProductEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String price, String image, String description, List<String> sizes, List<String> colors
+ String id, String title, double price, String image, String description, List<String> sizes, List<String> colors
 });
 
 
@@ -287,7 +287,7 @@ class __$ProductEntityCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as double,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,sizes: null == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>,colors: null == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable

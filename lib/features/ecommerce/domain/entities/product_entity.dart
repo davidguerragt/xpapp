@@ -8,7 +8,7 @@ abstract class ProductEntity with _$ProductEntity {
   const factory ProductEntity({
     required String id,
     required String title,
-    required String price,
+    required double price,
     required String image,
     required String description,
     required List<String> sizes,
