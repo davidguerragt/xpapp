@@ -237,7 +237,6 @@ class _AddToBagButtonSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedProduct = ref.watch(selectedProductProvider);
     return InkWell(
       onTap: () {
         router.goNamed(Routes.yourBag);
@@ -251,6 +250,14 @@ class _AddToBagButtonSection extends ConsumerWidget {
         ),
         child: InkWell(
           onTap: () {
+            if (ref.watch(selectedSizeProvider) == null ||
+                ref.watch(selectedColorProvider) == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Please select a size and color')),
+              );
+              return;
+            }
+
             final bagNotifier = ref.watch(yourBagProvider.notifier);
 
             bagNotifier.addItemToBag(
@@ -260,8 +267,8 @@ class _AddToBagButtonSection extends ConsumerWidget {
                 price: product.price,
                 imageUrl: product.image,
                 quantity: quantity,
-                size: ref.watch(selectedSizeProvider),
-                color: ref.watch(selectedColorProvider),
+                size: ref.watch(selectedSizeProvider).toString(),
+                color: ref.watch(selectedColorProvider).toString(),
               ),
               product.price,
             );

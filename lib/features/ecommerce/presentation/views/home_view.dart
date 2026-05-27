@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/item_view_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dart';
 
 class ECommerceHomeView extends ConsumerWidget {
@@ -127,13 +128,13 @@ class _SuggerencesSection extends ConsumerWidget {
   }
 }
 
-class _ProductSection extends StatelessWidget {
+class _ProductSection extends ConsumerWidget {
   final String title;
   final List<ProductEntity> products;
   const _ProductSection({required this.title, required this.products});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         Padding(

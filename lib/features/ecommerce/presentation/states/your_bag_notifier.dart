@@ -8,8 +8,8 @@ import 'package:xpapp/features/ecommerce/domain/use_cases/save_your_bag_use_case
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_state.dart';
 
 final selectedProductProvider = StateProvider<BagProductEntity?>((ref) => null);
-final selectedSizeProvider = StateProvider<String>((ref) => '');
-final selectedColorProvider = StateProvider<String>((ref) => '');
+final selectedSizeProvider = StateProvider<String?>((ref) => null);
+final selectedColorProvider = StateProvider<String?>((ref) => null);
 final yourBagProvider = StateNotifierProvider<YourBagNotifier, YourBagState>(
   (ref) => YourBagNotifier(
     SaveYourBagUseCase(
