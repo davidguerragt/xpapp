@@ -4,6 +4,10 @@ class YourBagState {
   final List<BagProductEntity> bagProducts;
   const YourBagState({this.bagProducts = const []});
 
+  Object? get total => 0.0;
+
+  Object? get totalPrice => 0.0;
+
   YourBagState copyWith({
     List<BagProductEntity>? bagProducts,
     required double totalPrice,

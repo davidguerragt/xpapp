@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/checkout_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
@@ -24,6 +25,11 @@ final router = GoRouter(
       name: Routes.yourBag,
       path: '/ecommerce/your-bag',
       builder: (context, state) => const YourBagView(),
+    ),
+    GoRoute(
+      name: Routes.checkout,
+      path: '/ecommerce/checkout',
+      builder: (context, state) => const CheckoutView(),
     ),
     GoRoute(
       name: Routes.onboarding,
@@ -52,6 +58,7 @@ abstract class Routes {
   static const String ecommerceHome = '/ecommerce/home';
   static const String itemView = '/ecommerce/item';
   static const String yourBag = '/ecommerce/your-bag';
+  static const String checkout = '/ecommerce/checkout';
 
   // Navigation destinatios
   static const String explore = '/explore';

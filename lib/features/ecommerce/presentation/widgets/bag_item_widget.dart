@@ -10,7 +10,7 @@ class BagItemWidget extends StatelessWidget {
   final Widget? image;
 
   const BagItemWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.price,
@@ -18,7 +18,7 @@ class BagItemWidget extends StatelessWidget {
     required this.onIncrement,
     required this.onDecrement,
     this.image,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -86,7 +86,9 @@ class BagItemsArea extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              router.goNamed(Routes.checkout);
+            },
             child: const Text('Checkout'),
           ),
         ),

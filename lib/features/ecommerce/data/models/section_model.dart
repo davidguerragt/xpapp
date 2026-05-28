@@ -5,11 +5,6 @@ part 'section_model.g.dart';
 
 @freezed
 abstract class SectionModel with _$SectionModel {
-  String get id;
-  String get title;
-  String get description;
-  String get image;
-
   factory SectionModel({
     required String id,
     required String title,

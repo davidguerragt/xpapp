@@ -16,6 +16,7 @@ class OptionItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 5,
@@ -30,7 +31,9 @@ class OptionItem extends StatelessWidget {
             children: [
               Radio(
                 value: option.name,
+                // ignore: deprecated_member_use
                 groupValue: null,
+                // ignore: deprecated_member_use
                 onChanged: (value) {},
               ),
               Column(
