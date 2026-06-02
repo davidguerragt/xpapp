@@ -14,7 +14,9 @@ class ECommerceItemView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sections = ref.read(homeProvider).sections;
     final products = sections.expand((section) => section.products).toList();
-    final product = products.firstWhere((product) => product.id == id);
+    final product =
+        ref.read(selectedProductProvider) ??
+        products.firstWhere((p) => p.id == id);
 
     return Scaffold(
       appBar: AppBar(

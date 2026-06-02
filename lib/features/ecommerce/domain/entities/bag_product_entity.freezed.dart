@@ -213,7 +213,7 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.price,_that.quantity,_t
 
 class _BagProductEntity implements BagProductEntity {
   const _BagProductEntity({required this.id, required this.name, required this.imageUrl, required this.price, required this.quantity, required this.size, required this.color});
-
+  
 
 @override final  String id;
 @override final  String name;

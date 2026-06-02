@@ -3,13 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xpapp/features/ecommerce/data/data_sources/local_your_bag_data_source.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/your_bag_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/bag_product_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_bag_products_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/save_your_bag_use_case.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_state.dart';
 
-final selectedProductProvider = StateProvider<BagProductEntity?>((ref) => null);
+final selectedProductProvider = StateProvider<ProductEntity?>((ref) => null);
 final selectedSizeProvider = StateProvider<String?>((ref) => null);
 final selectedColorProvider = StateProvider<String?>((ref) => null);
+final totalAmountProvider = StateProvider<double>((ref) => 0.0);
 final yourBagProvider = StateNotifierProvider<YourBagNotifier, YourBagState>(
   (ref) => YourBagNotifier(
     SaveYourBagUseCase(

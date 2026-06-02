@@ -29,13 +29,28 @@ class YourBagView extends ConsumerWidget {
           ),
         ),
       ),
-      body: SafeArea(child: BagItemsArea()),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(flex: 9, child: _BagItemsArea()),
+            Expanded(flex: 1, child: _TotalPriceDisplay()),
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: _CheckOutButtonSection(),
+              ),
+            ),
+            SizedBox(height: 32),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class BagItemsArea extends ConsumerWidget {
-  const BagItemsArea({super.key});
+class _BagItemsArea extends ConsumerWidget {
+  const _BagItemsArea();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,8 +78,41 @@ class BagItemsArea extends ConsumerWidget {
             },
           ),
         ),
-        BlueBigButton(route: Routes.checkout, buttonText: 'Checkout'),
       ],
     );
+  }
+}
+
+class _TotalPriceDisplay extends ConsumerWidget {
+  const _TotalPriceDisplay();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final totalPrice = ref.watch(yourBagProvider.notifier).totalPrice;
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Total',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            '\$${totalPrice.toStringAsFixed(2)}',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CheckOutButtonSection extends ConsumerWidget {
+  const _CheckOutButtonSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return BlueBigButton(route: Routes.checkout, buttonText: 'Checkout');
   }
 }

@@ -18,7 +18,7 @@ class BagItemWidget extends StatelessWidget {
     required this.quantity,
     required this.onIncrement,
     required this.onDecrement,
-    this.image,
+    required this.image,
   });
 
   @override
@@ -32,15 +32,17 @@ class BagItemWidget extends StatelessWidget {
             children: [
               // Image
               Container(
-                width: 72,
-                height: 72,
+                width: 90,
+                height: 100,
                 decoration: BoxDecoration(
                   color: Colors.blue.shade50,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child:
-                    image ??
-                    const Icon(Icons.image, color: Colors.blueGrey, size: 36),
+                child: Expanded(
+                  child:
+                      image ??
+                      const Icon(Icons.image, color: Colors.blueGrey, size: 36),
+                ),
               ),
               const SizedBox(width: 12),
               // Item data

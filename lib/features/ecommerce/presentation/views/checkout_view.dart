@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/payment_method_notifier.dart';
 
 class CheckoutView extends ConsumerWidget {
   const CheckoutView({super.key});
@@ -7,19 +9,24 @@ class CheckoutView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text('Checkout')),
+      appBar: AppBar(title: const Text('Checkout')),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                _StageButtonSection(),
-                _TextAreaSection(),
-                _PaymentMethodsSection(),
-                _PaymentConfirmationSection(),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              _StageButtonSection(),
+              const SizedBox(height: 20),
+              _TextAreaSection(),
+              const SizedBox(height: 20),
+              Expanded(
+                child: SingleChildScrollView(child: _PaymentMethodsSection()),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: _PaymentConfirmationSection(),
+              ),
+            ],
           ),
         ),
       ),
@@ -88,58 +95,200 @@ class _TextAreaSection extends StatelessWidget {
 }
 
 class _PaymentMethodsSection extends ConsumerWidget {
-  String? get opcionSeleccionada => null;
+  const _PaymentMethodsSection();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final paymentState = ref.watch(paymentMethodProvider);
+    final paymentNotifier = ref.watch(paymentMethodProvider.notifier);
+    final selectedMethod = paymentState.selectedMethod;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RadioListTile<String>(
-          title: const Text('Credit Card'),
-          value: 'creditCard',
-          groupValue: opcionSeleccionada,
-        ),
-        SizedBox(height: 20),
-        ListTile(
-          leading: Icon(Icons.credit_card),
-          title: Text('MasterCard'),
-          subtitle: Text('**** **** **** 1234'),
-          trailing: Icon(Icons.arrow_forward_ios, size: 16),
-          onTap: () {
-            // Handle credit card selection
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.credit_card),
-          title: Text('Visa'),
-          subtitle: Text('**** **** **** 1234'),
-          trailing: Icon(Icons.arrow_forward_ios, size: 16),
-          onTap: () {
-            // Handle credit card selection
-          },
-        ),
+        if (paymentState.methods.isEmpty) ...[
+          const SizedBox(height: 16),
+          const Text(
+            'No saved credit cards yet. Add a new card to continue.',
+            style: TextStyle(fontSize: 14, color: Colors.grey),
+          ),
+          const SizedBox(height: 20),
+        ] else ...[
+          ...paymentState.methods.map((method) {
+            return RadioListTile<String>(
+              title: Text(method.cardBrand),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(method.maskedNumber),
+                  Text('Exp: ${method.expirationDate}'),
+                ],
+              ),
+              value: method.id,
+              groupValue: paymentState.selectedMethodId,
+              onChanged: (value) {
+                if (value != null) {
+                  paymentNotifier.selectPaymentMethod(value);
+                }
+              },
+            );
+          }),
+          const SizedBox(height: 20),
+        ],
         TextButton(
-          onPressed: () {
-            // Handle PayPal selection
-          },
-          child: Text(
+          onPressed: () => _showAddCardDialog(context, ref),
+          child: const Text(
             '+ Add New Card',
             style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
           ),
         ),
-        RadioListTile<String>(
-          title: const Text('Apple Pay'),
-          value: 'applePay',
-          groupValue: opcionSeleccionada,
-        ),
+        if (selectedMethod != null) ...[
+          const SizedBox(height: 16),
+          Text(
+            'Selected: ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}',
+            style: const TextStyle(fontSize: 14, color: Colors.black54),
+          ),
+        ],
       ],
     );
   }
+
+  Future<void> _showAddCardDialog(BuildContext context, WidgetRef ref) async {
+    final cardHolderController = TextEditingController();
+    final cardNumberController = TextEditingController();
+    final expirationController = TextEditingController();
+    final cvcController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Add Credit Card'),
+          content: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    controller: cardHolderController,
+                    decoration: const InputDecoration(labelText: 'Card Holder'),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Enter the card holder name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: cardNumberController,
+                    decoration: const InputDecoration(
+                      labelText: 'Card Number',
+                      hintText: '1234 5678 9012 3456',
+                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      final cleaned = value?.replaceAll(' ', '') ?? '';
+                      if (cleaned.length < 12) {
+                        return 'Enter a valid card number';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: expirationController,
+                    decoration: const InputDecoration(
+                      labelText: 'Expiration Date',
+                      hintText: 'MM/YY',
+                    ),
+                    keyboardType: TextInputType.datetime,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Enter expiration date';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: cvcController,
+                    decoration: const InputDecoration(
+                      labelText: 'CVC',
+                      hintText: '123',
+                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.trim().length < 3) {
+                        return 'Enter CVC';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (formKey.currentState?.validate() ?? false) {
+                  final cardNumber = cardNumberController.text.replaceAll(
+                    ' ',
+                    '',
+                  );
+                  final method = PaymentMethodEntity(
+                    id: DateTime.now().millisecondsSinceEpoch.toString(),
+                    cardHolderName: cardHolderController.text.trim(),
+                    cardNumber: cardNumber,
+                    expirationDate: expirationController.text.trim(),
+                    cardBrand: _cardBrand(cardNumber),
+                  );
+
+                  ref
+                      .read(paymentMethodProvider.notifier)
+                      .addPaymentMethod(method);
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  String _cardBrand(String cardNumber) {
+    final cleaned = cardNumber.replaceAll(' ', '');
+    if (cleaned.startsWith('4')) {
+      return 'Visa';
+    }
+    if (cleaned.startsWith('5')) {
+      return 'MasterCard';
+    }
+    if (cleaned.startsWith('3')) {
+      return 'American Express';
+    }
+    return 'Credit Card';
+  }
 }
 
-class _PaymentConfirmationSection extends StatelessWidget {
+class _PaymentConfirmationSection extends ConsumerWidget {
+  const _PaymentConfirmationSection();
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedMethod = ref.watch(paymentMethodProvider).selectedMethod;
+
     return InkWell(
       onTap: () {},
       child: Container(
@@ -149,13 +298,12 @@ class _PaymentConfirmationSection extends StatelessWidget {
           color: Colors.indigoAccent,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: InkWell(
-          onTap: () {},
-          child: const Center(
-            child: Text(
-              'Process Payment',
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
+        child: Center(
+          child: Text(
+            selectedMethod != null
+                ? 'Pay with ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
+                : 'Process Payment',
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
       ),

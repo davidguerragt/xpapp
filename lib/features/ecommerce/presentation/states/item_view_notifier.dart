@@ -6,6 +6,7 @@ class ItemViewNotifier extends StateNotifier<ItemViewState> {
   final ProductEntity? selectedProduct;
   final String selectedSize;
   final String selectedColor;
+
   ItemViewNotifier({
     required this.selectedProduct,
     required this.selectedSize,
