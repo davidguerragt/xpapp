@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "607512237792",
+    "project_id": "xpapp-b451c",
+    "storage_bucket": "xpapp-b451c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607512237792:android:5fcf3febdacf512870e285",
+        "android_client_info": {
+          "package_name": "com.example.xpapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv9CZal69c_Vqlmm3AjqBQaVMMNhLwgs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
