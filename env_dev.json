@@ -1,0 +1,4 @@
+{
+    "paymentApiUrl": "https://processpayment-sfdkfoab2q-uc.a.run.app",
+    "cardsApiUrl": "https://testcards-sfdkfoab2q-uc.a.run.app"
+}

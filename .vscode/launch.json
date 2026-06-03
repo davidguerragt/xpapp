@@ -8,7 +8,8 @@
             "name": "xpapp",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "debug"
+            "flutterMode": "debug",
+            "program": "lib/main_dev.dart"
         },
         {
             "name": "xpapp (profile mode)",

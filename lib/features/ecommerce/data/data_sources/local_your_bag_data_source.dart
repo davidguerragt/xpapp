@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:xpapp/core/navigation/local_storage.dart';
+import 'package:xpapp/core/local/local_storage.dart';
 import 'package:xpapp/features/ecommerce/data/models/bag_product_model.dart';
 
 class LocalYourBagDataSource {

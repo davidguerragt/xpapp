@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/use_cases/checkout_payment_use_case.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/payment_method_notifier.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 
 class CheckoutView extends ConsumerWidget {
   const CheckoutView({super.key});
@@ -282,31 +285,142 @@ class _PaymentMethodsSection extends ConsumerWidget {
   }
 }
 
-class _PaymentConfirmationSection extends ConsumerWidget {
-  const _PaymentConfirmationSection();
+class _PaymentConfirmationSection extends ConsumerStatefulWidget {
+  const _PaymentConfirmationSection({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final selectedMethod = ref.watch(paymentMethodProvider).selectedMethod;
+  ConsumerState<_PaymentConfirmationSection> createState() =>
+      _PaymentConfirmationSectionState();
+}
 
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        width: double.infinity,
-        height: 48,
-        decoration: BoxDecoration(
-          color: Colors.indigoAccent,
-          borderRadius: BorderRadius.circular(12),
+class _PaymentConfirmationSectionState
+    extends ConsumerState<_PaymentConfirmationSection> {
+  @override
+  Widget build(BuildContext context) {
+    final selectedMethod = ref.watch(paymentMethodProvider).selectedMethod;
+    final totalPrice = ref.watch(yourBagProvider).totalPrice;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Total: \$${totalPrice?.toStringAsFixed(2) ?? '0.00'}',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        child: Center(
-          child: Text(
-            selectedMethod != null
-                ? 'Pay with ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
-                : 'Process Payment',
-            style: const TextStyle(color: Colors.white, fontSize: 16),
+        const SizedBox(height: 12),
+        InkWell(
+          onTap: selectedMethod != null
+              ? () => _processPayment(selectedMethod, totalPrice ?? 0.0)
+              : null,
+          child: Container(
+            width: double.infinity,
+            height: 48,
+            decoration: BoxDecoration(
+              color: selectedMethod != null ? Colors.indigoAccent : Colors.grey,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Text(
+                selectedMethod != null
+                    ? 'Pay with ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
+                    : 'Select a payment method',
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
           ),
         ),
-      ),
+      ],
+    );
+  }
+
+  Future<void> _processPayment(
+    PaymentMethodEntity selectedMethod,
+    double totalPrice,
+  ) async {
+    final cvc = await _showCvcDialog();
+    if (cvc == null) {
+      return;
+    }
+
+    if (!mounted) return;
+
+    final paymentEntity = PaymentProcessEntity(
+      cardNumber: selectedMethod.cardNumber,
+      expiryDate: selectedMethod.expirationDate,
+      cvv: cvc,
+      cardHolderName: selectedMethod.cardHolderName,
+      amount: totalPrice,
+    );
+
+    final checkoutUseCase = CheckoutPaymentUseCase(null);
+
+    if (!mounted) return;
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await checkoutUseCase.execute(paymentEntity);
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Payment completed successfully.')),
+      );
+      Navigator.of(context).pop();
+    } catch (error) {
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Payment failed: $error')));
+    }
+  }
+
+  Future<String?> _showCvcDialog() async {
+    final cvcController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    return showDialog<String>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Confirm Payment'),
+          content: Form(
+            key: formKey,
+            child: TextFormField(
+              controller: cvcController,
+              decoration: const InputDecoration(
+                labelText: 'CVC',
+                hintText: '123',
+              ),
+              keyboardType: TextInputType.number,
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value.trim().length < 3) {
+                  return 'Enter a valid CVC';
+                }
+                return null;
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(null),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (formKey.currentState?.validate() ?? false) {
+                  Navigator.of(context).pop(cvcController.text.trim());
+                }
+              },
+              child: const Text('Pay'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

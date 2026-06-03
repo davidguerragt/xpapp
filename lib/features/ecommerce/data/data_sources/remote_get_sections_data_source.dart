@@ -1,4 +1,4 @@
-import 'package:xpapp/core/navigation/assets.dart';
+import 'package:xpapp/core/consts/assets.dart';
 import 'package:xpapp/features/ecommerce/data/models/section_model.dart';
 
 class GetSectionsDataSource {

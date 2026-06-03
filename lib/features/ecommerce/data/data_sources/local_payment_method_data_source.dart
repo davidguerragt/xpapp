@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:xpapp/core/navigation/local_storage.dart';
+import 'package:xpapp/core/local/local_storage.dart';
 import 'package:xpapp/features/ecommerce/data/models/payment_method_model.dart';
 
 class LocalPaymentMethodDataSource {
