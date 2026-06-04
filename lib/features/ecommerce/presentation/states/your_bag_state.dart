@@ -2,16 +2,17 @@ import 'package:xpapp/features/ecommerce/domain/entities/bag_product_entity.dart
 
 class YourBagState {
   final List<BagProductEntity> bagProducts;
-  const YourBagState({this.bagProducts = const []});
+  final double totalPrice;
 
-  Object? get total => 0.0;
-
-  double? get totalPrice => 0.0;
+  const YourBagState({this.bagProducts = const [], this.totalPrice = 0.0});
 
   YourBagState copyWith({
     List<BagProductEntity>? bagProducts,
-    required double totalPrice,
+    double? totalPrice,
   }) {
-    return YourBagState(bagProducts: bagProducts ?? this.bagProducts);
+    return YourBagState(
+      bagProducts: bagProducts ?? this.bagProducts,
+      totalPrice: totalPrice ?? this.totalPrice,
+    );
   }
 }

@@ -11,6 +11,7 @@ abstract class PaymentProcessEntity with _$PaymentProcessEntity {
     required String cvv,
     required String cardHolderName,
     required double amount,
+    required String currency,
   }) = _PaymentProcessEntity;
 
   factory PaymentProcessEntity.fromJson(Map<String, dynamic> json) =>
@@ -23,6 +24,7 @@ abstract class PaymentProcessEntity with _$PaymentProcessEntity {
       cvv: model.cvv,
       cardHolderName: model.cardHolderName,
       amount: model.amount,
+      currency: model.currency,
     );
   }
 }

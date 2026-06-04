@@ -12,7 +12,7 @@ class Env {
   }
   // Variables
 
-  static String get apiBaseUrl => _values['apiUrl'] ?? '';
+  static String get apiBaseUrl => _values['paymentApiUrl'] ?? '';
   static String get apiKey => _values['apiKey'] ?? '';
   static String get appName {
     final appName = _values['appName'];

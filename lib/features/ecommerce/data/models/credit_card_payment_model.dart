@@ -12,6 +12,7 @@ abstract class CreditCardPaymentModel with _$CreditCardPaymentModel {
     required String cvv,
     required String cardHolderName,
     required double amount,
+    required String currency,
   }) = _CreditCardPaymentModel;
 
   factory CreditCardPaymentModel.fromJson(Map<String, dynamic> json) =>
@@ -24,6 +25,7 @@ abstract class CreditCardPaymentModel with _$CreditCardPaymentModel {
       cvv: entity.cvv,
       cardHolderName: entity.cardHolderName,
       amount: entity.amount,
+      currency: entity.currency,
     );
   }
 }

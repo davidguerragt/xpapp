@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PaymentProcessEntity {
 
- String get cardNumber; String get expiryDate; String get cvv; String get cardHolderName; double get amount;
+ String get cardNumber; String get expiryDate; String get cvv; String get cardHolderName; double get amount; String get currency;
 /// Create a copy of PaymentProcessEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PaymentProcessEntityCopyWith<PaymentProcessEntity> get copyWith => _$PaymentPro
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentProcessEntity&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate)&&(identical(other.cvv, cvv) || other.cvv == cvv)&&(identical(other.cardHolderName, cardHolderName) || other.cardHolderName == cardHolderName)&&(identical(other.amount, amount) || other.amount == amount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentProcessEntity&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate)&&(identical(other.cvv, cvv) || other.cvv == cvv)&&(identical(other.cardHolderName, cardHolderName) || other.cardHolderName == cardHolderName)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.currency, currency) || other.currency == currency));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,cardNumber,expiryDate,cvv,cardHolderName,amount);
+int get hashCode => Object.hash(runtimeType,cardNumber,expiryDate,cvv,cardHolderName,amount,currency);
 
 @override
 String toString() {
-  return 'PaymentProcessEntity(cardNumber: $cardNumber, expiryDate: $expiryDate, cvv: $cvv, cardHolderName: $cardHolderName, amount: $amount)';
+  return 'PaymentProcessEntity(cardNumber: $cardNumber, expiryDate: $expiryDate, cvv: $cvv, cardHolderName: $cardHolderName, amount: $amount, currency: $currency)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PaymentProcessEntityCopyWith<$Res>  {
   factory $PaymentProcessEntityCopyWith(PaymentProcessEntity value, $Res Function(PaymentProcessEntity) _then) = _$PaymentProcessEntityCopyWithImpl;
 @useResult
 $Res call({
- String cardNumber, String expiryDate, String cvv, String cardHolderName, double amount
+ String cardNumber, String expiryDate, String cvv, String cardHolderName, double amount, String currency
 });
 
 
@@ -65,14 +65,15 @@ class _$PaymentProcessEntityCopyWithImpl<$Res>
 
 /// Create a copy of PaymentProcessEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? cardNumber = null,Object? expiryDate = null,Object? cvv = null,Object? cardHolderName = null,Object? amount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? cardNumber = null,Object? expiryDate = null,Object? cvv = null,Object? cardHolderName = null,Object? amount = null,Object? currency = null,}) {
   return _then(_self.copyWith(
 cardNumber: null == cardNumber ? _self.cardNumber : cardNumber // ignore: cast_nullable_to_non_nullable
 as String,expiryDate: null == expiryDate ? _self.expiryDate : expiryDate // ignore: cast_nullable_to_non_nullable
 as String,cvv: null == cvv ? _self.cvv : cvv // ignore: cast_nullable_to_non_nullable
 as String,cardHolderName: null == cardHolderName ? _self.cardHolderName : cardHolderName // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as double,
+as double,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String cardNumber,  String expiryDate,  String cvv,  String cardHolderName,  double amount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String cardNumber,  String expiryDate,  String cvv,  String cardHolderName,  double amount,  String currency)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PaymentProcessEntity() when $default != null:
-return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName,_that.amount);case _:
+return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName,_that.amount,_that.currency);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String cardNumber,  String expiryDate,  String cvv,  String cardHolderName,  double amount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String cardNumber,  String expiryDate,  String cvv,  String cardHolderName,  double amount,  String currency)  $default,) {final _that = this;
 switch (_that) {
 case _PaymentProcessEntity():
-return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName,_that.amount);case _:
+return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName,_that.amount,_that.currency);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String cardNumber,  String expiryDate,  String cvv,  String cardHolderName,  double amount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String cardNumber,  String expiryDate,  String cvv,  String cardHolderName,  double amount,  String currency)?  $default,) {final _that = this;
 switch (_that) {
 case _PaymentProcessEntity() when $default != null:
-return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName,_that.amount);case _:
+return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName,_that.amount,_that.currency);case _:
   return null;
 
 }
@@ -213,7 +214,7 @@ return $default(_that.cardNumber,_that.expiryDate,_that.cvv,_that.cardHolderName
 @JsonSerializable()
 
 class _PaymentProcessEntity implements PaymentProcessEntity {
-  const _PaymentProcessEntity({required this.cardNumber, required this.expiryDate, required this.cvv, required this.cardHolderName, required this.amount});
+  const _PaymentProcessEntity({required this.cardNumber, required this.expiryDate, required this.cvv, required this.cardHolderName, required this.amount, required this.currency});
   factory _PaymentProcessEntity.fromJson(Map<String, dynamic> json) => _$PaymentProcessEntityFromJson(json);
 
 @override final  String cardNumber;
@@ -221,6 +222,7 @@ class _PaymentProcessEntity implements PaymentProcessEntity {
 @override final  String cvv;
 @override final  String cardHolderName;
 @override final  double amount;
+@override final  String currency;
 
 /// Create a copy of PaymentProcessEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentProcessEntity&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate)&&(identical(other.cvv, cvv) || other.cvv == cvv)&&(identical(other.cardHolderName, cardHolderName) || other.cardHolderName == cardHolderName)&&(identical(other.amount, amount) || other.amount == amount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentProcessEntity&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber)&&(identical(other.expiryDate, expiryDate) || other.expiryDate == expiryDate)&&(identical(other.cvv, cvv) || other.cvv == cvv)&&(identical(other.cardHolderName, cardHolderName) || other.cardHolderName == cardHolderName)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.currency, currency) || other.currency == currency));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,cardNumber,expiryDate,cvv,cardHolderName,amount);
+int get hashCode => Object.hash(runtimeType,cardNumber,expiryDate,cvv,cardHolderName,amount,currency);
 
 @override
 String toString() {
-  return 'PaymentProcessEntity(cardNumber: $cardNumber, expiryDate: $expiryDate, cvv: $cvv, cardHolderName: $cardHolderName, amount: $amount)';
+  return 'PaymentProcessEntity(cardNumber: $cardNumber, expiryDate: $expiryDate, cvv: $cvv, cardHolderName: $cardHolderName, amount: $amount, currency: $currency)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$PaymentProcessEntityCopyWith<$Res> implements $PaymentPro
   factory _$PaymentProcessEntityCopyWith(_PaymentProcessEntity value, $Res Function(_PaymentProcessEntity) _then) = __$PaymentProcessEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String cardNumber, String expiryDate, String cvv, String cardHolderName, double amount
+ String cardNumber, String expiryDate, String cvv, String cardHolderName, double amount, String currency
 });
 
 
@@ -272,14 +274,15 @@ class __$PaymentProcessEntityCopyWithImpl<$Res>
 
 /// Create a copy of PaymentProcessEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? cardNumber = null,Object? expiryDate = null,Object? cvv = null,Object? cardHolderName = null,Object? amount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? cardNumber = null,Object? expiryDate = null,Object? cvv = null,Object? cardHolderName = null,Object? amount = null,Object? currency = null,}) {
   return _then(_PaymentProcessEntity(
 cardNumber: null == cardNumber ? _self.cardNumber : cardNumber // ignore: cast_nullable_to_non_nullable
 as String,expiryDate: null == expiryDate ? _self.expiryDate : expiryDate // ignore: cast_nullable_to_non_nullable
 as String,cvv: null == cvv ? _self.cvv : cvv // ignore: cast_nullable_to_non_nullable
 as String,cardHolderName: null == cardHolderName ? _self.cardHolderName : cardHolderName // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
-as double,
+as double,currency: null == currency ? _self.currency : currency // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

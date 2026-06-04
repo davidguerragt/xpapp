@@ -11,6 +11,7 @@ part of 'bag_product_entity.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$BagProductEntity {
 
@@ -21,6 +22,8 @@ mixin _$BagProductEntity {
 @pragma('vm:prefer-inline')
 $BagProductEntityCopyWith<BagProductEntity> get copyWith => _$BagProductEntityCopyWithImpl<BagProductEntity>(this as BagProductEntity, _$identity);
 
+  /// Serializes this BagProductEntity to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is BagProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.size, size) || other.size == size)&&(identical(other.color, color) || other.color == color));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,name,imageUrl,price,quantity,size,color);
 
@@ -209,11 +212,11 @@ return $default(_that.id,_that.name,_that.imageUrl,_that.price,_that.quantity,_t
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _BagProductEntity implements BagProductEntity {
   const _BagProductEntity({required this.id, required this.name, required this.imageUrl, required this.price, required this.quantity, required this.size, required this.color});
-  
+  factory _BagProductEntity.fromJson(Map<String, dynamic> json) => _$BagProductEntityFromJson(json);
 
 @override final  String id;
 @override final  String name;
@@ -229,14 +232,17 @@ class _BagProductEntity implements BagProductEntity {
 @pragma('vm:prefer-inline')
 _$BagProductEntityCopyWith<_BagProductEntity> get copyWith => __$BagProductEntityCopyWithImpl<_BagProductEntity>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$BagProductEntityToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _BagProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.price, price) || other.price == price)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.size, size) || other.size == size)&&(identical(other.color, color) || other.color == color));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,name,imageUrl,price,quantity,size,color);
 
@@ -244,19 +250,6 @@ int get hashCode => Object.hash(runtimeType,id,name,imageUrl,price,quantity,size
 String toString() {
   return 'BagProductEntity(id: $id, name: $name, imageUrl: $imageUrl, price: $price, quantity: $quantity, size: $size, color: $color)';
 }
-
-  @override
-  BagProductModel toModel() {
-    return BagProductModel(
-      id: id,
-      name: name,
-      imageUrl: imageUrl,
-      price: price,
-      quantity: quantity,
-      size: size,
-      color: color,
-    );
-  }
 
 
 }

@@ -14,6 +14,7 @@ _CreditCardPaymentModel _$CreditCardPaymentModelFromJson(
   cvv: json['cvv'] as String,
   cardHolderName: json['cardHolderName'] as String,
   amount: (json['amount'] as num).toDouble(),
+  currency: json['currency'] as String,
 );
 
 Map<String, dynamic> _$CreditCardPaymentModelToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$CreditCardPaymentModelToJson(
   'cvv': instance.cvv,
   'cardHolderName': instance.cardHolderName,
   'amount': instance.amount,
+  'currency': instance.currency,
 };

@@ -28,9 +28,7 @@ final yourBagProvider = StateNotifierProvider<YourBagNotifier, YourBagState>(
 );
 
 class YourBagNotifier extends StateNotifier<YourBagState> {
-  //final YourBagState _initialState = const YourBagState();
   final List<BagProductEntity> _bagProducts = [];
-  double totalPrice = 0.0;
   final SaveYourBagUseCase _saveYourBagUseCase;
   final GetBagProductsUseCase _getBagProductsUseCase;
 
@@ -39,7 +37,10 @@ class YourBagNotifier extends StateNotifier<YourBagState> {
 
   Future<void> addItemToBag(BagProductEntity item, double price) async {
     _bagProducts.add(item);
-    totalPrice += price;
+    final totalPrice = _bagProducts.fold(
+      0.0,
+      (sum, product) => sum + product.price,
+    );
     state = state.copyWith(
       bagProducts: List.from(_bagProducts),
       totalPrice: totalPrice,
@@ -48,7 +49,10 @@ class YourBagNotifier extends StateNotifier<YourBagState> {
 
   Future<void> removeItemFromBag(BagProductEntity item, double price) async {
     _bagProducts.remove(item);
-    totalPrice -= price;
+    final totalPrice = _bagProducts.fold(
+      0.0,
+      (sum, product) => sum + product.price,
+    );
     state = state.copyWith(
       bagProducts: List.from(_bagProducts),
       totalPrice: totalPrice,
@@ -62,7 +66,7 @@ class YourBagNotifier extends StateNotifier<YourBagState> {
   Future<void> loadBag() async {
     final bagItems = await _getBagProductsUseCase.getBagProducts();
     _bagProducts.addAll(bagItems);
-    totalPrice = _bagProducts.fold(0.0, (sum, item) => sum + item.price);
+    final totalPrice = _bagProducts.fold(0.0, (sum, item) => sum + item.price);
     state = state.copyWith(
       bagProducts: List.from(_bagProducts),
       totalPrice: totalPrice,

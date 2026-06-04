@@ -350,16 +350,17 @@ class _PaymentConfirmationSectionState
       cvv: cvc,
       cardHolderName: selectedMethod.cardHolderName,
       amount: totalPrice,
+      currency: 'USD',
     );
 
     final checkoutUseCase = CheckoutPaymentUseCase(null);
 
     if (!mounted) return;
-    await showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
+    // await showDialog<void>(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => const Center(child: CircularProgressIndicator()),
+    // );
 
     try {
       await checkoutUseCase.execute(paymentEntity);
