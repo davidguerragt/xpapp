@@ -1,6 +1,8 @@
 import 'package:xpapp/features/ecommerce/data/data_sources/credit_card_payment_data_source.dart';
 import 'package:xpapp/features/ecommerce/data/models/credit_card_payment_model.dart';
+import 'package:xpapp/features/ecommerce/data/models/payment_process_response_model.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/payment_process_response_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/repositories/credit_card_paymemt_repository.dart';
 
 class CreditCardPaymentRepositoryImp implements CreditCardPaymentRepository {
@@ -12,8 +14,13 @@ class CreditCardPaymentRepositoryImp implements CreditCardPaymentRepository {
            creditCardPaymentDataSource ?? CreditCardPaymentDataSource();
 
   @override
-  Future<void> processPayment(PaymentProcessEntity paymentEntity) async {
+  Future<PaymentProcessResponseEntity> processPayment(
+    PaymentProcessEntity paymentEntity,
+  ) async {
     final paymentModel = CreditCardPaymentModel.fromEntity(paymentEntity);
-    await _creditCardPaymentDataSource.processPayment(paymentModel);
+    final responseModel = await _creditCardPaymentDataSource.processPayment(
+      paymentModel,
+    );
+    return responseModel.toEntity();
   }
 }

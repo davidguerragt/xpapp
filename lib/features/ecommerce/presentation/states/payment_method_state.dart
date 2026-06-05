@@ -3,13 +3,18 @@ import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.d
 class PaymentMethodState {
   final List<PaymentMethodEntity> methods;
   final String? selectedMethodId;
+  final bool useApplePay;
 
-  const PaymentMethodState({this.methods = const [], this.selectedMethodId});
+  const PaymentMethodState({
+    this.methods = const [],
+    this.selectedMethodId,
+    this.useApplePay = false,
+  });
 
   bool get hasMethods => methods.isNotEmpty;
 
   PaymentMethodEntity? get selectedMethod {
-    if (methods.isEmpty) {
+    if (useApplePay || methods.isEmpty) {
       return null;
     }
 
@@ -26,10 +31,12 @@ class PaymentMethodState {
   PaymentMethodState copyWith({
     List<PaymentMethodEntity>? methods,
     String? selectedMethodId,
+    bool? useApplePay,
   }) {
     return PaymentMethodState(
       methods: methods ?? this.methods,
       selectedMethodId: selectedMethodId ?? this.selectedMethodId,
+      useApplePay: useApplePay ?? this.useApplePay,
     );
   }
 }

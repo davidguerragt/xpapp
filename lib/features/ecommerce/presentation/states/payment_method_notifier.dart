@@ -32,6 +32,7 @@ class PaymentMethodNotifier extends StateNotifier<PaymentMethodState> {
     state = state.copyWith(
       methods: methods,
       selectedMethodId: methods.isNotEmpty ? methods.first.id : null,
+      useApplePay: false,
     );
   }
 
@@ -41,10 +42,15 @@ class PaymentMethodNotifier extends StateNotifier<PaymentMethodState> {
     state = state.copyWith(
       methods: updatedMethods,
       selectedMethodId: method.id,
+      useApplePay: false,
     );
   }
 
   void selectPaymentMethod(String methodId) {
-    state = state.copyWith(selectedMethodId: methodId);
+    state = state.copyWith(selectedMethodId: methodId, useApplePay: false);
+  }
+
+  void selectApplePay() {
+    state = state.copyWith(selectedMethodId: null, useApplePay: true);
   }
 }

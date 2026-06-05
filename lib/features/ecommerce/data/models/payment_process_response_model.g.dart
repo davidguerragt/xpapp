@@ -1,0 +1,33 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'payment_process_response_model.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_CreditCardPaymentResponseModel _$CreditCardPaymentResponseModelFromJson(
+  Map<String, dynamic> json,
+) => _CreditCardPaymentResponseModel(
+  success: json['success'] as bool,
+  status: json['status'] as String,
+  transactionId: json['transactionId'] as String,
+  amount: _amountFromJson(json['amount']),
+  currency: json['currency'] as String,
+  cardLast4: json['cardLast4'] as String,
+  message: json['message'] as String,
+  timestamp: _dateTimeFromJson(json['timestamp'] as String),
+);
+
+Map<String, dynamic> _$CreditCardPaymentResponseModelToJson(
+  _CreditCardPaymentResponseModel instance,
+) => <String, dynamic>{
+  'success': instance.success,
+  'status': instance.status,
+  'transactionId': instance.transactionId,
+  'amount': instance.amount,
+  'currency': instance.currency,
+  'cardLast4': instance.cardLast4,
+  'message': instance.message,
+  'timestamp': instance.timestamp.toIso8601String(),
+};

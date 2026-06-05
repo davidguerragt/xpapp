@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/checkout_payment_use_case.dart';
@@ -43,35 +44,68 @@ class _StageButtonSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _StageButton(label: 'Your Bag', isActive: false),
-        _StageButton(label: 'Shipping', isActive: false),
-        _StageButton(label: 'Payment', isActive: true),
+        _StageButton(
+          step: 1,
+          label: 'Your bag',
+          isCompleted: true,
+          onTap: () => router.goNamed(Routes.yourBag),
+        ),
+        const _StageButton(step: 2, label: 'Shipping', isCompleted: true),
+        const _StageButton(step: 3, label: 'Payment', isCompleted: false, isActive: true),
       ],
     );
   }
 }
 
 class _StageButton extends StatelessWidget {
+  final int step;
   final String label;
   final bool isActive;
+  final bool isCompleted;
+  final VoidCallback? onTap;
 
-  const _StageButton({required this.label, required this.isActive});
+  const _StageButton({
+    required this.step,
+    required this.label,
+    this.isActive = false,
+    this.isCompleted = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 16,
-          backgroundColor: isActive ? Colors.blue : Colors.lightBlue.shade100,
-          child: Icon(Icons.check, color: Colors.white, size: 12),
+    final active = isActive || isCompleted;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(32),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Column(
+          children: [
+            CircleAvatar(
+              radius: 18,
+              backgroundColor: active ? Colors.blue : Colors.blue.shade50,
+              child: isCompleted
+                  ? const Icon(Icons.check, color: Colors.white, size: 14)
+                  : Text(
+                      step.toString(),
+                      style: TextStyle(
+                        color: active ? Colors.white : Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              style: TextStyle(
+                color: active ? Colors.blue : Colors.grey,
+                fontWeight: active ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
+          ],
         ),
-        SizedBox(height: 8),
-        Text(
-          label,
-          style: TextStyle(color: isActive ? Colors.blue : Colors.grey),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -97,61 +131,187 @@ class _TextAreaSection extends StatelessWidget {
   }
 }
 
-class _PaymentMethodsSection extends ConsumerWidget {
+class _PaymentMethodsSection extends ConsumerStatefulWidget {
   const _PaymentMethodsSection();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_PaymentMethodsSection> createState() =>
+      _PaymentMethodsSectionState();
+}
+
+class _PaymentMethodsSectionState
+    extends ConsumerState<_PaymentMethodsSection> {
+  bool _sameBillingAddress = true;
+
+  @override
+  Widget build(BuildContext context) {
     final paymentState = ref.watch(paymentMethodProvider);
-    final paymentNotifier = ref.watch(paymentMethodProvider.notifier);
+    final paymentNotifier = ref.read(paymentMethodProvider.notifier);
     final selectedMethod = paymentState.selectedMethod;
+    final isApplePaySelected = paymentState.useApplePay;
+    final selectedPaymentLabel = isApplePaySelected
+        ? 'Apple Pay'
+        : selectedMethod != null
+            ? '${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
+            : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (paymentState.methods.isEmpty) ...[
-          const SizedBox(height: 16),
-          const Text(
-            'No saved credit cards yet. Add a new card to continue.',
-            style: TextStyle(fontSize: 14, color: Colors.grey),
-          ),
-          const SizedBox(height: 20),
-        ] else ...[
-          ...paymentState.methods.map((method) {
-            return RadioListTile<String>(
-              title: Text(method.cardBrand),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(method.maskedNumber),
-                  Text('Exp: ${method.expirationDate}'),
-                ],
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: Colors.grey.shade300),
+            boxShadow: [
+              const BoxShadow(
+                color: Color(0x0A000000),
+                blurRadius: 16,
+                offset: Offset(0, 6),
               ),
-              value: method.id,
-              groupValue: paymentState.selectedMethodId,
-              onChanged: (value) {
-                if (value != null) {
-                  paymentNotifier.selectPaymentMethod(value);
-                }
-              },
-            );
-          }),
-          const SizedBox(height: 20),
-        ],
-        TextButton(
-          onPressed: () => _showAddCardDialog(context, ref),
-          child: const Text(
-            '+ Add New Card',
-            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Credit Card',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              if (paymentState.methods.isEmpty) ...[
+                const Text(
+                  'No saved credit cards yet. Add a new card to continue.',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+                const SizedBox(height: 20),
+              ] else ...[
+                for (final method in paymentState.methods) ...[
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: paymentState.selectedMethodId == method.id
+                          ? Colors.blue.shade50
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: paymentState.selectedMethodId == method.id
+                            ? Colors.blue
+                            : Colors.grey.shade300,
+                      ),
+                    ),
+                    child: ListTile(
+                      onTap: () {
+                        paymentNotifier.selectPaymentMethod(method.id);
+                      },
+                      title: Text(
+                        method.cardBrand,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(method.maskedNumber),
+                          const SizedBox(height: 4),
+                          Text('Exp: ${method.expirationDate}'),
+                        ],
+                      ),
+                      trailing: paymentState.selectedMethodId == method.id
+                          ? const Icon(Icons.check_circle, color: Colors.blue)
+                          : null,
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                    ),
+                  ),
+                ],
+              ],
+              Align(
+                alignment: Alignment.center,
+                child: TextButton(
+                  onPressed: () => _showAddCardDialog(context, ref),
+                  child: const Text(
+                    '+ Add new card',
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              CheckboxListTile(
+                tristate: false,
+                value: _sameBillingAddress,
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      _sameBillingAddress = value;
+                    });
+                  }
+                },
+                title: const Text(
+                    'My billing address is the same as my shipping address'),
+                controlAffinity: ListTileControlAffinity.leading,
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+              ),
+              if (selectedPaymentLabel != null) ...[
+                const SizedBox(height: 16),
+                Text(
+                  'Selected: $selectedPaymentLabel',
+                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+                ),
+              ],
+            ],
           ),
         ),
-        if (selectedMethod != null) ...[
-          const SizedBox(height: 16),
-          Text(
-            'Selected: ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}',
-            style: const TextStyle(fontSize: 14, color: Colors.black54),
+        const SizedBox(height: 16),
+        InkWell(
+          onTap: paymentNotifier.selectApplePay,
+          borderRadius: BorderRadius.circular(24),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: isApplePaySelected ? Colors.blue : Colors.grey.shade300,
+              ),
+              boxShadow: [
+                const BoxShadow(
+                  color: Color(0x0A000000),
+                  blurRadius: 16,
+                  offset: Offset(0, 6),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey.shade400),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Apple Pay',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                if (isApplePaySelected)
+                  const Icon(Icons.check_circle, color: Colors.blue),
+              ],
+            ),
           ),
-        ],
+        ),
       ],
     );
   }
@@ -286,7 +446,7 @@ class _PaymentMethodsSection extends ConsumerWidget {
 }
 
 class _PaymentConfirmationSection extends ConsumerStatefulWidget {
-  const _PaymentConfirmationSection({Key? key}) : super(key: key);
+  const _PaymentConfirmationSection() : super();
 
   @override
   ConsumerState<_PaymentConfirmationSection> createState() =>
@@ -297,33 +457,38 @@ class _PaymentConfirmationSectionState
     extends ConsumerState<_PaymentConfirmationSection> {
   @override
   Widget build(BuildContext context) {
-    final selectedMethod = ref.watch(paymentMethodProvider).selectedMethod;
+    final paymentState = ref.watch(paymentMethodProvider);
+    final selectedMethod = paymentState.selectedMethod;
+    final isApplePaySelected = paymentState.useApplePay;
     final totalPrice = ref.watch(yourBagProvider).totalPrice;
+    final canPay = selectedMethod != null || isApplePaySelected;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Total: \$${totalPrice?.toStringAsFixed(2) ?? '0.00'}',
+          'Total: \$${totalPrice.toStringAsFixed(2)}',
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         InkWell(
-          onTap: selectedMethod != null
-              ? () => _processPayment(selectedMethod, totalPrice ?? 0.0)
+          onTap: canPay
+              ? () => _processPayment(selectedMethod, totalPrice, isApplePaySelected)
               : null,
           child: Container(
             width: double.infinity,
             height: 48,
             decoration: BoxDecoration(
-              color: selectedMethod != null ? Colors.indigoAccent : Colors.grey,
+              color: canPay ? Colors.blue : Colors.grey,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
               child: Text(
-                selectedMethod != null
-                    ? 'Pay with ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
-                    : 'Select a payment method',
+                isApplePaySelected
+                    ? 'Pay with Apple Pay'
+                    : selectedMethod != null
+                        ? 'Pay with ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
+                        : 'Select a payment method',
                 style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
@@ -334,48 +499,53 @@ class _PaymentConfirmationSectionState
   }
 
   Future<void> _processPayment(
-    PaymentMethodEntity selectedMethod,
+    PaymentMethodEntity? selectedMethod,
     double totalPrice,
+    bool useApplePay,
   ) async {
-    final cvc = await _showCvcDialog();
-    if (cvc == null) {
-      return;
+    String? cvc;
+    if (!useApplePay) {
+      cvc = await _showCvcDialog();
+      if (cvc == null) {
+        return;
+      }
     }
 
     if (!mounted) return;
 
-    final paymentEntity = PaymentProcessEntity(
-      cardNumber: selectedMethod.cardNumber,
-      expiryDate: selectedMethod.expirationDate,
-      cvv: cvc,
-      cardHolderName: selectedMethod.cardHolderName,
-      amount: totalPrice,
-      currency: 'USD',
-    );
+    if (!useApplePay && selectedMethod != null) {
+      final paymentEntity = PaymentProcessEntity(
+        cardNumber: selectedMethod.cardNumber,
+        expiryDate: selectedMethod.expirationDate,
+        cvv: cvc!,
+        cardHolderName: selectedMethod.cardHolderName,
+        amount: totalPrice,
+        currency: 'USD',
+      );
 
-    final checkoutUseCase = CheckoutPaymentUseCase(null);
+      final checkoutUseCase = CheckoutPaymentUseCase(null);
 
-    if (!mounted) return;
-    // await showDialog<void>(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) => const Center(child: CircularProgressIndicator()),
-    // );
-
-    try {
-      await checkoutUseCase.execute(paymentEntity);
+      try {
+        final response = await checkoutUseCase.execute(paymentEntity);
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(response.message)),
+        );
+        Navigator.of(context).pop();
+      } catch (error) {
+        if (!mounted) return;
+        final message = error.toString().replaceFirst('Exception: ', '');
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Payment failed: $message')));
+      }
+    } else {
+      await Future.delayed(const Duration(milliseconds: 400));
       if (!mounted) return;
-      Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Payment completed successfully.')),
+        const SnackBar(content: Text('Apple Pay payment completed successfully.')),
       );
       Navigator.of(context).pop();
-    } catch (error) {
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Payment failed: $error')));
     }
   }
 

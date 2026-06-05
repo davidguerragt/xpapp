@@ -1,5 +1,6 @@
 import 'package:xpapp/features/ecommerce/data/repositories/credit_card_payment_repository_imp.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/payment_process_response_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/repositories/credit_card_paymemt_repository.dart';
 
 class CheckoutPaymentUseCase {
@@ -8,7 +9,9 @@ class CheckoutPaymentUseCase {
   CheckoutPaymentUseCase(CreditCardPaymentRepository? repository)
     : _repository = repository ?? CreditCardPaymentRepositoryImp();
 
-  Future<void> execute(PaymentProcessEntity paymentEntity) async {
-    await _repository.processPayment(paymentEntity);
+  Future<PaymentProcessResponseEntity> execute(
+    PaymentProcessEntity paymentEntity,
+  ) async {
+    return await _repository.processPayment(paymentEntity);
   }
 }
