@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/core/consts/assets.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
@@ -57,7 +58,7 @@ class _MainCarrouselSection extends ConsumerWidget {
               final section = sections.isNotEmpty ? sections[index] : null;
               final imageAsset = section != null && section.image.isNotEmpty
                   ? section.image
-                  : 'assets/placeholder.png';
+                  : Assets.placeholder;
 
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),

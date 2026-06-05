@@ -1,5 +1,6 @@
 abstract class Assets {
   static const String fill = 'assets/images/Fill.png';
+  static const String placeholder = 'assets/placeholder.png';
 
   // Products
   static const String boots = 'assets/images/boots.jpg';
