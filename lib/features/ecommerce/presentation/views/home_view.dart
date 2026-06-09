@@ -6,26 +6,33 @@ import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dart';
+import 'package:xpapp/features/login/presemtation/states/login_notifier.dart';
+import 'package:xpapp/features/login/presemtation/states/login_state.dart';
 
 class ECommerceHomeView extends ConsumerWidget {
   const ECommerceHomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bagProductsNumber = ref.watch(yourBagProvider).bagProducts.length;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
         leading: AppBarSearchButton(),
-        actions: [AppbarWidgets()],
+        actions: [AppbarWidgets(cartProductsNumber: bagProductsNumber)],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(16),
             child: Column(
-              children: [_MainCarrouselSection(), _SuggerencesSection()],
+              children: [
+                _WelcomeGreeting(),
+                _MainCarrouselSection(),
+                _SuggerencesSection(),
+              ],
             ),
           ),
         ),
@@ -272,6 +279,45 @@ class _BottomButtonsBar extends ConsumerWidget {
         BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Stores'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
+    );
+  }
+}
+
+class _WelcomeGreeting extends ConsumerWidget {
+  const _WelcomeGreeting();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginState = ref.watch(loginProvider);
+
+    String userName = 'Guest';
+
+    if (loginState is LoginSuccessState) {
+      userName = loginState.user.name.isNotEmpty
+          ? loginState.user.name
+          : loginState.user.email.split('@')[0];
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome back!',
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            userName,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

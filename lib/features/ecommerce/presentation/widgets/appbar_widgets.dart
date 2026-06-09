@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:xpapp/core/navigation/router.dart';
 
 class AppbarWidgets extends StatelessWidget {
-  const AppbarWidgets({super.key});
+  final int cartProductsNumber;
+  const AppbarWidgets({super.key, required this.cartProductsNumber});
   @override
   Widget build(BuildContext context) {
-    return Row(children: [AppBarFavoriteButton(), AppBarCartButton()]);
+    return Row(
+      children: [
+        AppBarFavoriteButton(),
+        AppBarCartButton(cartProductsNumber: cartProductsNumber),
+      ],
+    );
   }
 }
 
@@ -33,14 +40,17 @@ class AppBarFavoriteButton extends StatelessWidget {
 }
 
 class AppBarCartButton extends StatelessWidget {
-  const AppBarCartButton({super.key});
+  final int cartProductsNumber;
+  const AppBarCartButton({super.key, required this.cartProductsNumber});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            router.goNamed(Routes.yourBag);
+          },
           icon: const Icon(Icons.shopping_bag_outlined, color: Colors.black),
         ),
         Positioned(
@@ -53,7 +63,7 @@ class AppBarCartButton extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Text(
-              '9',
+              cartProductsNumber.toString(),
               style: TextStyle(color: Colors.white, fontSize: 10),
             ),
           ),

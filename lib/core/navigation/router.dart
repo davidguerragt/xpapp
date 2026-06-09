@@ -13,12 +13,12 @@ final router = GoRouter(
   routes: [
     GoRoute(
       name: Routes.login,
-      path: '/login',
+      path: '/',
       builder: (context, state) => const LoginView(),
     ),
     GoRoute(
       name: Routes.register,
-      path: '/',
+      path: '/register',
       builder: (context, state) => const RegisterView(),
     ),
     // Ecommerce Routes
