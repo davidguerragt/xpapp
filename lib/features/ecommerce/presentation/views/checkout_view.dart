@@ -51,7 +51,12 @@ class _StageButtonSection extends StatelessWidget {
           onTap: () => router.goNamed(Routes.yourBag),
         ),
         const _StageButton(step: 2, label: 'Shipping', isCompleted: true),
-        const _StageButton(step: 3, label: 'Payment', isCompleted: false, isActive: true),
+        const _StageButton(
+          step: 3,
+          label: 'Payment',
+          isCompleted: false,
+          isActive: true,
+        ),
       ],
     );
   }
@@ -152,8 +157,8 @@ class _PaymentMethodsSectionState
     final selectedPaymentLabel = isApplePaySelected
         ? 'Apple Pay'
         : selectedMethod != null
-            ? '${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
-            : null;
+        ? '${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
+        : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +227,9 @@ class _PaymentMethodsSectionState
                           ? const Icon(Icons.check_circle, color: Colors.blue)
                           : null,
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                     ),
                   ),
                 ],
@@ -234,7 +241,9 @@ class _PaymentMethodsSectionState
                   child: const Text(
                     '+ Add new card',
                     style: TextStyle(
-                        color: Colors.blue, fontWeight: FontWeight.bold),
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -250,7 +259,8 @@ class _PaymentMethodsSectionState
                   }
                 },
                 title: const Text(
-                    'My billing address is the same as my shipping address'),
+                  'My billing address is the same as my shipping address',
+                ),
                 controlAffinity: ListTileControlAffinity.leading,
                 contentPadding: EdgeInsets.zero,
                 dense: true,
@@ -302,7 +312,10 @@ class _PaymentMethodsSectionState
                     const SizedBox(width: 12),
                     const Text(
                       'Apple Pay',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
@@ -473,7 +486,11 @@ class _PaymentConfirmationSectionState
         const SizedBox(height: 12),
         InkWell(
           onTap: canPay
-              ? () => _processPayment(selectedMethod, totalPrice, isApplePaySelected)
+              ? () => _processPayment(
+                  selectedMethod,
+                  totalPrice,
+                  isApplePaySelected,
+                )
               : null,
           child: Container(
             width: double.infinity,
@@ -487,8 +504,8 @@ class _PaymentConfirmationSectionState
                 isApplePaySelected
                     ? 'Pay with Apple Pay'
                     : selectedMethod != null
-                        ? 'Pay with ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
-                        : 'Select a payment method',
+                    ? 'Pay with ${selectedMethod.cardBrand} ${selectedMethod.maskedNumber}'
+                    : 'Select a payment method',
                 style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
@@ -528,10 +545,10 @@ class _PaymentConfirmationSectionState
       try {
         final response = await checkoutUseCase.execute(paymentEntity);
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response.message)),
-        );
-        Navigator.of(context).pop();
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(response.message)));
+        router.goNamed(Routes.ecommerceHome);
       } catch (error) {
         if (!mounted) return;
         final message = error.toString().replaceFirst('Exception: ', '');
@@ -543,9 +560,11 @@ class _PaymentConfirmationSectionState
       await Future.delayed(const Duration(milliseconds: 400));
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Apple Pay payment completed successfully.')),
+        const SnackBar(
+          content: Text('Apple Pay payment completed successfully.'),
+        ),
       );
-      Navigator.of(context).pop();
+      router.goNamed(Routes.ecommerceHome);
     }
   }
 

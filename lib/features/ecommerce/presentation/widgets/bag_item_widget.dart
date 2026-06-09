@@ -38,7 +38,7 @@ class BagItemWidget extends StatelessWidget {
                   color: Colors.blue.shade50,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Expanded(
+                child: Center(
                   child:
                       image ??
                       const Icon(Icons.image, color: Colors.blueGrey, size: 36),
@@ -157,45 +157,6 @@ class BagItemWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class BlueBigButton extends StatelessWidget {
-  final String route;
-  final String buttonText;
-
-  const BlueBigButton({
-    super.key,
-    required this.route,
-    required this.buttonText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        //router.goNamed(route);
-      },
-      child: Container(
-        width: double.infinity,
-        height: 48,
-        decoration: BoxDecoration(
-          color: Colors.indigoAccent,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: InkWell(
-          onTap: () {
-            router.goNamed(route);
-          },
-          child: Center(
-            child: Text(
-              buttonText,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

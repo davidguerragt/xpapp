@@ -3,16 +3,28 @@ import 'package:xpapp/features/ecommerce/presentation/views/checkout_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
+import 'package:xpapp/features/login/presemtation/views/login_view.dart';
+import 'package:xpapp/features/login/presemtation/views/register_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/personalise_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/subscription_view.dart';
 
 final router = GoRouter(
   routes: [
+    GoRoute(
+      name: Routes.login,
+      path: '/login',
+      builder: (context, state) => const LoginView(),
+    ),
+    GoRoute(
+      name: Routes.register,
+      path: '/',
+      builder: (context, state) => const RegisterView(),
+    ),
     // Ecommerce Routes
     GoRoute(
       name: Routes.ecommerceHome,
-      path: '/',
+      path: '/ecommerce/home',
       builder: (context, state) => const ECommerceHomeView(),
     ),
     GoRoute(
@@ -60,6 +72,10 @@ abstract class Routes {
   static const String yourBag = '/ecommerce/your-bag';
   static const String checkout = '/ecommerce/checkout';
 
-  // Navigation destinatios
+  // Navigation destinations
   static const String explore = '/explore';
+  static const String profile = '/profile';
+  static const String settings = '/settings';
+  static const String login = '/login';
+  static const String register = '/';
 }

@@ -25,4 +25,7 @@ abstract class Assets {
       'assets/images/new_arrivals_section.jpg';
   static const String bestSellersSection =
       'assets/images/best_sellers_section.jpg';
+
+  // Store
+  static const String storeLogo = 'assets/images/store_logo.jpg';
 }

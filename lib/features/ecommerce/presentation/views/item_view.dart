@@ -241,6 +241,30 @@ class _AddToBagButtonSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
+        final selectedSize = ref.read(selectedSizeProvider);
+        final selectedColor = ref.read(selectedColorProvider);
+
+        if (selectedSize == null || selectedColor == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Please select a size and color')),
+          );
+          return;
+        }
+
+        final bagNotifier = ref.read(yourBagProvider.notifier);
+
+        bagNotifier.addItemToBag(
+          BagProductEntity(
+            id: product.id,
+            name: product.title,
+            price: product.price,
+            imageUrl: product.image,
+            quantity: quantity,
+            size: selectedSize,
+            color: selectedColor,
+          ),
+          product.price,
+        );
         router.goNamed(Routes.yourBag);
       },
       child: Container(
@@ -250,37 +274,10 @@ class _AddToBagButtonSection extends ConsumerWidget {
           color: Colors.indigoAccent,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: InkWell(
-          onTap: () {
-            if (ref.watch(selectedSizeProvider) == null ||
-                ref.watch(selectedColorProvider) == null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Please select a size and color')),
-              );
-              return;
-            }
-
-            final bagNotifier = ref.watch(yourBagProvider.notifier);
-
-            bagNotifier.addItemToBag(
-              BagProductEntity(
-                id: product.id,
-                name: product.title,
-                price: product.price,
-                imageUrl: product.image,
-                quantity: quantity,
-                size: ref.watch(selectedSizeProvider).toString(),
-                color: ref.watch(selectedColorProvider).toString(),
-              ),
-              product.price,
-            );
-            router.goNamed(Routes.yourBag);
-          },
-          child: const Center(
-            child: Text(
-              '+ Add to bag',
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
+        child: const Center(
+          child: Text(
+            '+ Add to bag',
+            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
       ),

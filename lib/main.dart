@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/environment/env.dart';
 import 'package:xpapp/core/local/local_storage.dart';
 import 'package:xpapp/core/navigation/router.dart';
-// import 'firebase_options.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   await runProject();
@@ -12,7 +12,7 @@ Future<void> main() async {
 
 Future<void> runProject() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Env.initialize();
   await LocalStorage().init();
   runApp(ProviderScope(child: const MyApp()));

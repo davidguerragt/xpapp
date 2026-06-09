@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
+import 'package:xpapp/core/widgets/gemeral_widgets.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/bag_item_widget.dart';
 
@@ -113,6 +114,12 @@ class _CheckOutButtonSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return BlueBigButton(route: Routes.checkout, buttonText: 'Checkout');
+    return BlueBigButton(
+      route: Routes.checkout,
+      buttonText: 'Checkout',
+      onTap: () {
+        router.goNamed(Routes.checkout);
+      },
+    );
   }
 }
