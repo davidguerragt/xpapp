@@ -13,6 +13,7 @@ abstract class ProductModel with _$ProductModel {
     required String description,
     required List<String> sizes,
     required List<String> colors,
+    required List<String> sections,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>

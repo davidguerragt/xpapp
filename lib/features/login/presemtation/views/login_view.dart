@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/core/consts/api_consts.dart';
 import 'package:xpapp/core/consts/assets.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/core/widgets/gemeral_widgets.dart';
@@ -17,8 +18,12 @@ class LoginView extends ConsumerWidget {
 }
 
 class _BodyWidget extends ConsumerWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(
+    text: TestCredentials.testEmail,
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: TestCredentials.testPassword,
+  );
   _BodyWidget();
 
   @override

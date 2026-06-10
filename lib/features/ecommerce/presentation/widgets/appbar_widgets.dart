@@ -3,14 +3,36 @@ import 'package:xpapp/core/navigation/router.dart';
 
 class AppbarWidgets extends StatelessWidget {
   final int cartProductsNumber;
-  const AppbarWidgets({super.key, required this.cartProductsNumber});
+  final bool activeSession;
+  const AppbarWidgets({
+    super.key,
+    required this.cartProductsNumber,
+    required this.activeSession,
+  });
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        AppBarStartSessiongButton(visibility: activeSession),
         AppBarFavoriteButton(),
         AppBarCartButton(cartProductsNumber: cartProductsNumber),
+        AppBarSectionABCButton(visibility: !activeSession),
+        AppBarProductABCButton(visibility: !activeSession),
       ],
+    );
+  }
+}
+
+class AppBarBackButton extends StatelessWidget {
+  const AppBarBackButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        router.goNamed(Routes.ecommerceHome);
+      },
+      icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black),
     );
   }
 }
@@ -24,6 +46,23 @@ class AppBarSearchButton extends StatelessWidget {
       onPressed: () {},
       icon: const Icon(Icons.search, color: Colors.black),
     );
+  }
+}
+
+class AppBarStartSessiongButton extends StatelessWidget {
+  final bool visibility;
+  const AppBarStartSessiongButton({super.key, required this.visibility});
+
+  @override
+  Widget build(BuildContext context) {
+    return visibility
+        ? const SizedBox()
+        : IconButton(
+            onPressed: () {
+              router.goNamed(Routes.login);
+            },
+            icon: const Icon(Icons.person, color: Colors.black),
+          );
   }
 }
 
@@ -70,5 +109,39 @@ class AppBarCartButton extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class AppBarSectionABCButton extends StatelessWidget {
+  final bool visibility;
+  const AppBarSectionABCButton({super.key, required this.visibility});
+
+  @override
+  Widget build(BuildContext context) {
+    return visibility
+        ? const SizedBox()
+        : IconButton(
+            onPressed: () {
+              router.goNamed(Routes.sectionABC);
+            },
+            icon: const Icon(Icons.filter_frames, color: Colors.black),
+          );
+  }
+}
+
+class AppBarProductABCButton extends StatelessWidget {
+  final bool visibility;
+  const AppBarProductABCButton({super.key, required this.visibility});
+
+  @override
+  Widget build(BuildContext context) {
+    return visibility
+        ? const SizedBox()
+        : IconButton(
+            onPressed: () {
+              router.goNamed(Routes.productABC);
+            },
+            icon: const Icon(Icons.list_outlined, color: Colors.black),
+          );
   }
 }

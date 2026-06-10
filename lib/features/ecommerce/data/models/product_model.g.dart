@@ -17,6 +17,9 @@ _ProductModel _$ProductModelFromJson(Map<String, dynamic> json) =>
       colors: (json['colors'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      sections: (json['sections'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$ProductModelToJson(_ProductModel instance) =>
@@ -28,4 +31,5 @@ Map<String, dynamic> _$ProductModelToJson(_ProductModel instance) =>
       'description': instance.description,
       'sizes': instance.sizes,
       'colors': instance.colors,
+      'sections': instance.sections,
     };

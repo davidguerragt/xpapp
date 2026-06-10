@@ -2,6 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/checkout_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/product_abc_view.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/section_abc_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
 import 'package:xpapp/features/login/presemtation/views/login_view.dart';
 import 'package:xpapp/features/login/presemtation/views/register_view.dart';
@@ -13,7 +15,7 @@ final router = GoRouter(
   routes: [
     GoRoute(
       name: Routes.login,
-      path: '/',
+      path: '/login',
       builder: (context, state) => const LoginView(),
     ),
     GoRoute(
@@ -24,7 +26,7 @@ final router = GoRouter(
     // Ecommerce Routes
     GoRoute(
       name: Routes.ecommerceHome,
-      path: '/ecommerce/home',
+      path: '/',
       builder: (context, state) => const ECommerceHomeView(),
     ),
     GoRoute(
@@ -58,6 +60,16 @@ final router = GoRouter(
       path: '/subscription',
       builder: (context, state) => const SubscriptionView(),
     ),
+    GoRoute(
+      name: Routes.sectionABC,
+      path: '/section-abc',
+      builder: (context, state) => const SectionABCView(),
+    ),
+    GoRoute(
+      name: Routes.productABC,
+      path: '/product-abc',
+      builder: (context, state) => const ProductABCView(),
+    ),
   ],
 );
 
@@ -78,4 +90,8 @@ abstract class Routes {
   static const String settings = '/settings';
   static const String login = '/login';
   static const String register = '/';
+
+  // ABC
+  static const String sectionABC = '/section-abc';
+  static const String productABC = '/product-abc';
 }

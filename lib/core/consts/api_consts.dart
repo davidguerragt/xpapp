@@ -6,6 +6,6 @@ abstract class ApiConsts {
 }
 
 abstract class TestCredentials {
-  static final String testEmail = "david.guerra.gt@gmail.com";
+  static final String testEmail = "david.guerra@gmail.com";
   static final String testPassword = "1234567";
 }

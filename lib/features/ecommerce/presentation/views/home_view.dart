@@ -15,13 +15,21 @@ class ECommerceHomeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bagProductsNumber = ref.watch(yourBagProvider).bagProducts.length;
+    final loginState = ref.watch(loginProvider);
+    final activeSession = loginState is LoginSuccessState;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
         leading: AppBarSearchButton(),
-        actions: [AppbarWidgets(cartProductsNumber: bagProductsNumber)],
+        actions: [
+          AppbarWidgets(
+            cartProductsNumber: bagProductsNumber,
+            activeSession: activeSession,
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -303,10 +311,7 @@ class _WelcomeGreeting extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Welcome back!',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
-          ),
+          Text('Welcome!', style: TextStyle(fontSize: 12, color: Colors.grey)),
           const SizedBox(height: 4),
           Text(
             userName,

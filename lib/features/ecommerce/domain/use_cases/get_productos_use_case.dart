@@ -14,4 +14,9 @@ class GetProductsUseCase {
     final products = await _getProductsRepository.getProductsBySection(section);
     return products;
   }
+
+  Future<List<ProductEntity>> getAllProducts() async {
+    final products = await _getProductsRepository.getAllProducts();
+    return products;
+  }
 }

@@ -18,6 +18,7 @@ class GetProductsDataSource {
               'The perfect t-shirt for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['XS', 'S', 'M', 'L', 'XL'],
           colors: ['Black', 'DarkGrey', 'LightGrey', 'White', 'Green'],
+          sections: ["1"],
         ),
         ProductModel(
           id: '2',
@@ -28,6 +29,7 @@ class GetProductsDataSource {
               'The perfect pants for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['36', '38', '40', '42', '44', '46'],
           colors: ['Black', 'DarkGrey', 'LightGrey', 'White'],
+          sections: ["1"],
         ),
         ProductModel(
           id: '3',
@@ -38,6 +40,7 @@ class GetProductsDataSource {
               'The perfect boots for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% leather fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['38', '40', '42', '44', '46'],
           colors: ['Black', 'Yellow', 'Grey', 'Brown'],
+          sections: ["1"],
         ),
       ];
     }
@@ -53,6 +56,7 @@ class GetProductsDataSource {
               'The perfect swimming suit for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['XS', 'S', 'M', 'L', 'XL'],
           colors: ['Black', 'DarkGrey', 'LightGrey', 'White'],
+          sections: ["2"],
         ),
         ProductModel(
           id: '5',
@@ -63,6 +67,7 @@ class GetProductsDataSource {
               'The perfect portable pool for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['5x8 feet', '8x10 feet', '10x15 feet'],
           colors: ['Blue', 'Pink', 'Yellow', 'Green'],
+          sections: ["2"],
         ),
         ProductModel(
           id: '6',
@@ -73,6 +78,7 @@ class GetProductsDataSource {
               'The perfect ice box for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['5 liters', '10 liters', '15 liters'],
           colors: ['Blue', 'Pink', 'Yellow', 'Green'],
+          sections: ["2"],
         ),
         ProductModel(
           id: '7',
@@ -83,6 +89,7 @@ class GetProductsDataSource {
               'The perfect umbrella for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['S', 'M', 'L'],
           colors: ['Red', 'Pink', 'Yellow', 'Green'],
+          sections: ["2"],
         ),
       ];
     }
@@ -98,6 +105,7 @@ class GetProductsDataSource {
               'The perfect sunglasses for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['One size'],
           colors: ['Black', 'DarkGrey', 'LightGrey', 'White'],
+          sections: ["3"],
         ),
         ProductModel(
           id: '9',
@@ -108,6 +116,7 @@ class GetProductsDataSource {
               'The perfect hat for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['S', 'M', 'L'],
           colors: ['Black', 'DarkGrey', 'LightGrey', 'White'],
+          sections: ["3"],
         ),
       ];
     }
@@ -123,6 +132,7 @@ class GetProductsDataSource {
               'The perfect beach towel for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['One size'],
           colors: ['Blue', 'Pink', 'Yellow', 'Green'],
+          sections: ["4"],
         ),
         ProductModel(
           id: '11',
@@ -133,6 +143,7 @@ class GetProductsDataSource {
               'The perfect beach ball for when you want to feel comfortable but still stylish. Amazing for all ocasions.  Made of 100% cotton fabric in four colors.  Its modern style gives a lighter look to the outfit.  Perfect for the warmest days.',
           sizes: ['One size'],
           colors: ['Blue', 'Pink', 'Yellow', 'Green'],
+          sections: ["4"],
         ),
       ];
     }

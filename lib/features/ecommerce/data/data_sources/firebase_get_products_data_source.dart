@@ -7,10 +7,19 @@ class FirebaseGetProductsDataSource {
   FirebaseGetProductsDataSource({FirebaseFirestore? firestore})
     : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<List<ProductModel>> getProducts() async {
-    final productsResult = await _firestore.collection('products').get();
-    return productsResult.docs
-        .map((doc) => ProductModel.fromJson(doc.data()))
-        .toList();
+  Future<List<ProductModel>> getProductsBySection(int section) async {
+    final collectionRef = _firestore.collection('products');
+    final query = collectionRef.where(
+      'sections',
+      arrayContains: section.toString(),
+    );
+    final result = await query.get();
+    return result.docs.map((doc) => ProductModel.fromJson(doc.data())).toList();
+  }
+
+  Future<List<ProductModel>> getAllProducts() async {
+    final collectionRef = _firestore.collection('products');
+    final result = await collectionRef.get();
+    return result.docs.map((doc) => ProductModel.fromJson(doc.data())).toList();
   }
 }

@@ -13,8 +13,12 @@ class GetProductsRepositoryImpl extends GetProductsRepository {
 
   @override
   Future<List<ProductEntity>> getProductsBySection(int section) async {
-    //final products = await _productsDataSource.getProductsBySection(section);
-    final products = await _productsDataSource.getProducts();
+    final products = await _productsDataSource.getProductsBySection(section);
+    return products.map(ProductEntity.fromModel).toList();
+  }
+
+  Future<List<ProductEntity>> getAllProducts() async {
+    final products = await _productsDataSource.getAllProducts();
     return products.map(ProductEntity.fromModel).toList();
   }
 }

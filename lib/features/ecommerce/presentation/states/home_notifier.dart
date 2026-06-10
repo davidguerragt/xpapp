@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/legacy.dart';
 //import 'package:xpapp/features/ecommerce/data/data_sources/firebase_get_products_data_source.dart';
 //import 'package:xpapp/features/ecommerce/data/data_sources/remote_get_products_data_source.dart';
-import 'package:xpapp/features/ecommerce/data/data_sources/remote_get_sections_data_source.dart';
+//import 'package:xpapp/features/ecommerce/data/data_sources/remote_get_sections_data_source.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/get_products_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/get_sections_repository_impl.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_productos_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_sections_use_case.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_state.dart';
@@ -17,7 +19,7 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
       //GetProductsRepositoryImpl(FirebaseGetProductsDataSource()),
       GetProductsRepositoryImpl(),
     ),
-    GetSectionsUseCase(GetSectionsRepositoryImpl(GetSectionsDataSource())),
+    GetSectionsUseCase(GetSectionsRepositoryImpl()),
   )..loadSections(),
 );
 
@@ -40,7 +42,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
       }),
     );
 
-    state = state.copyWith(sections: sectionsWithProducts);
+    state = state.copyWith(sections: sectionsWithProducts, products: []);
   }
 
   Future<void> loadProductsBySection(int sectionId) async {
@@ -51,7 +53,23 @@ class HomeNotifier extends StateNotifier<HomeState> {
       }
       return section;
     }).toList();
-    state = state.copyWith(sections: updatedSections);
+    state = state.copyWith(sections: updatedSections, products: []);
+  }
+
+  Future<void> loadAllProducts() async {
+    final products = await _getProductosUseCase.getAllProducts();
+    state = state.copyWith(products: products);
+  }
+
+  void addProduct(ProductEntity product) {
+    state = state.copyWith(products: [...state.products, product]);
+  }
+
+  void addSection(SectionEntity section) {
+    state = state.copyWith(
+      sections: [...state.sections, section],
+      products: [],
+    );
   }
 
   void updateSelectedSize(String size) {}

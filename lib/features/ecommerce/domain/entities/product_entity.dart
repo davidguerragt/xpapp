@@ -13,6 +13,7 @@ abstract class ProductEntity with _$ProductEntity {
     required String description,
     required List<String> sizes,
     required List<String> colors,
+    required List<String> sections,
   }) = _ProductEntity;
 
   factory ProductEntity.fromModel(ProductModel model) {
@@ -24,6 +25,7 @@ abstract class ProductEntity with _$ProductEntity {
       description: model.description,
       sizes: model.sizes,
       colors: model.colors,
+      sections: model.sections,
     );
   }
 }
