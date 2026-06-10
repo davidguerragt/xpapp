@@ -54,6 +54,13 @@ class _BodyWidget extends ConsumerWidget {
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.email),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      emailController.clear();
+                    },
+                  ),
                 ),
               ),
               SizedBox(height: 16),
