@@ -1,35 +1,18 @@
-class PaymentMethodModel {
-  final String id;
-  final String cardHolderName;
-  final String cardNumber;
-  final String expirationDate;
-  final String cardBrand;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  PaymentMethodModel({
-    required this.id,
-    required this.cardHolderName,
-    required this.cardNumber,
-    required this.expirationDate,
-    required this.cardBrand,
-  });
+part 'payment_method_model.freezed.dart';
+part 'payment_method_model.g.dart';
 
-  factory PaymentMethodModel.fromJson(Map<String, dynamic> json) {
-    return PaymentMethodModel(
-      id: json['id'] as String,
-      cardHolderName: json['cardHolderName'] as String,
-      cardNumber: json['cardNumber'] as String,
-      expirationDate: json['expirationDate'] as String,
-      cardBrand: json['cardBrand'] as String,
-    );
-  }
+@freezed
+abstract class PaymentMethodModel with _$PaymentMethodModel {
+  factory PaymentMethodModel({
+    required String number,
+    required String holder,
+    required String behavior,
+    required String availableFunds,
+    required String declineReason,
+  }) = _PaymentMethodModel;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'cardHolderName': cardHolderName,
-      'cardNumber': cardNumber,
-      'expirationDate': expirationDate,
-      'cardBrand': cardBrand,
-    };
-  }
+  factory PaymentMethodModel.fromJson(Map<String, dynamic> json) =>
+      _$PaymentMethodModelFromJson(json);
 }

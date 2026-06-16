@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:xpapp/features/ecommerce/data/models/section_model.dart';
 
-class FirebaseGetSectionsDataSource {
+class FirebaseSectionsDataSource {
   final FirebaseFirestore _firestore;
 
-  FirebaseGetSectionsDataSource({FirebaseFirestore? firestore})
+  FirebaseSectionsDataSource({FirebaseFirestore? firestore})
     : _firestore = firestore ?? FirebaseFirestore.instance;
 
   Future<List<SectionModel>> getSections() async {
@@ -13,5 +13,17 @@ class FirebaseGetSectionsDataSource {
         .where((doc) => doc.data()['status'] == 'A')
         .map((doc) => SectionModel.fromJson(doc.data()))
         .toList();
+  }
+
+  Future<String> postSection(Map<String, dynamic> sectionData) async {
+    try {
+      final collectionRef = _firestore.collection('sections');
+      final docRef = await collectionRef.add(sectionData);
+      return docRef.id;
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error al subir la sección: $e');
+      throw Exception('Error al subir la seccion: $e.message');
+    }
   }
 }
