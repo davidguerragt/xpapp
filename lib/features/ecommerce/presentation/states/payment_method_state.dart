@@ -23,7 +23,7 @@ class PaymentMethodState {
     }
 
     return methods.firstWhere(
-      (method) => method.id == selectedMethodId,
+      (method) => method.number == selectedMethodId,
       orElse: () => methods.first,
     );
   }

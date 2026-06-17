@@ -9,11 +9,21 @@ class CreditCardsGetCardsDataSource {
     try {
       final response = await dio.get(ApiConsts.getCards);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final json = Map<+
-        String, dynamic>.from(response as Map);
-        final result = PaymentMethodModel.fromJson(json);
-        final listResult = result
-            .map((item) => PaymentMethodModel.fromJson(item))
+        final json = Map<String, dynamic>.from(response as Map);
+        final listResult = json['data']
+            .cast<Map<String, dynamic>>()
+            .mapIndexed(
+              (index, item) => PaymentMethodModel.fromJson({
+                'id': index,
+                'number': item['number'],
+                'holder': item['holder'],
+                'behavior': item['behavior'],
+                'availableFunds': item['availableFunds'],
+                'declineReason': item['declineReason'],
+                'expirationDate': item['expirationDate'],
+                'cardBrand': item['cardBrand'],
+              }),
+            )
             .toList();
 
         return listResult;
@@ -21,10 +31,9 @@ class CreditCardsGetCardsDataSource {
 
       final rawData = response.data;
       final message = rawData is Map<String, dynamic>
-          ? rawData['message']?.toString() ??
-              'Failed to process payment: ${response.statusCode} ${response.statusMessage}';
+          ? rawData['message']?.toString()
+          : 'Failed to process payment: ${response.statusCode} ${response.statusMessage}';
       throw Exception(message);
-
     } on DioException catch (error) {
       final responseData = error.response?.data;
       final message = responseData is Map<String, dynamic>

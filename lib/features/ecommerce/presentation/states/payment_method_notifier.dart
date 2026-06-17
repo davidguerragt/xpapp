@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:xpapp/features/ecommerce/data/data_sources/credit_cards_get_cards_data_source.dart';
 import 'package:xpapp/features/ecommerce/data/data_sources/local_payment_method_data_source.dart';
 import 'package:xpapp/features/ecommerce/data/repositories/payment_method_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.dart';
@@ -7,16 +8,17 @@ import 'package:xpapp/features/ecommerce/domain/use_cases/save_payment_methods_u
 import 'package:xpapp/features/ecommerce/presentation/states/payment_method_state.dart';
 
 final paymentMethodProvider =
-    StateNotifierProvider<PaymentMethodNotifier, PaymentMethodState>(
-      (ref) => PaymentMethodNotifier(
-        GetPaymentMethodsUseCase(
-          PaymentMethodRepositoryImpl(LocalPaymentMethodDataSource()),
-        ),
-        SavePaymentMethodsUseCase(
-          PaymentMethodRepositoryImpl(LocalPaymentMethodDataSource()),
-        ),
-      )..loadPaymentMethods(),
-    );
+    StateNotifierProvider<PaymentMethodNotifier, PaymentMethodState>((ref) {
+      final repository = PaymentMethodRepositoryImpl(
+        localDataSource: LocalPaymentMethodDataSource(),
+        remoteDataSource: CreditCardsGetCardsDataSource(),
+      );
+
+      return PaymentMethodNotifier(
+        GetPaymentMethodsUseCase(repository),
+        SavePaymentMethodsUseCase(repository),
+      )..loadPaymentMethods();
+    });
 
 class PaymentMethodNotifier extends StateNotifier<PaymentMethodState> {
   final GetPaymentMethodsUseCase _getPaymentMethodsUseCase;
@@ -31,7 +33,7 @@ class PaymentMethodNotifier extends StateNotifier<PaymentMethodState> {
     final methods = await _getPaymentMethodsUseCase.call();
     state = state.copyWith(
       methods: methods,
-      selectedMethodId: methods.isNotEmpty ? methods.first.id : null,
+      selectedMethodId: methods.isNotEmpty ? methods.first.number : null,
       useApplePay: false,
     );
   }
@@ -41,7 +43,7 @@ class PaymentMethodNotifier extends StateNotifier<PaymentMethodState> {
     await _savePaymentMethodsUseCase.call(updatedMethods);
     state = state.copyWith(
       methods: updatedMethods,
-      selectedMethodId: method.id,
+      selectedMethodId: method.number,
       useApplePay: false,
     );
   }

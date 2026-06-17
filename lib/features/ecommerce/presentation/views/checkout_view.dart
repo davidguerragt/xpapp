@@ -423,8 +423,11 @@ class _PaymentMethodsSectionState
                   );
                   final method = PaymentMethodEntity(
                     id: DateTime.now().millisecondsSinceEpoch.toString(),
-                    cardHolderName: cardHolderController.text.trim(),
-                    cardNumber: cardNumber,
+                    holder: cardHolderController.text.trim(),
+                    number: cardNumber,
+                    behavior: '',
+                    availableFunds: '',
+                    declineReason: '',
                     expirationDate: expirationController.text.trim(),
                     cardBrand: _cardBrand(cardNumber),
                   );
@@ -532,10 +535,10 @@ class _PaymentConfirmationSectionState
 
     if (!useApplePay && selectedMethod != null) {
       final paymentEntity = PaymentProcessEntity(
-        cardNumber: selectedMethod.cardNumber,
+        cardNumber: selectedMethod.number,
         expiryDate: selectedMethod.expirationDate,
         cvv: cvc!,
-        cardHolderName: selectedMethod.cardHolderName,
+        cardHolderName: selectedMethod.holder,
         amount: totalPrice,
         currency: 'USD',
       );
