@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:xpapp/core/navigation/router.dart';
 
 class BagItemWidget extends StatelessWidget {
   final String title;

@@ -9,7 +9,7 @@ class CreditCardsGetCardsDataSource {
     try {
       final response = await dio.get(ApiConsts.getCards);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final json = Map<String, dynamic>.from(response as Map);
+        final json = Map<String, dynamic>.from(response.data[0].value as Map);
         final listResult = json['data']
             .cast<Map<String, dynamic>>()
             .mapIndexed(

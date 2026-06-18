@@ -7,6 +7,7 @@ class AuthenticationImplRepository implements AuthenticationRepository {
   final FirebaseLoginDataSource _dataSource = FirebaseLoginDataSource();
   @override
   Future<UserEntity> login(String email, String password) async {
+    // ignore: avoid_print
     print('email/password at AuthenticationImplRepository: $email / $password');
     final UserModel user = await _dataSource.login(email, password);
     final UserEntity userEntity = UserEntity(

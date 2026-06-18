@@ -129,6 +129,7 @@ class _AddProductButton extends ConsumerWidget {
             onPressed: () {
               if (formKey.currentState?.validate() ?? false) {
                 // Lógica para crear la entidad y enviarla al notifier
+                // ignore: unused_local_variable
                 final newProduct = ProductEntity(
                   id: DateTime.now().toString(),
                   title: titleController.text,
@@ -174,7 +175,7 @@ class _BodyWidget extends ConsumerWidget {
 
     return ListView.separated(
       itemCount: allProducts.length,
-      separatorBuilder: (_, __) => const Divider(),
+      separatorBuilder: (_, _) => const Divider(),
       itemBuilder: (context, index) {
         final product = allProducts[index];
         return ListTile(
@@ -189,7 +190,7 @@ class _BodyWidget extends ConsumerWidget {
               borderRadius: BorderRadius.circular(8),
               child: Image.asset(
                 product.image,
-                errorBuilder: (_, __, ___) => const Icon(Icons.broken_image),
+                errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
               ),
             ),
           ),
@@ -238,6 +239,7 @@ class _InfoTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
+        // ignore: deprecated_member_use
         color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(4),
       ),

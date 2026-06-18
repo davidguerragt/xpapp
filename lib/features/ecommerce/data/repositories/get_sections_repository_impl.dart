@@ -13,6 +13,8 @@ class GetSectionsRepositoryImpl implements GetSectionsRepository {
   @override
   Future<List<SectionEntity>> getSections() async {
     final sections = await _sectionsDataSource.getSections();
+
+    // ignore: avoid_print
     print('Sections: $sections');
     return sections.map(SectionEntity.fromModel).toList();
   }

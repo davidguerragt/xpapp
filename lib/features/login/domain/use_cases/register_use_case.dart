@@ -9,6 +9,7 @@ class LoginRegisterUseCase {
     : _repository = repository ?? AuthenticationImplRepository();
 
   Future<UserEntity> call(String email, String password) async {
+    // ignore: avoid_print
     print('email/password at LoginRegisterUseCase: $email / $password');
     if (email != '' && password != '') {
       final user = await _repository.register(email, password);

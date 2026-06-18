@@ -16,6 +16,7 @@ class GetProductsRepositoryImpl extends GetProductsRepository {
     return products.map(ProductEntity.fromModel).toList();
   }
 
+  @override
   Future<List<ProductEntity>> getAllProducts() async {
     final products = await _productsDataSource.getAllProducts();
     return products.map(ProductEntity.fromModel).toList();

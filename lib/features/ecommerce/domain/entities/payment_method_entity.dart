@@ -62,6 +62,7 @@ extension PaymentMethodEntityX on PaymentMethodEntity {
 
     // Discover: 6011, 622126–622925, 644–649, 65
     if (cleaned.startsWith('6011') || cleaned.startsWith('65'))
+      // ignore: curly_braces_in_flow_control_structures
       return 'Discover';
     if (bin3 != null && bin3 >= 644 && bin3 <= 649) return 'Discover';
     if (bin6 != null && bin6 >= 622126 && bin6 <= 622925) return 'Discover';

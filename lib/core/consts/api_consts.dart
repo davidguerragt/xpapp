@@ -3,8 +3,8 @@ import 'package:xpapp/core/environment/env.dart';
 abstract class ApiConsts {
   static final String paymentBase = Env.apiBaseUrl;
   static final String processPayment = "$paymentBase/processPayment";
-  static final String cardsBase = "Env.cardsApiUrl";
-  static final String getCards = "$cardsBase/getCards";
+  static final String cardsBase = Env.cardsApiUrl;
+  static final String getCards = "$cardsBase/testCards";
 }
 
 abstract class TestCredentials {

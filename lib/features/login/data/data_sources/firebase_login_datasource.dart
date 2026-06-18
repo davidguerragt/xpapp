@@ -5,6 +5,7 @@ class FirebaseLoginDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Future<UserModel> login(String email, String password) async {
     try {
+      // ignore: avoid_print
       print('email/password at FirebaseLoginDataSource: $email / $password');
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -17,17 +18,22 @@ class FirebaseLoginDataSource {
         name: user.displayName ?? '',
       );
     } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
       print('FirebaseAuthException code: ${e.code}');
       if (e.code == 'user-not-found') {
+        // ignore: avoid_print
         print('No se encontró un usuario con ese correo.');
         throw Exception('User not found. Please register first.');
       } else if (e.code == 'wrong-password') {
+        // ignore: avoid_print
         print('Contraseña incorrecta.');
         throw Exception('Incorrect password');
       } else if (e.code == 'invalid-email') {
+        // ignore: avoid_print
         print('El email no es válido.');
         throw Exception('Invalid email format');
       } else if (e.code == 'invalid-credential') {
+        // ignore: avoid_print
         print('Credencial inválida.');
         throw Exception('Invalid email or password. Please try again.');
       }
