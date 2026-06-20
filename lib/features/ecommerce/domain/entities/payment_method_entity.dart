@@ -8,14 +8,12 @@ part 'payment_method_entity.g.dart';
 @freezed
 abstract class PaymentMethodEntity with _$PaymentMethodEntity {
   const factory PaymentMethodEntity({
-    required String id,
     required String number,
     required String holder,
     required String behavior,
-    required String availableFunds,
+    required int availableFunds,
     required String declineReason,
-    required String expirationDate,
-    required String cardBrand,
+    required String brand,
   }) = _PaymentMethodEntity;
 
   factory PaymentMethodEntity.fromJson(Map<String, dynamic> json) =>
@@ -23,14 +21,12 @@ abstract class PaymentMethodEntity with _$PaymentMethodEntity {
 
   factory PaymentMethodEntity.fromModel(PaymentMethodModel model) =>
       PaymentMethodEntity(
-        id: model.id,
         number: model.number,
         holder: model.holder,
         behavior: model.behavior,
         availableFunds: model.availableFunds,
         declineReason: model.declineReason,
-        expirationDate: model.expirationDate ?? '',
-        cardBrand: model.cardBrand ?? '',
+        brand: '',
       );
 }
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PaymentMethodModel {
 
- String get id; String get number; String get holder; String get behavior; String get availableFunds; String get declineReason; String? get expirationDate; String? get cardBrand;
+ String get number; String get holder; String get behavior; int get availableFunds; String get declineReason;
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PaymentMethodModelCopyWith<PaymentMethodModel> get copyWith => _$PaymentMethodM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentMethodModel&&(identical(other.id, id) || other.id == id)&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason)&&(identical(other.expirationDate, expirationDate) || other.expirationDate == expirationDate)&&(identical(other.cardBrand, cardBrand) || other.cardBrand == cardBrand));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentMethodModel&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,number,holder,behavior,availableFunds,declineReason,expirationDate,cardBrand);
+int get hashCode => Object.hash(runtimeType,number,holder,behavior,availableFunds,declineReason);
 
 @override
 String toString() {
-  return 'PaymentMethodModel(id: $id, number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason, expirationDate: $expirationDate, cardBrand: $cardBrand)';
+  return 'PaymentMethodModel(number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PaymentMethodModelCopyWith<$Res>  {
   factory $PaymentMethodModelCopyWith(PaymentMethodModel value, $Res Function(PaymentMethodModel) _then) = _$PaymentMethodModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String number, String holder, String behavior, String availableFunds, String declineReason, String? expirationDate, String? cardBrand
+ String number, String holder, String behavior, int availableFunds, String declineReason
 });
 
 
@@ -65,17 +65,14 @@ class _$PaymentMethodModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,Object? expirationDate = freezed,Object? cardBrand = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String,holder: null == holder ? _self.holder : holder // ignore: cast_nullable_to_non_nullable
 as String,behavior: null == behavior ? _self.behavior : behavior // ignore: cast_nullable_to_non_nullable
 as String,availableFunds: null == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
-as String,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
-as String,expirationDate: freezed == expirationDate ? _self.expirationDate : expirationDate // ignore: cast_nullable_to_non_nullable
-as String?,cardBrand: freezed == cardBrand ? _self.cardBrand : cardBrand // ignore: cast_nullable_to_non_nullable
-as String?,
+as int,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -160,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String number,  String holder,  String behavior,  String availableFunds,  String declineReason,  String? expirationDate,  String? cardBrand)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PaymentMethodModel() when $default != null:
-return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.expirationDate,_that.cardBrand);case _:
+return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason);case _:
   return orElse();
 
 }
@@ -181,10 +178,10 @@ return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availabl
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String number,  String holder,  String behavior,  String availableFunds,  String declineReason,  String? expirationDate,  String? cardBrand)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason)  $default,) {final _that = this;
 switch (_that) {
 case _PaymentMethodModel():
-return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.expirationDate,_that.cardBrand);case _:
+return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +198,10 @@ return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availabl
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String number,  String holder,  String behavior,  String availableFunds,  String declineReason,  String? expirationDate,  String? cardBrand)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason)?  $default,) {final _that = this;
 switch (_that) {
 case _PaymentMethodModel() when $default != null:
-return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.expirationDate,_that.cardBrand);case _:
+return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason);case _:
   return null;
 
 }
@@ -216,17 +213,14 @@ return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availabl
 @JsonSerializable()
 
 class _PaymentMethodModel implements PaymentMethodModel {
-   _PaymentMethodModel({required this.id, required this.number, required this.holder, required this.behavior, required this.availableFunds, required this.declineReason, this.expirationDate, this.cardBrand});
+   _PaymentMethodModel({required this.number, required this.holder, required this.behavior, required this.availableFunds, required this.declineReason});
   factory _PaymentMethodModel.fromJson(Map<String, dynamic> json) => _$PaymentMethodModelFromJson(json);
 
-@override final  String id;
 @override final  String number;
 @override final  String holder;
 @override final  String behavior;
-@override final  String availableFunds;
+@override final  int availableFunds;
 @override final  String declineReason;
-@override final  String? expirationDate;
-@override final  String? cardBrand;
 
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentMethodModel&&(identical(other.id, id) || other.id == id)&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason)&&(identical(other.expirationDate, expirationDate) || other.expirationDate == expirationDate)&&(identical(other.cardBrand, cardBrand) || other.cardBrand == cardBrand));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentMethodModel&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,number,holder,behavior,availableFunds,declineReason,expirationDate,cardBrand);
+int get hashCode => Object.hash(runtimeType,number,holder,behavior,availableFunds,declineReason);
 
 @override
 String toString() {
-  return 'PaymentMethodModel(id: $id, number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason, expirationDate: $expirationDate, cardBrand: $cardBrand)';
+  return 'PaymentMethodModel(number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason)';
 }
 
 
@@ -261,7 +255,7 @@ abstract mixin class _$PaymentMethodModelCopyWith<$Res> implements $PaymentMetho
   factory _$PaymentMethodModelCopyWith(_PaymentMethodModel value, $Res Function(_PaymentMethodModel) _then) = __$PaymentMethodModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String number, String holder, String behavior, String availableFunds, String declineReason, String? expirationDate, String? cardBrand
+ String number, String holder, String behavior, int availableFunds, String declineReason
 });
 
 
@@ -278,17 +272,14 @@ class __$PaymentMethodModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,Object? expirationDate = freezed,Object? cardBrand = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,}) {
   return _then(_PaymentMethodModel(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String,holder: null == holder ? _self.holder : holder // ignore: cast_nullable_to_non_nullable
 as String,behavior: null == behavior ? _self.behavior : behavior // ignore: cast_nullable_to_non_nullable
 as String,availableFunds: null == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
-as String,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
-as String,expirationDate: freezed == expirationDate ? _self.expirationDate : expirationDate // ignore: cast_nullable_to_non_nullable
-as String?,cardBrand: freezed == cardBrand ? _self.cardBrand : cardBrand // ignore: cast_nullable_to_non_nullable
-as String?,
+as int,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

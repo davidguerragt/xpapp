@@ -197,19 +197,19 @@ class _PaymentMethodsSectionState
                   Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
-                      color: paymentState.selectedMethodId == method.id
+                      color: paymentState.selectedMethodId == method.number
                           ? Colors.blue.shade50
                           : Colors.white,
                       borderRadius: BorderRadius.circular(18),
                       border: Border.all(
-                        color: paymentState.selectedMethodId == method.id
+                        color: paymentState.selectedMethodId == method.number
                             ? Colors.blue
                             : Colors.grey.shade300,
                       ),
                     ),
                     child: ListTile(
                       onTap: () {
-                        paymentNotifier.selectPaymentMethod(method.id);
+                        paymentNotifier.selectPaymentMethod(method.number);
                       },
                       title: Text(
                         method.cardBrand,
@@ -220,10 +220,10 @@ class _PaymentMethodsSectionState
                         children: [
                           Text(method.maskedNumber),
                           const SizedBox(height: 4),
-                          Text('Exp: ${method.expirationDate}'),
+                          Text('Holder: ${method.holder}'),
                         ],
                       ),
-                      trailing: paymentState.selectedMethodId == method.id
+                      trailing: paymentState.selectedMethodId == method.number
                           ? const Icon(Icons.check_circle, color: Colors.blue)
                           : null,
                       contentPadding: const EdgeInsets.symmetric(
@@ -422,14 +422,12 @@ class _PaymentMethodsSectionState
                     '',
                   );
                   final method = PaymentMethodEntity(
-                    id: DateTime.now().millisecondsSinceEpoch.toString(),
                     holder: cardHolderController.text.trim(),
                     number: cardNumber,
                     behavior: '',
-                    availableFunds: '',
+                    availableFunds: 0,
                     declineReason: '',
-                    expirationDate: expirationController.text.trim(),
-                    cardBrand: _cardBrand(cardNumber),
+                    brand: _cardBrand(cardNumber),
                   );
 
                   ref
@@ -525,10 +523,12 @@ class _PaymentConfirmationSectionState
   ) async {
     String? cvc;
     if (!useApplePay) {
-      cvc = await _showCvcDialog();
-      if (cvc == null) {
-        return;
-      }
+      // cvc = await _showCvcDialog();
+      // if (cvc == null) {
+      //   return;
+      // }
+      cvc = "123";
+      //return;
     }
 
     if (!mounted) return;
@@ -536,7 +536,7 @@ class _PaymentConfirmationSectionState
     if (!useApplePay && selectedMethod != null) {
       final paymentEntity = PaymentProcessEntity(
         cardNumber: selectedMethod.number,
-        expiryDate: selectedMethod.expirationDate,
+        expiryDate: '',
         cvv: cvc!,
         cardHolderName: selectedMethod.holder,
         amount: totalPrice,

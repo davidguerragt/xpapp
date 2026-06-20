@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PaymentMethodEntity implements DiagnosticableTreeMixin {
 
- String get id; String get number; String get holder; String get behavior; String get availableFunds; String get declineReason; String get expirationDate; String get cardBrand;
+ String get number; String get holder; String get behavior; int get availableFunds; String get declineReason; String get brand;
 /// Create a copy of PaymentMethodEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,21 +29,21 @@ $PaymentMethodEntityCopyWith<PaymentMethodEntity> get copyWith => _$PaymentMetho
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'PaymentMethodEntity'))
-    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('number', number))..add(DiagnosticsProperty('holder', holder))..add(DiagnosticsProperty('behavior', behavior))..add(DiagnosticsProperty('availableFunds', availableFunds))..add(DiagnosticsProperty('declineReason', declineReason))..add(DiagnosticsProperty('expirationDate', expirationDate))..add(DiagnosticsProperty('cardBrand', cardBrand));
+    ..add(DiagnosticsProperty('number', number))..add(DiagnosticsProperty('holder', holder))..add(DiagnosticsProperty('behavior', behavior))..add(DiagnosticsProperty('availableFunds', availableFunds))..add(DiagnosticsProperty('declineReason', declineReason))..add(DiagnosticsProperty('brand', brand));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentMethodEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason)&&(identical(other.expirationDate, expirationDate) || other.expirationDate == expirationDate)&&(identical(other.cardBrand, cardBrand) || other.cardBrand == cardBrand));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PaymentMethodEntity&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason)&&(identical(other.brand, brand) || other.brand == brand));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,number,holder,behavior,availableFunds,declineReason,expirationDate,cardBrand);
+int get hashCode => Object.hash(runtimeType,number,holder,behavior,availableFunds,declineReason,brand);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'PaymentMethodEntity(id: $id, number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason, expirationDate: $expirationDate, cardBrand: $cardBrand)';
+  return 'PaymentMethodEntity(number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason, brand: $brand)';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $PaymentMethodEntityCopyWith<$Res>  {
   factory $PaymentMethodEntityCopyWith(PaymentMethodEntity value, $Res Function(PaymentMethodEntity) _then) = _$PaymentMethodEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String number, String holder, String behavior, String availableFunds, String declineReason, String expirationDate, String cardBrand
+ String number, String holder, String behavior, int availableFunds, String declineReason, String brand
 });
 
 
@@ -71,16 +71,14 @@ class _$PaymentMethodEntityCopyWithImpl<$Res>
 
 /// Create a copy of PaymentMethodEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,Object? expirationDate = null,Object? cardBrand = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,Object? brand = null,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String,holder: null == holder ? _self.holder : holder // ignore: cast_nullable_to_non_nullable
 as String,behavior: null == behavior ? _self.behavior : behavior // ignore: cast_nullable_to_non_nullable
 as String,availableFunds: null == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
-as String,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
-as String,expirationDate: null == expirationDate ? _self.expirationDate : expirationDate // ignore: cast_nullable_to_non_nullable
-as String,cardBrand: null == cardBrand ? _self.cardBrand : cardBrand // ignore: cast_nullable_to_non_nullable
+as int,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
+as String,brand: null == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -166,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String number,  String holder,  String behavior,  String availableFunds,  String declineReason,  String expirationDate,  String cardBrand)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason,  String brand)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PaymentMethodEntity() when $default != null:
-return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.expirationDate,_that.cardBrand);case _:
+return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.brand);case _:
   return orElse();
 
 }
@@ -187,10 +185,10 @@ return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availabl
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String number,  String holder,  String behavior,  String availableFunds,  String declineReason,  String expirationDate,  String cardBrand)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason,  String brand)  $default,) {final _that = this;
 switch (_that) {
 case _PaymentMethodEntity():
-return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.expirationDate,_that.cardBrand);case _:
+return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.brand);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +205,10 @@ return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availabl
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String number,  String holder,  String behavior,  String availableFunds,  String declineReason,  String expirationDate,  String cardBrand)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason,  String brand)?  $default,) {final _that = this;
 switch (_that) {
 case _PaymentMethodEntity() when $default != null:
-return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.expirationDate,_that.cardBrand);case _:
+return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason,_that.brand);case _:
   return null;
 
 }
@@ -222,17 +220,15 @@ return $default(_that.id,_that.number,_that.holder,_that.behavior,_that.availabl
 @JsonSerializable()
 
 class _PaymentMethodEntity with DiagnosticableTreeMixin implements PaymentMethodEntity {
-  const _PaymentMethodEntity({required this.id, required this.number, required this.holder, required this.behavior, required this.availableFunds, required this.declineReason, required this.expirationDate, required this.cardBrand});
+  const _PaymentMethodEntity({required this.number, required this.holder, required this.behavior, required this.availableFunds, required this.declineReason, required this.brand});
   factory _PaymentMethodEntity.fromJson(Map<String, dynamic> json) => _$PaymentMethodEntityFromJson(json);
 
-@override final  String id;
 @override final  String number;
 @override final  String holder;
 @override final  String behavior;
-@override final  String availableFunds;
+@override final  int availableFunds;
 @override final  String declineReason;
-@override final  String expirationDate;
-@override final  String cardBrand;
+@override final  String brand;
 
 /// Create a copy of PaymentMethodEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -248,21 +244,21 @@ Map<String, dynamic> toJson() {
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'PaymentMethodEntity'))
-    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('number', number))..add(DiagnosticsProperty('holder', holder))..add(DiagnosticsProperty('behavior', behavior))..add(DiagnosticsProperty('availableFunds', availableFunds))..add(DiagnosticsProperty('declineReason', declineReason))..add(DiagnosticsProperty('expirationDate', expirationDate))..add(DiagnosticsProperty('cardBrand', cardBrand));
+    ..add(DiagnosticsProperty('number', number))..add(DiagnosticsProperty('holder', holder))..add(DiagnosticsProperty('behavior', behavior))..add(DiagnosticsProperty('availableFunds', availableFunds))..add(DiagnosticsProperty('declineReason', declineReason))..add(DiagnosticsProperty('brand', brand));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentMethodEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason)&&(identical(other.expirationDate, expirationDate) || other.expirationDate == expirationDate)&&(identical(other.cardBrand, cardBrand) || other.cardBrand == cardBrand));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PaymentMethodEntity&&(identical(other.number, number) || other.number == number)&&(identical(other.holder, holder) || other.holder == holder)&&(identical(other.behavior, behavior) || other.behavior == behavior)&&(identical(other.availableFunds, availableFunds) || other.availableFunds == availableFunds)&&(identical(other.declineReason, declineReason) || other.declineReason == declineReason)&&(identical(other.brand, brand) || other.brand == brand));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,number,holder,behavior,availableFunds,declineReason,expirationDate,cardBrand);
+int get hashCode => Object.hash(runtimeType,number,holder,behavior,availableFunds,declineReason,brand);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'PaymentMethodEntity(id: $id, number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason, expirationDate: $expirationDate, cardBrand: $cardBrand)';
+  return 'PaymentMethodEntity(number: $number, holder: $holder, behavior: $behavior, availableFunds: $availableFunds, declineReason: $declineReason, brand: $brand)';
 }
 
 
@@ -273,7 +269,7 @@ abstract mixin class _$PaymentMethodEntityCopyWith<$Res> implements $PaymentMeth
   factory _$PaymentMethodEntityCopyWith(_PaymentMethodEntity value, $Res Function(_PaymentMethodEntity) _then) = __$PaymentMethodEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String number, String holder, String behavior, String availableFunds, String declineReason, String expirationDate, String cardBrand
+ String number, String holder, String behavior, int availableFunds, String declineReason, String brand
 });
 
 
@@ -290,16 +286,14 @@ class __$PaymentMethodEntityCopyWithImpl<$Res>
 
 /// Create a copy of PaymentMethodEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,Object? expirationDate = null,Object? cardBrand = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,Object? brand = null,}) {
   return _then(_PaymentMethodEntity(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String,holder: null == holder ? _self.holder : holder // ignore: cast_nullable_to_non_nullable
 as String,behavior: null == behavior ? _self.behavior : behavior // ignore: cast_nullable_to_non_nullable
 as String,availableFunds: null == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
-as String,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
-as String,expirationDate: null == expirationDate ? _self.expirationDate : expirationDate // ignore: cast_nullable_to_non_nullable
-as String,cardBrand: null == cardBrand ? _self.cardBrand : cardBrand // ignore: cast_nullable_to_non_nullable
+as int,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
+as String,brand: null == brand ? _self.brand : brand // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

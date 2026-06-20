@@ -7,6 +7,7 @@ class GetPaymentMethodsUseCase {
   GetPaymentMethodsUseCase(this._repository);
 
   Future<List<PaymentMethodEntity>> call() async {
-    return _repository.getPaymentMethods();
+    final list = _repository.getPaymentMethods();
+    return list;
   }
 }
