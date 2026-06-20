@@ -23,10 +23,10 @@ class FirebaseProductsDataSource {
     return result.docs.map((doc) => ProductModel.fromJson(doc.data())).toList();
   }
 
-  Future<String> postProduct(Map<String, dynamic> productData) async {
+  Future<String> postProduct(ProductModel productData) async {
     try {
       final collectionRef = _firestore.collection('products');
-      final docRef = await collectionRef.add(productData);
+      final docRef = await collectionRef.add(productData.toJson());
       return docRef.id;
     } catch (e) {
       // ignore: avoid_print
@@ -35,12 +35,12 @@ class FirebaseProductsDataSource {
     }
   }
 
-  Future<String> updateProduct(Map<String, dynamic> productData) async {
+  Future<String> updateProduct(ProductModel productData) async {
     try {
       DocumentReference docRef = _firestore
           .collection('products')
-          .doc(productData['id']);
-      await docRef.update(productData);
+          .doc(productData.id);
+      await docRef.update(productData.toJson());
       return docRef.id;
     } catch (e) {
       // ignore: avoid_print
