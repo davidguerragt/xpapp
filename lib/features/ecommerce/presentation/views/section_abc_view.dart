@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/section_abc_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dart';
 
 class SectionABCView extends ConsumerWidget {
@@ -88,13 +90,13 @@ class _AddSectionButton extends ConsumerWidget {
             ElevatedButton(
               onPressed: () {
                 if (formKey.currentState?.validate() ?? false) {
-                  // Aquí llamarías al método de tu notifier para agregar la sección
-                  // ref.read(homeProvider.notifier).addSection(
-                  //   title: titleController.text,
-                  //   description: descriptionController.text,
-                  //   image: imageController.text,
-                  // );
-
+                  final newSection = SectionEntity(
+                    id: DateTime.now().toString(),
+                    title: titleController.text,
+                    image: imageController.text,
+                    description: descriptionController.text,
+                  );
+                  ref.read(sectionAbcProvider.notifier).saveSection(newSection);
                   Navigator.pop(context);
                 }
               },
@@ -119,9 +121,9 @@ class _SectionListArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sections = ref.watch(homeProvider).sections;
+    final sectionsGet = ref.watch(homeProvider).sections;
 
-    if (sections.isEmpty) {
+    if (sectionsGet.isEmpty) {
       return const Padding(
         padding: EdgeInsets.all(20.0),
         child: Center(child: Text('No hay secciones disponibles.')),
@@ -131,9 +133,9 @@ class _SectionListArea extends ConsumerWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: sections.length,
+      itemCount: sectionsGet.length,
       itemBuilder: (context, index) {
-        final section = sections[index];
+        final section = sectionsGet[index];
         return ListTile(
           leading: const CircleAvatar(child: Icon(Icons.abc)),
           title: Text(section.title),

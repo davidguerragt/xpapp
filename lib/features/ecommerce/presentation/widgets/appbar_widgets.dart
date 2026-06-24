@@ -16,8 +16,8 @@ class AppbarWidgets extends StatelessWidget {
         AppBarStartSessiongButton(visibility: activeSession),
         AppBarFavoriteButton(),
         AppBarCartButton(cartProductsNumber: cartProductsNumber),
-        AppBarSectionABCButton(visibility: !activeSession),
-        AppBarProductABCButton(visibility: !activeSession),
+        // AppBarSectionABCButton(visibility: !activeSession),
+        // AppBarProductABCButton(visibility: !activeSession),
       ],
     );
   }

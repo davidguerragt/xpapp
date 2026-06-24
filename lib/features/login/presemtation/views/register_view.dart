@@ -27,6 +27,8 @@ class _BodyWidget extends ConsumerStatefulWidget {
 class _BodyWidgetState extends ConsumerState<_BodyWidget> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  String selectedRole = 'client';
+  final List<String> roles = ['client', 'admin'];
 
   @override
   void initState() {
@@ -105,7 +107,31 @@ class _BodyWidgetState extends ConsumerState<_BodyWidget> {
                   border: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: selectedRole,
+                decoration: InputDecoration(
+                  labelText: 'Role',
+                  border: OutlineInputBorder(),
+                ),
+                items: roles
+                    .map(
+                      (role) => DropdownMenuItem(
+                        value: role,
+                        child: Text(role[0].toUpperCase() + role.substring(1)),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      selectedRole = value;
+                    });
+                  }
+                },
+              ),
               SizedBox(height: 24),
+
               BlueBigButton(
                 route: '',
                 buttonText: 'Create Account',
@@ -133,7 +159,11 @@ class _BodyWidgetState extends ConsumerState<_BodyWidget> {
                     return;
                   }
 
-                  ref.read(loginProvider.notifier).register(email, password);
+                  ref.read(loginProvider.notifier).register(
+                    email,
+                    password,
+                    selectedRole,
+                  );
                 },
               ),
               SizedBox(height: 16),

@@ -20,6 +20,11 @@ final class LoginSuccessState extends LoginState {
   const LoginSuccessState(this.user);
 }
 
+final class LoginRegisterSuccessState extends LoginState {
+  final UserEntity user;
+  const LoginRegisterSuccessState(this.user);
+}
+
 final class LoginErrorState extends LoginState {
   const LoginErrorState(String errorMessage)
     : super(errorMessage: errorMessage);
@@ -28,4 +33,9 @@ final class LoginErrorState extends LoginState {
 final class LoginLoggedInState extends LoginState {
   final bool isLoggedIn;
   const LoginLoggedInState(this.isLoggedIn);
+}
+
+final class LoginAdminState extends LoginState {
+  final bool isAdmin;
+  const LoginAdminState(this.isAdmin);
 }

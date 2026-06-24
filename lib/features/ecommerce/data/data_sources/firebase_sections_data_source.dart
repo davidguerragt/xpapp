@@ -15,10 +15,10 @@ class FirebaseSectionsDataSource {
         .toList();
   }
 
-  Future<String> postSection(Map<String, dynamic> sectionData) async {
+  Future<String> postSection(SectionModel section) async {
     try {
       final collectionRef = _firestore.collection('sections');
-      final docRef = await collectionRef.add(sectionData);
+      final docRef = await collectionRef.add(section.toJson());
       return docRef.id;
     } catch (e) {
       // ignore: avoid_print

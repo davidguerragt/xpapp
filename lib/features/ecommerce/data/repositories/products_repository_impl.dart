@@ -4,11 +4,11 @@ import 'package:xpapp/features/ecommerce/data/models/product_model.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/repositories/product_repository.dart';
 
-class GetProductsRepositoryImpl extends GetProductsRepository {
+class ProductsRepositoryImpl extends ProductsRepository {
   //final GetProductsDataSource _productsDataSource;
   final FirebaseProductsDataSource _productsDataSource;
 
-  GetProductsRepositoryImpl({FirebaseProductsDataSource? productsDataSource})
+  ProductsRepositoryImpl({FirebaseProductsDataSource? productsDataSource})
     : _productsDataSource = productsDataSource ?? FirebaseProductsDataSource();
 
   @override
@@ -24,7 +24,7 @@ class GetProductsRepositoryImpl extends GetProductsRepository {
   }
 
   @override
-  Future<void> saveProduct(ProductEntity product) {
+  Future<String> saveProduct(ProductEntity product) {
     final ProductModel model = ProductModel.fromEntity(product);
     return _productsDataSource.postProduct(model);
   }

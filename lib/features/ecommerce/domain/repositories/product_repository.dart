@@ -1,7 +1,7 @@
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 
-abstract class GetProductsRepository {
+abstract class ProductsRepository {
   Future<List<ProductEntity>> getProductsBySection(int section);
   Future<List<ProductEntity>> getAllProducts();
-  Future<void> saveProduct(ProductEntity product);
+  Future<String> saveProduct(ProductEntity product);
 }

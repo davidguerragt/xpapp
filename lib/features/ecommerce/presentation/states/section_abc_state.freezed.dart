@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'product_abc_state.dart';
+part of 'section_abc_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,7 +12,7 @@ part of 'product_abc_state.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ProductAbcState {
+mixin _$SectionAbcState {
 
 
 
@@ -20,7 +20,7 @@ mixin _$ProductAbcState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProductAbcState);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SectionAbcState);
 }
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProductAbcState()';
+  return 'SectionAbcState()';
 }
 
 
 }
 
 /// @nodoc
-class $ProductAbcStateCopyWith<$Res>  {
-$ProductAbcStateCopyWith(ProductAbcState _, $Res Function(ProductAbcState) __);
+class $SectionAbcStateCopyWith<$Res>  {
+$SectionAbcStateCopyWith(SectionAbcState _, $Res Function(SectionAbcState) __);
 }
 
 
-/// Adds pattern-matching-related methods to [ProductAbcState].
-extension ProductAbcStatePatterns on ProductAbcState {
+/// Adds pattern-matching-related methods to [SectionAbcState].
+extension SectionAbcStatePatterns on SectionAbcState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -55,13 +55,13 @@ extension ProductAbcStatePatterns on ProductAbcState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _IsSelecting value)?  selecting,TResult Function( _Selected value)?  selected,TResult Function( _Saving value)?  saving,TResult Function( _Saved value)?  saved,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Selecting value)?  selecting,TResult Function( _Selected value)?  selected,TResult Function( _Saving value)?  saving,TResult Function( _Saved value)?  saved,TResult Function( _Error value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
 return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _IsSelecting() when selecting != null:
+return loaded(_that);case _Selecting() when selecting != null:
 return selecting(_that);case _Selected() when selected != null:
 return selected(_that);case _Saving() when saving != null:
 return saving(_that);case _Saved() when saved != null:
@@ -84,13 +84,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _IsSelecting value)  selecting,required TResult Function( _Selected value)  selected,required TResult Function( _Saving value)  saving,required TResult Function( _Saved value)  saved,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Selecting value)  selecting,required TResult Function( _Selected value)  selected,required TResult Function( _Saving value)  saving,required TResult Function( _Saved value)  saved,required TResult Function( _Error value)  error,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _Loading():
 return loading(_that);case _Loaded():
-return loaded(_that);case _IsSelecting():
+return loaded(_that);case _Selecting():
 return selecting(_that);case _Selected():
 return selected(_that);case _Saving():
 return saving(_that);case _Saved():
@@ -112,13 +112,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _IsSelecting value)?  selecting,TResult? Function( _Selected value)?  selected,TResult? Function( _Saving value)?  saving,TResult? Function( _Saved value)?  saved,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Selecting value)?  selecting,TResult? Function( _Selected value)?  selected,TResult? Function( _Saving value)?  saving,TResult? Function( _Saved value)?  saved,TResult? Function( _Error value)?  error,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
 return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _IsSelecting() when selecting != null:
+return loaded(_that);case _Selecting() when selecting != null:
 return selecting(_that);case _Selected() when selected != null:
 return selected(_that);case _Saving() when saving != null:
 return saving(_that);case _Saved() when saved != null:
@@ -140,16 +140,16 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( List<ProductEntity> products)?  loading,TResult Function( List<ProductEntity> products)?  loaded,TResult Function( bool isSelecting)?  selecting,TResult Function( ProductEntity product)?  selected,TResult Function( bool isSaving)?  saving,TResult Function( ProductEntity product)?  saved,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( bool isLoading)?  loading,TResult Function( List<SectionEntity> sections)?  loaded,TResult Function( bool isSelecting)?  selecting,TResult Function( SectionEntity section)?  selected,TResult Function( bool isSaving)?  saving,TResult Function( SectionEntity section)?  saved,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
-return loading(_that.products);case _Loaded() when loaded != null:
-return loaded(_that.products);case _IsSelecting() when selecting != null:
+return loading(_that.isLoading);case _Loaded() when loaded != null:
+return loaded(_that.sections);case _Selecting() when selecting != null:
 return selecting(_that.isSelecting);case _Selected() when selected != null:
-return selected(_that.product);case _Saving() when saving != null:
+return selected(_that.section);case _Saving() when saving != null:
 return saving(_that.isSaving);case _Saved() when saved != null:
-return saved(_that.product);case _Error() when error != null:
+return saved(_that.section);case _Error() when error != null:
 return error(_that.error);case _:
   return orElse();
 
@@ -168,16 +168,16 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( List<ProductEntity> products)  loading,required TResult Function( List<ProductEntity> products)  loaded,required TResult Function( bool isSelecting)  selecting,required TResult Function( ProductEntity product)  selected,required TResult Function( bool isSaving)  saving,required TResult Function( ProductEntity product)  saved,required TResult Function( String error)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( bool isLoading)  loading,required TResult Function( List<SectionEntity> sections)  loaded,required TResult Function( bool isSelecting)  selecting,required TResult Function( SectionEntity section)  selected,required TResult Function( bool isSaving)  saving,required TResult Function( SectionEntity section)  saved,required TResult Function( String error)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
-return loading(_that.products);case _Loaded():
-return loaded(_that.products);case _IsSelecting():
+return loading(_that.isLoading);case _Loaded():
+return loaded(_that.sections);case _Selecting():
 return selecting(_that.isSelecting);case _Selected():
-return selected(_that.product);case _Saving():
+return selected(_that.section);case _Saving():
 return saving(_that.isSaving);case _Saved():
-return saved(_that.product);case _Error():
+return saved(_that.section);case _Error():
 return error(_that.error);case _:
   throw StateError('Unexpected subclass');
 
@@ -195,16 +195,16 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( List<ProductEntity> products)?  loading,TResult? Function( List<ProductEntity> products)?  loaded,TResult? Function( bool isSelecting)?  selecting,TResult? Function( ProductEntity product)?  selected,TResult? Function( bool isSaving)?  saving,TResult? Function( ProductEntity product)?  saved,TResult? Function( String error)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( bool isLoading)?  loading,TResult? Function( List<SectionEntity> sections)?  loaded,TResult? Function( bool isSelecting)?  selecting,TResult? Function( SectionEntity section)?  selected,TResult? Function( bool isSaving)?  saving,TResult? Function( SectionEntity section)?  saved,TResult? Function( String error)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
-return loading(_that.products);case _Loaded() when loaded != null:
-return loaded(_that.products);case _IsSelecting() when selecting != null:
+return loading(_that.isLoading);case _Loaded() when loaded != null:
+return loaded(_that.sections);case _Selecting() when selecting != null:
 return selecting(_that.isSelecting);case _Selected() when selected != null:
-return selected(_that.product);case _Saving() when saving != null:
+return selected(_that.section);case _Saving() when saving != null:
 return saving(_that.isSaving);case _Saved() when saved != null:
-return saved(_that.product);case _Error() when error != null:
+return saved(_that.section);case _Error() when error != null:
 return error(_that.error);case _:
   return null;
 
@@ -216,7 +216,7 @@ return error(_that.error);case _:
 /// @nodoc
 
 
-class _Initial implements ProductAbcState {
+class _Initial implements SectionAbcState {
   const _Initial();
   
 
@@ -236,7 +236,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProductAbcState.initial()';
+  return 'SectionAbcState.initial()';
 }
 
 
@@ -248,19 +248,13 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements ProductAbcState {
-  const _Loading({required final  List<ProductEntity> products}): _products = products;
+class _Loading implements SectionAbcState {
+  const _Loading({required this.isLoading});
   
 
- final  List<ProductEntity> _products;
- List<ProductEntity> get products {
-  if (_products is EqualUnmodifiableListView) return _products;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_products);
-}
+ final  bool isLoading;
 
-
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -270,27 +264,27 @@ _$LoadingCopyWith<_Loading> get copyWith => __$LoadingCopyWithImpl<_Loading>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading&&const DeepCollectionEquality().equals(other._products, _products));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products));
+int get hashCode => Object.hash(runtimeType,isLoading);
 
 @override
 String toString() {
-  return 'ProductAbcState.loading(products: $products)';
+  return 'SectionAbcState.loading(isLoading: $isLoading)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoadingCopyWith<$Res> implements $ProductAbcStateCopyWith<$Res> {
+abstract mixin class _$LoadingCopyWith<$Res> implements $SectionAbcStateCopyWith<$Res> {
   factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) _then) = __$LoadingCopyWithImpl;
 @useResult
 $Res call({
- List<ProductEntity> products
+ bool isLoading
 });
 
 
@@ -305,12 +299,12 @@ class __$LoadingCopyWithImpl<$Res>
   final _Loading _self;
   final $Res Function(_Loading) _then;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? products = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? isLoading = null,}) {
   return _then(_Loading(
-products: null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
-as List<ProductEntity>,
+isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -320,19 +314,19 @@ as List<ProductEntity>,
 /// @nodoc
 
 
-class _Loaded implements ProductAbcState {
-  const _Loaded({required final  List<ProductEntity> products}): _products = products;
+class _Loaded implements SectionAbcState {
+  const _Loaded({required final  List<SectionEntity> sections}): _sections = sections;
   
 
- final  List<ProductEntity> _products;
- List<ProductEntity> get products {
-  if (_products is EqualUnmodifiableListView) return _products;
+ final  List<SectionEntity> _sections;
+ List<SectionEntity> get sections {
+  if (_sections is EqualUnmodifiableListView) return _sections;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_products);
+  return EqualUnmodifiableListView(_sections);
 }
 
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -342,27 +336,27 @@ _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._products, _products));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other._sections, _sections));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_sections));
 
 @override
 String toString() {
-  return 'ProductAbcState.loaded(products: $products)';
+  return 'SectionAbcState.loaded(sections: $sections)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res> implements $ProductAbcStateCopyWith<$Res> {
+abstract mixin class _$LoadedCopyWith<$Res> implements $SectionAbcStateCopyWith<$Res> {
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
- List<ProductEntity> products
+ List<SectionEntity> sections
 });
 
 
@@ -377,12 +371,12 @@ class __$LoadedCopyWithImpl<$Res>
   final _Loaded _self;
   final $Res Function(_Loaded) _then;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? products = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? sections = null,}) {
   return _then(_Loaded(
-products: null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
-as List<ProductEntity>,
+sections: null == sections ? _self._sections : sections // ignore: cast_nullable_to_non_nullable
+as List<SectionEntity>,
   ));
 }
 
@@ -392,23 +386,23 @@ as List<ProductEntity>,
 /// @nodoc
 
 
-class _IsSelecting implements ProductAbcState {
-  const _IsSelecting({required this.isSelecting});
+class _Selecting implements SectionAbcState {
+  const _Selecting({required this.isSelecting});
   
 
  final  bool isSelecting;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$IsSelectingCopyWith<_IsSelecting> get copyWith => __$IsSelectingCopyWithImpl<_IsSelecting>(this, _$identity);
+_$SelectingCopyWith<_Selecting> get copyWith => __$SelectingCopyWithImpl<_Selecting>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _IsSelecting&&(identical(other.isSelecting, isSelecting) || other.isSelecting == isSelecting));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Selecting&&(identical(other.isSelecting, isSelecting) || other.isSelecting == isSelecting));
 }
 
 
@@ -417,15 +411,15 @@ int get hashCode => Object.hash(runtimeType,isSelecting);
 
 @override
 String toString() {
-  return 'ProductAbcState.selecting(isSelecting: $isSelecting)';
+  return 'SectionAbcState.selecting(isSelecting: $isSelecting)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$IsSelectingCopyWith<$Res> implements $ProductAbcStateCopyWith<$Res> {
-  factory _$IsSelectingCopyWith(_IsSelecting value, $Res Function(_IsSelecting) _then) = __$IsSelectingCopyWithImpl;
+abstract mixin class _$SelectingCopyWith<$Res> implements $SectionAbcStateCopyWith<$Res> {
+  factory _$SelectingCopyWith(_Selecting value, $Res Function(_Selecting) _then) = __$SelectingCopyWithImpl;
 @useResult
 $Res call({
  bool isSelecting
@@ -436,17 +430,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$IsSelectingCopyWithImpl<$Res>
-    implements _$IsSelectingCopyWith<$Res> {
-  __$IsSelectingCopyWithImpl(this._self, this._then);
+class __$SelectingCopyWithImpl<$Res>
+    implements _$SelectingCopyWith<$Res> {
+  __$SelectingCopyWithImpl(this._self, this._then);
 
-  final _IsSelecting _self;
-  final $Res Function(_IsSelecting) _then;
+  final _Selecting _self;
+  final $Res Function(_Selecting) _then;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? isSelecting = null,}) {
-  return _then(_IsSelecting(
+  return _then(_Selecting(
 isSelecting: null == isSelecting ? _self.isSelecting : isSelecting // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
@@ -458,13 +452,13 @@ as bool,
 /// @nodoc
 
 
-class _Selected implements ProductAbcState {
-  const _Selected({required this.product});
+class _Selected implements SectionAbcState {
+  const _Selected({required this.section});
   
 
- final  ProductEntity product;
+ final  SectionEntity section;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -474,31 +468,31 @@ _$SelectedCopyWith<_Selected> get copyWith => __$SelectedCopyWithImpl<_Selected>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Selected&&(identical(other.product, product) || other.product == product));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Selected&&(identical(other.section, section) || other.section == section));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,product);
+int get hashCode => Object.hash(runtimeType,section);
 
 @override
 String toString() {
-  return 'ProductAbcState.selected(product: $product)';
+  return 'SectionAbcState.selected(section: $section)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SelectedCopyWith<$Res> implements $ProductAbcStateCopyWith<$Res> {
+abstract mixin class _$SelectedCopyWith<$Res> implements $SectionAbcStateCopyWith<$Res> {
   factory _$SelectedCopyWith(_Selected value, $Res Function(_Selected) _then) = __$SelectedCopyWithImpl;
 @useResult
 $Res call({
- ProductEntity product
+ SectionEntity section
 });
 
 
-$ProductEntityCopyWith<$Res> get product;
+$SectionEntityCopyWith<$Res> get section;
 
 }
 /// @nodoc
@@ -509,23 +503,23 @@ class __$SelectedCopyWithImpl<$Res>
   final _Selected _self;
   final $Res Function(_Selected) _then;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? product = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? section = null,}) {
   return _then(_Selected(
-product: null == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
-as ProductEntity,
+section: null == section ? _self.section : section // ignore: cast_nullable_to_non_nullable
+as SectionEntity,
   ));
 }
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ProductEntityCopyWith<$Res> get product {
+$SectionEntityCopyWith<$Res> get section {
   
-  return $ProductEntityCopyWith<$Res>(_self.product, (value) {
-    return _then(_self.copyWith(product: value));
+  return $SectionEntityCopyWith<$Res>(_self.section, (value) {
+    return _then(_self.copyWith(section: value));
   });
 }
 }
@@ -533,13 +527,13 @@ $ProductEntityCopyWith<$Res> get product {
 /// @nodoc
 
 
-class _Saving implements ProductAbcState {
+class _Saving implements SectionAbcState {
   const _Saving({required this.isSaving});
   
 
  final  bool isSaving;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -558,14 +552,14 @@ int get hashCode => Object.hash(runtimeType,isSaving);
 
 @override
 String toString() {
-  return 'ProductAbcState.saving(isSaving: $isSaving)';
+  return 'SectionAbcState.saving(isSaving: $isSaving)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SavingCopyWith<$Res> implements $ProductAbcStateCopyWith<$Res> {
+abstract mixin class _$SavingCopyWith<$Res> implements $SectionAbcStateCopyWith<$Res> {
   factory _$SavingCopyWith(_Saving value, $Res Function(_Saving) _then) = __$SavingCopyWithImpl;
 @useResult
 $Res call({
@@ -584,7 +578,7 @@ class __$SavingCopyWithImpl<$Res>
   final _Saving _self;
   final $Res Function(_Saving) _then;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? isSaving = null,}) {
   return _then(_Saving(
@@ -599,13 +593,13 @@ as bool,
 /// @nodoc
 
 
-class _Saved implements ProductAbcState {
-  const _Saved({required this.product});
+class _Saved implements SectionAbcState {
+  const _Saved({required this.section});
   
 
- final  ProductEntity product;
+ final  SectionEntity section;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -615,31 +609,31 @@ _$SavedCopyWith<_Saved> get copyWith => __$SavedCopyWithImpl<_Saved>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Saved&&(identical(other.product, product) || other.product == product));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Saved&&(identical(other.section, section) || other.section == section));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,product);
+int get hashCode => Object.hash(runtimeType,section);
 
 @override
 String toString() {
-  return 'ProductAbcState.saved(product: $product)';
+  return 'SectionAbcState.saved(section: $section)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SavedCopyWith<$Res> implements $ProductAbcStateCopyWith<$Res> {
+abstract mixin class _$SavedCopyWith<$Res> implements $SectionAbcStateCopyWith<$Res> {
   factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) _then) = __$SavedCopyWithImpl;
 @useResult
 $Res call({
- ProductEntity product
+ SectionEntity section
 });
 
 
-$ProductEntityCopyWith<$Res> get product;
+$SectionEntityCopyWith<$Res> get section;
 
 }
 /// @nodoc
@@ -650,23 +644,23 @@ class __$SavedCopyWithImpl<$Res>
   final _Saved _self;
   final $Res Function(_Saved) _then;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? product = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? section = null,}) {
   return _then(_Saved(
-product: null == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
-as ProductEntity,
+section: null == section ? _self.section : section // ignore: cast_nullable_to_non_nullable
+as SectionEntity,
   ));
 }
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$ProductEntityCopyWith<$Res> get product {
+$SectionEntityCopyWith<$Res> get section {
   
-  return $ProductEntityCopyWith<$Res>(_self.product, (value) {
-    return _then(_self.copyWith(product: value));
+  return $SectionEntityCopyWith<$Res>(_self.section, (value) {
+    return _then(_self.copyWith(section: value));
   });
 }
 }
@@ -674,13 +668,13 @@ $ProductEntityCopyWith<$Res> get product {
 /// @nodoc
 
 
-class _Error implements ProductAbcState {
+class _Error implements SectionAbcState {
   const _Error({required this.error});
   
 
  final  String error;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -699,14 +693,14 @@ int get hashCode => Object.hash(runtimeType,error);
 
 @override
 String toString() {
-  return 'ProductAbcState.error(error: $error)';
+  return 'SectionAbcState.error(error: $error)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $ProductAbcStateCopyWith<$Res> {
+abstract mixin class _$ErrorCopyWith<$Res> implements $SectionAbcStateCopyWith<$Res> {
   factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
 @useResult
 $Res call({
@@ -725,7 +719,7 @@ class __$ErrorCopyWithImpl<$Res>
   final _Error _self;
   final $Res Function(_Error) _then;
 
-/// Create a copy of ProductAbcState
+/// Create a copy of SectionAbcState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? error = null,}) {
   return _then(_Error(

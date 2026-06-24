@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/product_abc_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dart';
 
 class ProductABCView extends ConsumerStatefulWidget {
@@ -126,10 +127,8 @@ class _AddProductButton extends ConsumerWidget {
             child: const Text('Cancelar'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState?.validate() ?? false) {
-                // Lógica para crear la entidad y enviarla al notifier
-                // ignore: unused_local_variable
                 final newProduct = ProductEntity(
                   id: DateTime.now().toString(),
                   title: titleController.text,
@@ -150,8 +149,14 @@ class _AddProductButton extends ConsumerWidget {
                       .toList(),
                 );
 
-                // ref.read(homeProvider.notifier).addProduct(newProduct);
-                Navigator.pop(context);
+                await ref
+                    .read(productAbcProvider.notifier)
+                    .saveProduct(newProduct);
+                await ref.read(homeProvider.notifier).loadAllProducts();
+
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
               }
             },
             child: const Text('Guardar'),

@@ -268,23 +268,69 @@ class _BottomButtonsBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(bottomNavProvider);
+    final loginState = ref.watch(loginProvider);
+    final isAdmin = loginState is LoginAdminState && loginState.isAdmin;
+
+    void handleNavigation(int index) {
+      if (!isAdmin) {
+        showDialog(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('Admin access required'),
+            content: const Text(
+              'Only admin users can access this section. Please sign in with an admin account.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                  router.goNamed(Routes.login);
+                },
+                child: const Text('Go to Login'),
+              ),
+            ],
+          ),
+        );
+        return;
+      }
+
+      ref.read(bottomNavProvider.notifier).state = index;
+      switch (index) {
+        case 0:
+          router.goNamed(Routes.ecommerceHome);
+          break;
+        case 1:
+          router.goNamed(Routes.sectionABC);
+          break;
+        case 2:
+          router.goNamed(Routes.productABC);
+          break;
+        case 3:
+          router.goNamed(Routes.login);
+          break;
+      }
+    }
 
     return BottomNavigationBar(
       backgroundColor: Colors.white,
       currentIndex: currentIndex,
-      onTap: (index) {
-        ref.read(bottomNavProvider.notifier).state = index;
-      },
+      onTap: handleNavigation,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor: Colors.grey,
-      items: const [
+      selectedItemColor: isAdmin ? Colors.blue : Colors.grey,
+      unselectedItemColor: isAdmin ? Colors.blue : Colors.grey,
+      items: [
         BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+        BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Sections'),
         BottomNavigationBarItem(
-          icon: Icon(Icons.grid_view),
-          label: 'Categories',
+          icon: Icon(Icons.label),
+          activeIcon: Icon(Icons.label_important),
+          label: 'Products',
+          tooltip: 'Products',
         ),
-        BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Stores'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
     );

@@ -11,7 +11,7 @@ _CreditCardPaymentResponseModel _$CreditCardPaymentResponseModelFromJson(
 ) => _CreditCardPaymentResponseModel(
   success: json['success'] as bool,
   status: json['status'] as String,
-  transactionId: json['transactionId'].toString(),
+  transactionId: json['transactionId'] as String,
   amount: _amountFromJson(json['amount']),
   currency: json['currency'] as String,
   cardLast4: json['cardLast4'] as String,
