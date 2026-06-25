@@ -43,6 +43,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
       final UserRoleEntity ur = await _userRoleUseCase.getUserRole(email);
       if (ur.role == 'admin') {
         state = LoginAdminState(true);
+        return true;
       }
       state = LoginSuccessState(user);
       return true;

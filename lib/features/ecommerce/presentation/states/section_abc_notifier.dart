@@ -18,9 +18,12 @@ class SectionAbcNotifier extends StateNotifier<SectionAbcState> {
   Future<String> saveSection(SectionEntity section) async {
     state = SectionAbcState.saving(isSaving: true);
     final response = await _sectionSaveUseCase.call(section);
-    if (response.contains('Error')) {
+
+    if (response.toLowerCase().contains('error')) {
       state = SectionAbcState.error(error: response);
-    } else {}
+      return response;
+    }
+
     state = SectionAbcState.saved(section: section);
     return response;
   }

@@ -10,7 +10,7 @@ class FirebaseSectionsDataSource {
   Future<List<SectionModel>> getSections() async {
     final sectionsResult = await _firestore.collection('sections').get();
     return sectionsResult.docs
-        .where((doc) => doc.data()['status'] == 'A')
+        .where((doc) => (doc.data()['status'] as String? ?? 'A') == 'A')
         .map((doc) => SectionModel.fromJson(doc.data()))
         .toList();
   }

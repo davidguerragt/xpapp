@@ -273,28 +273,6 @@ class _BottomButtonsBar extends ConsumerWidget {
 
     void handleNavigation(int index) {
       if (!isAdmin) {
-        showDialog(
-          context: context,
-          builder: (dialogContext) => AlertDialog(
-            title: const Text('Admin access required'),
-            content: const Text(
-              'Only admin users can access this section. Please sign in with an admin account.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                  router.goNamed(Routes.login);
-                },
-                child: const Text('Go to Login'),
-              ),
-            ],
-          ),
-        );
         return;
       }
 
@@ -318,7 +296,7 @@ class _BottomButtonsBar extends ConsumerWidget {
     return BottomNavigationBar(
       backgroundColor: Colors.white,
       currentIndex: currentIndex,
-      onTap: handleNavigation,
+      onTap: isAdmin ? handleNavigation : null,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: isAdmin ? Colors.blue : Colors.grey,
       unselectedItemColor: isAdmin ? Colors.blue : Colors.grey,
@@ -330,6 +308,7 @@ class _BottomButtonsBar extends ConsumerWidget {
           activeIcon: Icon(Icons.label_important),
           label: 'Products',
           tooltip: 'Products',
+          
         ),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],

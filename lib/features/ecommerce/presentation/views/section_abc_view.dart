@@ -88,16 +88,23 @@ class _AddSectionButton extends ConsumerWidget {
               child: const Text('Cancelar'),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState?.validate() ?? false) {
                   final newSection = SectionEntity(
-                    id: DateTime.now().toString(),
+                    id: DateTime.now().millisecondsSinceEpoch.toString(),
                     title: titleController.text,
                     image: imageController.text,
                     description: descriptionController.text,
                   );
-                  ref.read(sectionAbcProvider.notifier).saveSection(newSection);
-                  Navigator.pop(context);
+                  final response = await ref
+                      .read(sectionAbcProvider.notifier)
+                      .saveSection(newSection);
+
+                  if (context.mounted &&
+                      !response.toLowerCase().contains('error')) {
+                    ref.read(homeProvider.notifier).addSection(newSection);
+                    Navigator.pop(context);
+                  }
                 }
               },
               child: const Text('Guardar'),
