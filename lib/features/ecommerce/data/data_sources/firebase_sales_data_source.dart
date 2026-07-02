@@ -20,13 +20,13 @@ class FirebaseSalesDataSource {
 
   Future<String> postSale(SaleModel sale) async {
     try {
-      final collectionRef = _firestore.collection('sections');
+      final collectionRef = _firestore.collection('sales');
       final docRef = await collectionRef.add(sale.toJson());
       return docRef.id;
     } catch (e) {
       // ignore: avoid_print
       print('Error al subir la venta: $e');
-      throw Exception('Error al subir la venta: $e.message');
+      throw Exception('Error al subir la venta: $e');
     }
   }
 }

@@ -24,8 +24,8 @@ abstract class PaymentMethodEntity with _$PaymentMethodEntity {
         number: model.number,
         holder: model.holder,
         behavior: model.behavior,
-        availableFunds: model.availableFunds,
-        declineReason: model.declineReason,
+        availableFunds: model.availableFunds ?? 0,
+        declineReason: model.declineReason ?? '',
         brand: '',
       );
 }

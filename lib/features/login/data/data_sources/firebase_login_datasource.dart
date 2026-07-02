@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:xpapp/features/login/data/models/user_model.dart';
-import 'package:xpapp/features/login/data/models/user_role_model.dart';
 
 class FirebaseLoginDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

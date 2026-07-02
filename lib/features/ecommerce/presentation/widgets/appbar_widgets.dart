@@ -18,8 +18,26 @@ class AppbarWidgets extends StatelessWidget {
         AppBarCartButton(cartProductsNumber: cartProductsNumber),
         // AppBarSectionABCButton(visibility: !activeSession),
         // AppBarProductABCButton(visibility: !activeSession),
+        AppBarTransactionListButton(visibility: !activeSession),
       ],
     );
+  }
+}
+
+class AppBarTransactionListButton extends StatelessWidget {
+  final bool visibility;
+  const AppBarTransactionListButton({super.key, required this.visibility});
+
+  @override
+  Widget build(BuildContext context) {
+    return visibility
+        ? const SizedBox()
+        : IconButton(
+            onPressed: () {
+              router.goNamed(Routes.transactionList);
+            },
+            icon: const Icon(Icons.list_alt_outlined, color: Colors.black),
+          );
   }
 }
 

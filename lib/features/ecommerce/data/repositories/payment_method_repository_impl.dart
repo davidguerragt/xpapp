@@ -9,8 +9,8 @@ class PaymentMethodRepositoryImpl implements PaymentMethodRepository {
   final CreditCardsGetCardsDataSource _remoteDataSource;
 
   PaymentMethodRepositoryImpl({
-    required LocalPaymentMethodDataSource? localDataSource,
-    required CreditCardsGetCardsDataSource? remoteDataSource,
+    LocalPaymentMethodDataSource? localDataSource,
+    CreditCardsGetCardsDataSource? remoteDataSource,
   }) : _localDataSource = localDataSource ?? LocalPaymentMethodDataSource(),
        _remoteDataSource = remoteDataSource ?? CreditCardsGetCardsDataSource();
 

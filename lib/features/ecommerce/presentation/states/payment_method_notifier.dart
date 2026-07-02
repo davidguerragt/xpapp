@@ -1,7 +1,4 @@
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:xpapp/features/ecommerce/data/data_sources/credit_cards_get_cards_data_source.dart';
-import 'package:xpapp/features/ecommerce/data/data_sources/local_payment_method_data_source.dart';
-import 'package:xpapp/features/ecommerce/data/repositories/payment_method_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_payment_methods_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/save_payment_methods_use_case.dart';
@@ -9,25 +6,22 @@ import 'package:xpapp/features/ecommerce/presentation/states/payment_method_stat
 
 final paymentMethodProvider =
     StateNotifierProvider<PaymentMethodNotifier, PaymentMethodState>((ref) {
-      final repository = PaymentMethodRepositoryImpl(
-        localDataSource: LocalPaymentMethodDataSource(),
-        remoteDataSource: CreditCardsGetCardsDataSource(),
-      );
-
       return PaymentMethodNotifier(
-        GetPaymentMethodsUseCase(repository),
-        SavePaymentMethodsUseCase(repository),
-      )..loadPaymentMethods();
+        getPaymentMethodsUseCase: GetPaymentMethodsUseCase(),
+        savePaymentMethodsUseCase: SavePaymentMethodsUseCase(),
+      );
     });
 
 class PaymentMethodNotifier extends StateNotifier<PaymentMethodState> {
   final GetPaymentMethodsUseCase _getPaymentMethodsUseCase;
   final SavePaymentMethodsUseCase _savePaymentMethodsUseCase;
 
-  PaymentMethodNotifier(
-    this._getPaymentMethodsUseCase,
-    this._savePaymentMethodsUseCase,
-  ) : super(const PaymentMethodState());
+  PaymentMethodNotifier({
+    required GetPaymentMethodsUseCase getPaymentMethodsUseCase,
+    required SavePaymentMethodsUseCase savePaymentMethodsUseCase,
+  }) : _getPaymentMethodsUseCase = getPaymentMethodsUseCase,
+       _savePaymentMethodsUseCase = savePaymentMethodsUseCase,
+       super(const PaymentMethodState());
 
   Future<void> loadPaymentMethods() async {
     final methods = await _getPaymentMethodsUseCase.call();

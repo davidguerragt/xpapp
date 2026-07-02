@@ -6,7 +6,7 @@ import 'package:xpapp/features/ecommerce/domain/repositories/credit_card_paymemt
 class CheckoutPaymentUseCase {
   final CreditCardPaymentRepository _repository;
 
-  CheckoutPaymentUseCase(CreditCardPaymentRepository? repository)
+  CheckoutPaymentUseCase({CreditCardPaymentRepository? repository})
     : _repository = repository ?? CreditCardPaymentRepositoryImp();
 
   Future<PaymentProcessResponseEntity> execute(

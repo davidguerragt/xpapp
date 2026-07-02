@@ -83,12 +83,23 @@ class _BodyWidget extends ConsumerWidget {
               BlueBigButton(
                 route: Routes.ecommerceHome,
                 buttonText: 'Login',
-                onTap: () {
+                onTap: () async {
                   final email = emailController.text;
                   final password = passwordController.text;
                   if (email.isNotEmpty && password.isNotEmpty) {
-                    ref.read(loginProvider.notifier).login(email, password);
-                    router.goNamed(Routes.ecommerceHome);
+                    final success = await ref
+                        .read(loginProvider.notifier)
+                        .login(email, password);
+                    if (!context.mounted) return;
+                    if (success) {
+                      router.goNamed(Routes.ecommerceHome);
+                    } else {
+                      final state = ref.read(loginProvider);
+                      final message = state.errorMessage ?? 'Login failed';
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(message)));
+                    }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

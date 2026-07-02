@@ -109,6 +109,7 @@ class _BodyWidgetState extends ConsumerState<_BodyWidget> {
               ),
               SizedBox(height: 16),
               DropdownButtonFormField<String>(
+                // ignore: deprecated_member_use
                 value: selectedRole,
                 decoration: InputDecoration(
                   labelText: 'Role',
@@ -159,11 +160,9 @@ class _BodyWidgetState extends ConsumerState<_BodyWidget> {
                     return;
                   }
 
-                  ref.read(loginProvider.notifier).register(
-                    email,
-                    password,
-                    selectedRole,
-                  );
+                  ref
+                      .read(loginProvider.notifier)
+                      .register(email, password, selectedRole);
                 },
               ),
               SizedBox(height: 16),

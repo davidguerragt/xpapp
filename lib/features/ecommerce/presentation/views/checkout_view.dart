@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.dart';
-import 'package:xpapp/features/ecommerce/domain/use_cases/checkout_payment_use_case.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/checkout_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/payment_method_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 
@@ -147,6 +147,14 @@ class _PaymentMethodsSection extends ConsumerStatefulWidget {
 class _PaymentMethodsSectionState
     extends ConsumerState<_PaymentMethodsSection> {
   bool _sameBillingAddress = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(paymentMethodProvider.notifier).loadPaymentMethods();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -543,10 +551,10 @@ class _PaymentConfirmationSectionState
         currency: 'USD',
       );
 
-      final checkoutUseCase = CheckoutPaymentUseCase(null);
-
       try {
-        final response = await checkoutUseCase.execute(paymentEntity);
+        final response = await ref
+            .read(checkoutProvider.notifier)
+            .paymentProcess(paymentEntity);
         if (!mounted) return;
         ScaffoldMessenger.of(
           context,
@@ -571,6 +579,7 @@ class _PaymentConfirmationSectionState
     }
   }
 
+  // ignore: unused_element
   Future<String?> _showCvcDialog() async {
     final cvcController = TextEditingController();
     final formKey = GlobalKey<FormState>();

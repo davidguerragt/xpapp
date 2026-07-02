@@ -16,7 +16,15 @@ class ECommerceHomeView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bagProductsNumber = ref.watch(yourBagProvider).bagProducts.length;
     final loginState = ref.watch(loginProvider);
-    final activeSession = loginState is LoginSuccessState;
+    if (loginState is LoginInitialState) {
+      Future.microtask(() {
+        ref.read(loginProvider.notifier).isLoggedIn();
+      });
+    }
+    final activeSession =
+        loginState is LoginSuccessState ||
+        (loginState is LoginLoggedInState && loginState.isLoggedIn) ||
+        (loginState is LoginAdminState && loginState.isAdmin);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -308,7 +316,6 @@ class _BottomButtonsBar extends ConsumerWidget {
           activeIcon: Icon(Icons.label_important),
           label: 'Products',
           tooltip: 'Products',
-          
         ),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],

@@ -4,6 +4,7 @@ import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/product_abc_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/section_abc_view.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
 import 'package:xpapp/features/login/presemtation/views/login_view.dart';
 import 'package:xpapp/features/login/presemtation/views/register_view.dart';
@@ -70,6 +71,11 @@ final router = GoRouter(
       path: '/product-abc',
       builder: (context, state) => const ProductABCView(),
     ),
+    GoRoute(
+      name: Routes.transactionList,
+      path: '/transaction-list',
+      builder: (context, state) => const TransactionListView(),
+    ),
   ],
 );
 
@@ -83,6 +89,7 @@ abstract class Routes {
   static const String itemView = '/ecommerce/item';
   static const String yourBag = '/ecommerce/your-bag';
   static const String checkout = '/ecommerce/checkout';
+  static const String transactionList = '/ecommerce/transaction-list';
 
   // Navigation destinations
   static const String explore = '/explore';

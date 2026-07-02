@@ -10,8 +10,8 @@ abstract class PaymentMethodModel with _$PaymentMethodModel {
     required String number,
     required String holder,
     required String behavior,
-    required int availableFunds,
-    required String declineReason,
+    int? availableFunds,
+    String? declineReason,
   }) = _PaymentMethodModel;
 
   factory PaymentMethodModel.fromJson(Map<String, dynamic> json) =>

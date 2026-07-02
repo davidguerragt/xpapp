@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PaymentMethodModel {
 
- String get number; String get holder; String get behavior; int get availableFunds; String get declineReason;
+ String get number; String get holder; String get behavior; int? get availableFunds; String? get declineReason;
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $PaymentMethodModelCopyWith<$Res>  {
   factory $PaymentMethodModelCopyWith(PaymentMethodModel value, $Res Function(PaymentMethodModel) _then) = _$PaymentMethodModelCopyWithImpl;
 @useResult
 $Res call({
- String number, String holder, String behavior, int availableFunds, String declineReason
+ String number, String holder, String behavior, int? availableFunds, String? declineReason
 });
 
 
@@ -65,14 +65,14 @@ class _$PaymentMethodModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = freezed,Object? declineReason = freezed,}) {
   return _then(_self.copyWith(
 number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String,holder: null == holder ? _self.holder : holder // ignore: cast_nullable_to_non_nullable
 as String,behavior: null == behavior ? _self.behavior : behavior // ignore: cast_nullable_to_non_nullable
-as String,availableFunds: null == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
-as int,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
-as String,
+as String,availableFunds: freezed == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
+as int?,declineReason: freezed == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -157,7 +157,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int? availableFunds,  String? declineReason)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PaymentMethodModel() when $default != null:
 return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason);case _:
@@ -178,7 +178,7 @@ return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String number,  String holder,  String behavior,  int? availableFunds,  String? declineReason)  $default,) {final _that = this;
 switch (_that) {
 case _PaymentMethodModel():
 return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason);case _:
@@ -198,7 +198,7 @@ return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String number,  String holder,  String behavior,  int availableFunds,  String declineReason)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String number,  String holder,  String behavior,  int? availableFunds,  String? declineReason)?  $default,) {final _that = this;
 switch (_that) {
 case _PaymentMethodModel() when $default != null:
 return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_that.declineReason);case _:
@@ -213,14 +213,14 @@ return $default(_that.number,_that.holder,_that.behavior,_that.availableFunds,_t
 @JsonSerializable()
 
 class _PaymentMethodModel implements PaymentMethodModel {
-   _PaymentMethodModel({required this.number, required this.holder, required this.behavior, required this.availableFunds, required this.declineReason});
+   _PaymentMethodModel({required this.number, required this.holder, required this.behavior, this.availableFunds, this.declineReason});
   factory _PaymentMethodModel.fromJson(Map<String, dynamic> json) => _$PaymentMethodModelFromJson(json);
 
 @override final  String number;
 @override final  String holder;
 @override final  String behavior;
-@override final  int availableFunds;
-@override final  String declineReason;
+@override final  int? availableFunds;
+@override final  String? declineReason;
 
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
@@ -255,7 +255,7 @@ abstract mixin class _$PaymentMethodModelCopyWith<$Res> implements $PaymentMetho
   factory _$PaymentMethodModelCopyWith(_PaymentMethodModel value, $Res Function(_PaymentMethodModel) _then) = __$PaymentMethodModelCopyWithImpl;
 @override @useResult
 $Res call({
- String number, String holder, String behavior, int availableFunds, String declineReason
+ String number, String holder, String behavior, int? availableFunds, String? declineReason
 });
 
 
@@ -272,14 +272,14 @@ class __$PaymentMethodModelCopyWithImpl<$Res>
 
 /// Create a copy of PaymentMethodModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = null,Object? declineReason = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? number = null,Object? holder = null,Object? behavior = null,Object? availableFunds = freezed,Object? declineReason = freezed,}) {
   return _then(_PaymentMethodModel(
 number: null == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
 as String,holder: null == holder ? _self.holder : holder // ignore: cast_nullable_to_non_nullable
 as String,behavior: null == behavior ? _self.behavior : behavior // ignore: cast_nullable_to_non_nullable
-as String,availableFunds: null == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
-as int,declineReason: null == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
-as String,
+as String,availableFunds: freezed == availableFunds ? _self.availableFunds : availableFunds // ignore: cast_nullable_to_non_nullable
+as int?,declineReason: freezed == declineReason ? _self.declineReason : declineReason // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
