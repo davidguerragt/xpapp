@@ -112,22 +112,38 @@ class TransactionListArea extends ConsumerWidget {
                       ),
                     );
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No transactions found.'));
+                    return const Center(
+                      child: Text(
+                        'No transactions found.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
                   } else {
                     final transactionList = snapshot.data!;
-                    return ListView.builder(
-                      itemCount: transactionList.length,
-                      itemBuilder: (context, index) {
-                        final transaction = transactionList[index];
-                        return TransactionListItem(
-                          transactionId: transaction.id,
-                          date: transaction.date,
-                          user: transaction.user,
-                          amount: transaction.amount,
-                          holderName: transaction.holderName,
-                          cardNumber: transaction.cardNumber,
-                        );
-                      },
+                    return Column(
+                      children: [
+                        Text('Total Transactions: ${transactionList.length}'),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: transactionList.length,
+                            itemBuilder: (context, index) {
+                              final transaction = transactionList[index];
+                              return TransactionListItem(
+                                transactionId: transaction.id,
+                                date: transaction.date,
+                                user: transaction.user,
+                                amount: transaction.amount,
+                                holderName: transaction.holderName,
+                                cardNumber: transaction.cardNumber,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     );
                   }
                 },

@@ -35,25 +35,31 @@ class TransactionListNotifier extends StateNotifier<TransactionListState> {
 
   Future<void> initSubscription(String user) async {
     // Cancel any existing subscription
-    await _subscription?.cancel();
+    //await _subscription?.cancel();
 
     state = TransactionListState.loading(transactions: []);
 
     // Start a new subscription
-    _subscription = _getTransactionsUseCase
-        .getTransactions(user)
-        .listen(
-          (transactions) {
-            state = TransactionListState.loaded(
-              transactions: _getTransactionsUseCase.getTransactions(user),
-            );
-          },
-          onError: (error) {
-            state = TransactionListState.error(
-              'Error fetching transactions: ${error.toString()}',
-            );
-          },
-        );
+    try {
+      _subscription = _getTransactionsUseCase
+          .getTransactions(user)
+          .listen(
+            (transactions) {
+              state = TransactionListState.loaded(
+                transactions: _getTransactionsUseCase.getTransactions(user),
+              );
+            },
+            onError: (error) {
+              state = TransactionListState.error(
+                'Error fetching transactions: ${error.toString()}',
+              );
+            },
+          );
+    } catch (e) {
+      state = TransactionListState.error(
+        'Error initializing transaction subscription: ${e.toString()}',
+      );
+    }
   }
 
   @override
