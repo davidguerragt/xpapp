@@ -41,11 +41,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
     try {
       final UserEntity user = await _loginUseCase(email, password);
       final UserRoleEntity ur = await _userRoleUseCase.getUserRole(email);
-      if (ur.role == 'admin') {
-        state = LoginAdminState(true);
-        return true;
-      }
-      state = LoginSuccessState(user);
+      state = LoginSuccessState(user.copyWith(role: ur.role));
       return true;
     } catch (e) {
       state = LoginErrorState(e.toString());
@@ -64,8 +60,22 @@ class LoginNotifier extends StateNotifier<LoginState> {
       final bool isLoggedIn = await _isLoggedInUseCase();
 
       if (isLoggedIn) {
-        // Si Firebase dice que está logueado pero el estado no lo refleja,
-        // cambiar a un estado que indique que está logueado
+        final currentUser = await _isLoggedInUseCase.getCurrentUser();
+
+        if (currentUser != null) {
+          try {
+            final userRole = await _userRoleUseCase.getUserRole(
+              currentUser.email,
+            );
+            state = LoginSuccessState(
+              currentUser.copyWith(role: userRole.role),
+            );
+          } catch (_) {
+            state = LoginSuccessState(currentUser);
+          }
+          return true;
+        }
+
         state = LoginLoggedInState(true);
         return true;
       } else {

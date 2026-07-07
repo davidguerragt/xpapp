@@ -11,6 +11,7 @@ class FirebaseTransactionDataSource {
     return _firestore
         .collection('transactions')
         .where('user', isEqualTo: user)
+        .orderBy('date', descending: true)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs

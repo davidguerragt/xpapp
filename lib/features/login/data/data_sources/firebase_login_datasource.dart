@@ -4,6 +4,19 @@ import 'package:xpapp/features/login/data/models/user_model.dart';
 class FirebaseLoginDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  UserModel? getCurrentUser() {
+    final user = _firebaseAuth.currentUser;
+    if (user == null) {
+      return null;
+    }
+
+    return UserModel(
+      id: user.uid,
+      email: user.email ?? '',
+      name: user.displayName ?? '',
+    );
+  }
+
   Future<UserModel> login(String email, String password) async {
     try {
       // ignore: avoid_print

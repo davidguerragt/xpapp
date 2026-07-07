@@ -277,7 +277,9 @@ class _BottomButtonsBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(bottomNavProvider);
     final loginState = ref.watch(loginProvider);
-    final isAdmin = loginState is LoginAdminState && loginState.isAdmin;
+    final isAdmin =
+        (loginState is LoginAdminState && loginState.isAdmin) ||
+        (loginState is LoginSuccessState && loginState.user.role == 'admin');
 
     void handleNavigation(int index) {
       if (!isAdmin) {

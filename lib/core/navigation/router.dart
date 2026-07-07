@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/checkout_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
@@ -6,13 +10,84 @@ import 'package:xpapp/features/ecommerce/presentation/views/product_abc_view.dar
 import 'package:xpapp/features/ecommerce/presentation/views/section_abc_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
+import 'package:xpapp/features/login/domain/use_cases/get_user_role_use_case.dart';
 import 'package:xpapp/features/login/presemtation/views/login_view.dart';
 import 'package:xpapp/features/login/presemtation/views/register_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/personalise_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/subscription_view.dart';
 
+final _getUserRoleUseCase = GetUserRoleUseCase();
+final _routerAuthRefresh = _AuthRouterRefreshNotifier();
+
+class _AuthRouterRefreshNotifier extends ChangeNotifier {
+  _AuthRouterRefreshNotifier() {
+    _subscription = FirebaseAuth.instance.authStateChanges().listen((_) {
+      notifyListeners();
+    });
+  }
+
+  StreamSubscription<User?>? _subscription;
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
+}
+
+bool _requiresAuth(String path) {
+  if (path.startsWith('/ecommerce/item/')) {
+    return true;
+  }
+
+  return path == '/' ||
+      path == '/ecommerce/your-bag' ||
+      path == '/ecommerce/checkout' ||
+      path == '/section-abc' ||
+      path == '/product-abc' ||
+      path == '/ecommerce/transaction-list';
+}
+
+bool _requiresAdmin(String path) {
+  return path == '/section-abc' || path == '/product-abc';
+}
+
 final router = GoRouter(
+  refreshListenable: _routerAuthRefresh,
+  redirect: (context, state) async {
+    final currentPath = state.uri.path;
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final isLoggedIn = currentUser != null;
+    final isAuthRoute =
+        currentPath == Routes.login || currentPath == Routes.register;
+
+    if (!isLoggedIn && _requiresAuth(currentPath)) {
+      return Routes.login;
+    }
+
+    if (isLoggedIn && isAuthRoute) {
+      return '/';
+    }
+
+    if (_requiresAdmin(currentPath)) {
+      final email = currentUser?.email;
+      if (email == null || email.isEmpty) {
+        return Routes.login;
+      }
+
+      try {
+        final userRole = await _getUserRoleUseCase.getUserRole(email);
+        if (userRole.role != 'admin') {
+          return '/';
+        }
+      } catch (_) {
+        return '/';
+      }
+    }
+
+    return null;
+  },
   routes: [
     GoRoute(
       name: Routes.login,
@@ -73,7 +148,7 @@ final router = GoRouter(
     ),
     GoRoute(
       name: Routes.transactionList,
-      path: '/transaction-list',
+      path: '/ecommerce/transaction-list',
       builder: (context, state) => const TransactionListView(),
     ),
   ],
@@ -96,7 +171,7 @@ abstract class Routes {
   static const String profile = '/profile';
   static const String settings = '/settings';
   static const String login = '/login';
-  static const String register = '/';
+  static const String register = '/register';
 
   // ABC
   static const String sectionABC = '/section-abc';

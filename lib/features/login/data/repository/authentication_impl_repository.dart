@@ -19,6 +19,16 @@ class AuthenticationImplRepository implements AuthenticationRepository {
   }
 
   @override
+  Future<UserEntity?> getCurrentUser() async {
+    final user = _dataSource.getCurrentUser();
+    if (user == null) {
+      return null;
+    }
+
+    return UserEntity(id: user.id, name: user.name, email: user.email);
+  }
+
+  @override
   Future<void> logout() async {
     await _dataSource.logout();
   }
