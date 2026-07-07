@@ -13,7 +13,17 @@ class TransactionListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Transaction List')),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Transaction List',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
       body: const SafeArea(child: TransactionListBody()),
     );
   }
@@ -49,17 +59,29 @@ class _TransactionListBodyState extends ConsumerState<TransactionListBody> {
       return Column(
         children: [
           const SizedBox(height: 20),
-          const Text(
-            'Transaction List',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
           const TransactionListArea(),
-          ElevatedButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               router.goNamed(Routes.ecommerceHome);
             },
-            child: const Text('Go to Checkout'),
+            child: Container(
+              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              decoration: BoxDecoration(
+                color: Colors.indigoAccent,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: const Center(
+                child: Text(
+                  'Back to Home',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       );
@@ -126,7 +148,13 @@ class TransactionListArea extends ConsumerWidget {
                     final transactionList = snapshot.data!;
                     return Column(
                       children: [
-                        Text('Total Transactions: ${transactionList.length}'),
+                        Text(
+                          'Total Transactions: ${transactionList.length}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Expanded(
                           child: ListView.builder(
                             itemCount: transactionList.length,
@@ -177,20 +205,20 @@ class TransactionListItem extends StatelessWidget {
     return ListTile(
       title: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.blueAccent, width: 2.0),
-          color: Colors.blueAccent,
+          border: Border.all(color: Colors.indigoAccent, width: 2.0),
+          color: Colors.blue,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Text(
           'Transaction ID: $transactionId',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
       ),
       subtitle: Container(
         margin: const EdgeInsets.only(top: 8.0),
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.blueAccent, width: 2.0),
+          border: Border.all(color: Colors.indigoAccent, width: 2.0),
           color: Colors.white,
           borderRadius: BorderRadius.circular(8.0),
         ),
