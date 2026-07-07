@@ -15,6 +15,11 @@ class LocalYourBagDataSource {
     await _prefs.setString('bag', bagProducts.toString());
   }
 
+  Future<void> clearBag() async {
+    await Future.delayed(const Duration(seconds: 1));
+    await _prefs.remove('bag');
+  }
+
   Future<List<BagProductModel>> getBag() async {
     await Future.delayed(const Duration(seconds: 1));
     final bagString = _prefs.getString('bag');

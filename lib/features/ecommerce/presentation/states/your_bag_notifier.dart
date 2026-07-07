@@ -72,4 +72,13 @@ class YourBagNotifier extends StateNotifier<YourBagState> {
       totalPrice: totalPrice,
     );
   }
+
+  Future<void> clearBag() async {
+    _bagProducts.clear();
+    state = state.copyWith(
+      bagProducts: List.from(_bagProducts),
+      totalPrice: 0.0,
+    );
+    await _saveYourBagUseCase([]);
+  }
 }

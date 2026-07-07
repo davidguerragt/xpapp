@@ -6,6 +6,8 @@ import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.
 import 'package:xpapp/features/ecommerce/presentation/states/checkout_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/payment_method_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
+import 'package:xpapp/features/login/presemtation/states/login_notifier.dart';
+import 'package:xpapp/features/login/presemtation/states/login_state.dart';
 
 class CheckoutView extends ConsumerWidget {
   const CheckoutView({super.key});
@@ -529,6 +531,25 @@ class _PaymentConfirmationSectionState
     double totalPrice,
     bool useApplePay,
   ) async {
+    // Validar si el usuario está logueado
+    final loginState = ref.read(loginProvider);
+    final isLoggedIn =
+        loginState is LoginSuccessState ||
+        loginState is LoginAdminState ||
+        (loginState is LoginLoggedInState && loginState.isLoggedIn);
+
+    if (!isLoggedIn) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please log in to complete your purchase'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      router.goNamed(Routes.login);
+      return;
+    }
+
     String? cvc;
     if (!useApplePay) {
       // cvc = await _showCvcDialog();

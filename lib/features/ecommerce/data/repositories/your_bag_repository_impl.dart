@@ -12,8 +12,15 @@ class YourBagRepositoryImpl implements YourBagRepository {
 
   @override
   Future<void> saveYourBag(List<BagProductEntity> bag) async {
-    _localDataSource.saveBag(bag.map((product) => product.toModel()).toList());
+    await _localDataSource.saveBag(
+      bag.map((product) => product.toModel()).toList(),
+    );
     // Implement the logic to save the bag, e.g., using local storage or an API
+  }
+
+  @override
+  Future<void> clearYourBag() async {
+    await _localDataSource.clearBag();
   }
 
   @override

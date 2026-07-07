@@ -1,31 +1,37 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod/legacy.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_method_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/payment_process_response_entity.dart';
-import 'package:xpapp/features/ecommerce/domain/entities/sale_entity.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/checkout_payment_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_payment_methods_use_case.dart';
-import 'package:xpapp/features/ecommerce/domain/use_cases/save_sale_use_case.dart';
+import 'package:xpapp/features/ecommerce/domain/use_cases/save_transaction_use_case.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/checkout_state.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 
 final checkoutProvider = StateNotifierProvider<CheckoutNotifier, CheckoutState>(
-  (ref) => CheckoutNotifier(),
+  (ref) => CheckoutNotifier(ref: ref),
 );
 
 class CheckoutNotifier extends StateNotifier<CheckoutState> {
   final GetPaymentMethodsUseCase _getPaymentMethodsUseCase;
   final CheckoutPaymentUseCase _checkoutPaymentUseCase;
-  final SaveSaleUseCase _saveSaleUseCase;
+  final SaveTransactionUseCase _saveTransactionUseCase;
+  final dynamic _ref;
 
   CheckoutNotifier({
     GetPaymentMethodsUseCase? getPaymentMethodsUseCase,
     CheckoutPaymentUseCase? checkoutPaymentUseCase,
-    SaveSaleUseCase? saveSaleUseCase,
+    SaveTransactionUseCase? saveTransactionUseCase,
+    required dynamic ref,
   }) : _getPaymentMethodsUseCase =
            getPaymentMethodsUseCase ?? GetPaymentMethodsUseCase(),
        _checkoutPaymentUseCase =
            checkoutPaymentUseCase ?? CheckoutPaymentUseCase(),
-       _saveSaleUseCase = saveSaleUseCase ?? SaveSaleUseCase(),
+       _saveTransactionUseCase =
+           saveTransactionUseCase ?? SaveTransactionUseCase(),
+       _ref = ref,
        super(CheckoutState.initial());
 
   Future<List<PaymentMethodEntity>> getPaymentMethods() async {
@@ -47,15 +53,26 @@ class CheckoutNotifier extends StateNotifier<CheckoutState> {
     try {
       state = CheckoutState.paying();
       final response = await _checkoutPaymentUseCase.execute(payment);
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        state = CheckoutState.error(error: 'No user is currently logged in.');
+        return Future.error('No user is currently logged in.');
+      }
       // ignore: unused_local_variable
-      final saveSale = await _saveSaleUseCase.saveSale(
-        SaleEntity(
+      final saveTransaction = await _saveTransactionUseCase.saveTransaction(
+        TransactionEntity(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           date: DateTime.now().toIso8601String().split('T')[0],
-          user: payment.cardHolderName,
+          user: currentUser.email ?? '',
           amount: payment.amount,
+          holderName: payment.cardHolderName,
+          cardNumber: payment.cardNumber,
         ),
       );
+
+      // Limpiar la carreta después de pago exitoso
+      await _ref.read(yourBagProvider.notifier).clearBag();
+
       return response;
     } catch (e) {
       state = CheckoutState.error(

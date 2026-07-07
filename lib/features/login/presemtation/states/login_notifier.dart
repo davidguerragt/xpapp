@@ -54,11 +54,25 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   Future<bool> isLoggedIn() async {
-    state = LoginLoadingState();
     try {
+      // Si ya está en estado de éxito o admin, mantener ese estado
+      if (state is LoginSuccessState || state is LoginAdminState) {
+        return true;
+      }
+
+      // Verificar con Firebase
       final bool isLoggedIn = await _isLoggedInUseCase();
-      state = LoginLoggedInState(isLoggedIn);
-      return true;
+
+      if (isLoggedIn) {
+        // Si Firebase dice que está logueado pero el estado no lo refleja,
+        // cambiar a un estado que indique que está logueado
+        state = LoginLoggedInState(true);
+        return true;
+      } else {
+        // Si no está logueado, volver al estado inicial
+        state = const LoginInitialState();
+        return false;
+      }
     } catch (e) {
       state = LoginErrorState(e.toString());
       return false;
