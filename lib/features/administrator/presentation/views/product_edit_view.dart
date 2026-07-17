@@ -25,7 +25,14 @@ class ProductEditView extends ConsumerWidget {
           ],
         ),
       ),
-      body: Column(children: [_BodyWidget(productId: productId)]),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(children: [_BodyWidget(productId: productId)]),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -44,7 +51,7 @@ class _BodyWidget extends ConsumerWidget {
 }
 
 class _ProductEditFormStateful extends ConsumerStatefulWidget {
-  final String productId;
+  final String? productId;
   const _ProductEditFormStateful({required this.productId});
 
   @override
@@ -55,7 +62,7 @@ class _ProductEditFormStateful extends ConsumerStatefulWidget {
 class _ProductEditFormStatefulState
     extends ConsumerState<_ProductEditFormStateful> {
   late final TextEditingController _idController = TextEditingController(
-    text: widget.productId,
+    text: widget.productId ?? '',
   );
   late final TextEditingController _titleController = TextEditingController();
   late final TextEditingController _descriptionController =
@@ -71,69 +78,52 @@ class _ProductEditFormStatefulState
   @override
   Widget build(BuildContext context) {
     final productState = ref.watch(productEditNotifierProvider.notifier);
-    final product = await productState.getProductById(widget.productId);
+    final dynamic product;
+    if (widget.productId != null && widget.productId!.isNotEmpty) {
+      product = productState.getProductById(widget.productId!);
+    } else {
+      product = null;
+    }
+
+    if (product != null) {
+      _idController.text = product?.id ?? '';
+      _titleController.text = product?.title ?? '';
+      _descriptionController.text = product?.description ?? '';
+      _priceController.text = product?.price() ?? '';
+      _imageUrlController.text = product?.imageUrl ?? '';
+      _sizesController.text = product?.sizes.join(', ') ?? '';
+      _colorsController.text = product?.colors.join(', ') ?? '';
+      _sectionsController.text = product?.sections.join(', ') ?? '';
+    }
 
     return Container(
       padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Product ID:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(label: '', controller: _idController, locked: true),
+          FormFieldLabel(label: 'Product ID:'),
+          FormField(controller: _idController, locked: true),
           SizedBox(height: 16.0),
-          Text(
-            'Title:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(
-            label: product.title ?? 'Product Title',
-            controller: _titleController,
-          ),
+          FormFieldLabel(label: 'Title:'),
+          FormField(controller: _titleController),
           SizedBox(height: 16.0),
-          Text(
-            'Description:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(
-            label: 'Product Description',
-            controller: _descriptionController,
-          ),
+          FormFieldLabel(label: 'Description:'),
+          FormField(controller: _descriptionController),
           SizedBox(height: 16.0),
-          Text(
-            'Price:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(label: 'Product Price', controller: _priceController),
+          FormFieldLabel(label: 'Price:'),
+          FormField(controller: _priceController),
           SizedBox(height: 16.0),
-          Text(
-            'Image URL:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(
-            label: 'Product Image URL',
-            controller: _imageUrlController,
-          ),
+          FormFieldLabel(label: 'Image URL:'),
+          FormField(controller: _imageUrlController),
           SizedBox(height: 16.0),
-          Text(
-            'Sizes:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(label: 'Product Sizes', controller: _sizesController),
+          FormFieldLabel(label: 'Sizes:'),
+          FormField(controller: _sizesController),
           SizedBox(height: 16.0),
-          Text(
-            'Colors:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(label: 'Product Colors', controller: _colorsController),
+          FormFieldLabel(label: 'Colors:'),
+          FormField(controller: _colorsController),
           SizedBox(height: 16.0),
-          Text(
-            'Sections:',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-          ),
-          FormField(label: 'Product Sections', controller: _sectionsController),
+          FormFieldLabel(label: 'Sections:'),
+          FormField(controller: _sectionsController),
           SizedBox(height: 16.0),
           BlueBigButton(route: '', buttonText: 'Save', onTap: () {}),
         ],
@@ -142,35 +132,58 @@ class _ProductEditFormStatefulState
   }
 }
 
-class FormField extends StatelessWidget {
+class FormFieldLabel extends StatelessWidget {
   final String label;
+  const FormFieldLabel({super.key, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: TextStyle(
+        fontSize: 14.0,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Outfit',
+        color: Colors.indigo,
+      ),
+    );
+  }
+}
+
+class FormField extends StatelessWidget {
   final TextEditingController controller;
   final bool locked;
 
-  const FormField({
-    super.key,
-    required this.label,
-    required this.controller,
-    this.locked = false,
-  });
+  const FormField({super.key, required this.controller, this.locked = false});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyle(fontSize: 16.0, color: Colors.black),
+      style: TextStyle(
+        fontSize: 16.0,
+        color: Colors.black,
+        fontFamily: 'Outfit',
+      ),
       decoration: InputDecoration(
-        hintText: label,
-        hintStyle: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
+        hintStyle: TextStyle(
+          fontSize: 16.0,
+          color: Colors.grey[200],
+          fontFamily: 'Outfit',
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide(color: Colors.grey, width: 0.5),
+        ),
         contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Colors.white, // Set the background color to light blue
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.grey[300]!, width: 1.0),
+          borderSide: BorderSide(color: Colors.transparent, width: 0.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.blue, width: 1.5),
+          borderSide: BorderSide(color: Colors.indigo, width: 1.0),
         ),
       ),
       controller: controller,

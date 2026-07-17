@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/product_abc_notifier.dart';
@@ -183,51 +184,64 @@ class _BodyWidget extends ConsumerWidget {
       separatorBuilder: (_, _) => const Divider(),
       itemBuilder: (context, index) {
         final product = allProducts[index];
-        return ListTile(
-          leading: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey.shade200,
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                product.image,
-                errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+        return InkWell(
+          onDoubleTap: () {
+            // ref.read(selectedProductProvider.notifier).state = product;
+            // ref.read(selectedSizeProvider.notifier).state =
+            //     product.sizes.isNotEmpty ? product.sizes.first : null;
+            // ref.read(selectedColorProvider.notifier).state =
+            //     product.colors.isNotEmpty ? product.colors.first : null;
+            router.goNamed(
+              Routes.productEdit,
+              pathParameters: {'productId': product.id},
+            );
+          },
+          child: ListTile(
+            leading: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.grey.shade200,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  product.image,
+                  errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+                ),
               ),
             ),
+            title: Text(
+              product.title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  product.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    _InfoTag(
+                      label: '\$${product.price.toStringAsFixed(2)}',
+                      color: Colors.green,
+                    ),
+                    const SizedBox(width: 5),
+                    _InfoTag(
+                      label: 'Sizes: ${product.sizes.length}',
+                      color: Colors.blue,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            isThreeLine: true,
           ),
-          title: Text(
-            product.title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                product.description,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  _InfoTag(
-                    label: '\$${product.price.toStringAsFixed(2)}',
-                    color: Colors.green,
-                  ),
-                  const SizedBox(width: 5),
-                  _InfoTag(
-                    label: 'Sizes: ${product.sizes.length}',
-                    color: Colors.blue,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          isThreeLine: true,
         );
       },
     );
