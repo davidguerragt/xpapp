@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:xpapp/features/administrator/presentation/views/product_edit_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/checkout_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
@@ -151,6 +152,12 @@ final router = GoRouter(
       path: '/ecommerce/transaction-list',
       builder: (context, state) => const TransactionListView(),
     ),
+    // Administrator Routes
+    GoRoute(
+      name: Routes.productEdit,
+      path: '/product-edit',
+      builder: (context, state) => const ProductEditView(productId: ''),
+    ),
   ],
 );
 
@@ -176,4 +183,7 @@ abstract class Routes {
   // ABC
   static const String sectionABC = '/section-abc';
   static const String productABC = '/product-abc';
+
+  // Administrator routes
+  static const String productEdit = '/product-edit';
 }

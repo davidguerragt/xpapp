@@ -295,7 +295,8 @@ class _BottomButtonsBar extends ConsumerWidget {
           router.goNamed(Routes.sectionABC);
           break;
         case 2:
-          router.goNamed(Routes.productABC);
+          router.goNamed(Routes.productEdit);
+          //router.goNamed(Routes.productABC);
           break;
         case 3:
           router.goNamed(Routes.login);

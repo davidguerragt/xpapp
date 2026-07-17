@@ -11,3 +11,11 @@ abstract class TestCredentials {
   static final String testEmail = "david.guerra@gmail.com";
   static final String testPassword = "1234567";
 }
+
+abstract class FireStoreCollections {
+  static final String users = "users";
+  static final String cards = "cards";
+  static final String products = "products";
+  static final String sections = "sections";
+  static final String transactions = "transactions";
+}

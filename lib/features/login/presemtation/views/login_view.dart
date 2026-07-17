@@ -92,7 +92,8 @@ class _BodyWidget extends ConsumerWidget {
                         .login(email, password);
                     if (!context.mounted) return;
                     if (success) {
-                      router.goNamed(Routes.ecommerceHome);
+                      //router.goNamed(Routes.ecommerceHome);
+                      router.goNamed(Routes.productEdit);
                     } else {
                       final state = ref.read(loginProvider);
                       final message = state.errorMessage ?? 'Login failed';
