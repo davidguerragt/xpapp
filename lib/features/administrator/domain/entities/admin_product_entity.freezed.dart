@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AdminProductEntity {
 
- String get id; String get title; String get description; double get price; String get imageUrl; List<String> get sizes; List<String> get colors; List<String> get sections;
+ String get id; String? get title; String? get description; double? get price; String? get image; List<String>? get sizes; List<String>? get colors; List<String>? get sections;
 /// Create a copy of AdminProductEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AdminProductEntityCopyWith<AdminProductEntity> get copyWith => _$AdminProductEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&const DeepCollectionEquality().equals(other.colors, colors)&&const DeepCollectionEquality().equals(other.sections, sections));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&const DeepCollectionEquality().equals(other.colors, colors)&&const DeepCollectionEquality().equals(other.sections, sections));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,price,imageUrl,const DeepCollectionEquality().hash(sizes),const DeepCollectionEquality().hash(colors),const DeepCollectionEquality().hash(sections));
+int get hashCode => Object.hash(runtimeType,id,title,description,price,image,const DeepCollectionEquality().hash(sizes),const DeepCollectionEquality().hash(colors),const DeepCollectionEquality().hash(sections));
 
 @override
 String toString() {
-  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, imageUrl: $imageUrl, sizes: $sizes, colors: $colors, sections: $sections)';
+  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, image: $image, sizes: $sizes, colors: $colors, sections: $sections)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AdminProductEntityCopyWith<$Res>  {
   factory $AdminProductEntityCopyWith(AdminProductEntity value, $Res Function(AdminProductEntity) _then) = _$AdminProductEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String description, double price, String imageUrl, List<String> sizes, List<String> colors, List<String> sections
+ String id, String? title, String? description, double? price, String? image, List<String>? sizes, List<String>? colors, List<String>? sections
 });
 
 
@@ -62,17 +62,17 @@ class _$AdminProductEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdminProductEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? imageUrl = null,Object? sizes = null,Object? colors = null,Object? sections = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? price = freezed,Object? image = freezed,Object? sizes = freezed,Object? colors = freezed,Object? sections = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,sizes: null == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
-as List<String>,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
-as List<String>,sections: null == sections ? _self.sections : sections // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as double?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String?,sizes: freezed == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
+as List<String>?,colors: freezed == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
+as List<String>?,sections: freezed == sections ? _self.sections : sections // ignore: cast_nullable_to_non_nullable
+as List<String>?,
   ));
 }
 
@@ -157,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  double price,  String imageUrl,  List<String> sizes,  List<String> colors,  List<String> sections)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AdminProductEntity() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.price,_that.imageUrl,_that.sizes,_that.colors,_that.sections);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections);case _:
   return orElse();
 
 }
@@ -178,10 +178,10 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.imageUr
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  double price,  String imageUrl,  List<String> sizes,  List<String> colors,  List<String> sections)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections)  $default,) {final _that = this;
 switch (_that) {
 case _AdminProductEntity():
-return $default(_that.id,_that.title,_that.description,_that.price,_that.imageUrl,_that.sizes,_that.colors,_that.sections);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +198,10 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.imageUr
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  double price,  String imageUrl,  List<String> sizes,  List<String> colors,  List<String> sections)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections)?  $default,) {final _that = this;
 switch (_that) {
 case _AdminProductEntity() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.price,_that.imageUrl,_that.sizes,_that.colors,_that.sections);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections);case _:
   return null;
 
 }
@@ -213,33 +213,39 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.imageUr
 
 
 class _AdminProductEntity implements AdminProductEntity {
-  const _AdminProductEntity({required this.id, required this.title, required this.description, required this.price, required this.imageUrl, required final  List<String> sizes, required final  List<String> colors, required final  List<String> sections}): _sizes = sizes,_colors = colors,_sections = sections;
+  const _AdminProductEntity({required this.id, required this.title, required this.description, required this.price, required this.image, required final  List<String>? sizes, required final  List<String>? colors, required final  List<String>? sections}): _sizes = sizes,_colors = colors,_sections = sections;
   
 
 @override final  String id;
-@override final  String title;
-@override final  String description;
-@override final  double price;
-@override final  String imageUrl;
- final  List<String> _sizes;
-@override List<String> get sizes {
+@override final  String? title;
+@override final  String? description;
+@override final  double? price;
+@override final  String? image;
+ final  List<String>? _sizes;
+@override List<String>? get sizes {
+  final value = _sizes;
+  if (value == null) return null;
   if (_sizes is EqualUnmodifiableListView) return _sizes;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_sizes);
+  return EqualUnmodifiableListView(value);
 }
 
- final  List<String> _colors;
-@override List<String> get colors {
+ final  List<String>? _colors;
+@override List<String>? get colors {
+  final value = _colors;
+  if (value == null) return null;
   if (_colors is EqualUnmodifiableListView) return _colors;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_colors);
+  return EqualUnmodifiableListView(value);
 }
 
- final  List<String> _sections;
-@override List<String> get sections {
+ final  List<String>? _sections;
+@override List<String>? get sections {
+  final value = _sections;
+  if (value == null) return null;
   if (_sections is EqualUnmodifiableListView) return _sections;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_sections);
+  return EqualUnmodifiableListView(value);
 }
 
 
@@ -253,16 +259,16 @@ _$AdminProductEntityCopyWith<_AdminProductEntity> get copyWith => __$AdminProduc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&const DeepCollectionEquality().equals(other._colors, _colors)&&const DeepCollectionEquality().equals(other._sections, _sections));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&const DeepCollectionEquality().equals(other._colors, _colors)&&const DeepCollectionEquality().equals(other._sections, _sections));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,price,imageUrl,const DeepCollectionEquality().hash(_sizes),const DeepCollectionEquality().hash(_colors),const DeepCollectionEquality().hash(_sections));
+int get hashCode => Object.hash(runtimeType,id,title,description,price,image,const DeepCollectionEquality().hash(_sizes),const DeepCollectionEquality().hash(_colors),const DeepCollectionEquality().hash(_sections));
 
 @override
 String toString() {
-  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, imageUrl: $imageUrl, sizes: $sizes, colors: $colors, sections: $sections)';
+  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, image: $image, sizes: $sizes, colors: $colors, sections: $sections)';
 }
 
 
@@ -273,7 +279,7 @@ abstract mixin class _$AdminProductEntityCopyWith<$Res> implements $AdminProduct
   factory _$AdminProductEntityCopyWith(_AdminProductEntity value, $Res Function(_AdminProductEntity) _then) = __$AdminProductEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String description, double price, String imageUrl, List<String> sizes, List<String> colors, List<String> sections
+ String id, String? title, String? description, double? price, String? image, List<String>? sizes, List<String>? colors, List<String>? sections
 });
 
 
@@ -290,17 +296,17 @@ class __$AdminProductEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdminProductEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? imageUrl = null,Object? sizes = null,Object? colors = null,Object? sections = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? price = freezed,Object? image = freezed,Object? sizes = freezed,Object? colors = freezed,Object? sections = freezed,}) {
   return _then(_AdminProductEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,sizes: null == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
-as List<String>,colors: null == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable
-as List<String>,sections: null == sections ? _self._sections : sections // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,price: freezed == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
+as double?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String?,sizes: freezed == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
+as List<String>?,colors: freezed == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable
+as List<String>?,sections: freezed == sections ? _self._sections : sections // ignore: cast_nullable_to_non_nullable
+as List<String>?,
   ));
 }
 

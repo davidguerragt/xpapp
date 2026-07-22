@@ -193,8 +193,9 @@ class _BodyWidget extends ConsumerWidget {
             //     product.colors.isNotEmpty ? product.colors.first : null;
             router.goNamed(
               Routes.productEdit,
-              pathParameters: {'productId': product.id},
+              pathParameters: {'id': product.id},
             );
+            //router.goNamed(Routes.itemView, pathParameters: {'id': product.id});
           },
           child: ListTile(
             leading: Container(

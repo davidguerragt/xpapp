@@ -6,13 +6,13 @@ part 'admin_product_entity.freezed.dart';
 abstract class AdminProductEntity with _$AdminProductEntity {
   const factory AdminProductEntity({
     required String id,
-    required String title,
-    required String description,
-    required double price,
-    required String imageUrl,
-    required List<String> sizes,
-    required List<String> colors,
-    required List<String> sections,
+    required String? title,
+    required String? description,
+    required double? price,
+    required String? image,
+    required List<String>? sizes,
+    required List<String>? colors,
+    required List<String>? sections,
   }) = _AdminProductEntity;
 
   factory AdminProductEntity.fromModel(AdminProductModel model) =>
@@ -21,7 +21,7 @@ abstract class AdminProductEntity with _$AdminProductEntity {
         title: model.title,
         description: model.description,
         price: model.price,
-        imageUrl: model.imageUrl,
+        image: model.image,
         sizes: model.sizes,
         colors: model.colors,
         sections: model.sections,
@@ -31,12 +31,12 @@ abstract class AdminProductEntity with _$AdminProductEntity {
 extension AdminProductEntityX on AdminProductEntity {
   AdminProductModel toModel() => AdminProductModel(
     id: id,
-    title: title,
-    description: description,
-    price: price,
-    imageUrl: imageUrl,
-    sizes: sizes,
-    colors: colors,
-    sections: sections,
+    title: title ?? '',
+    description: description ?? '',
+    price: price ?? 0.0,
+    image: image ?? '',
+    sizes: sizes ?? [],
+    colors: colors ?? [],
+    sections: sections ?? [],
   );
 }

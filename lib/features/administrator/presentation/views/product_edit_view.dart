@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/core/widgets/gemeral_widgets.dart';
 import 'package:xpapp/features/administrator/domain/entities/admin_product_entity.dart';
 import 'package:xpapp/features/administrator/presentation/states/product_edit_notifier.dart';
@@ -18,7 +19,7 @@ class ProductEditView extends ConsumerWidget {
             IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                router.goNamed(Routes.productABC);
               },
             ),
             Text('Product Edit'),
@@ -39,63 +40,54 @@ class ProductEditView extends ConsumerWidget {
 
 class _BodyWidget extends ConsumerWidget {
   final String productId;
-  const _BodyWidget({required this.productId});
+  const _BodyWidget({super.key, required this.productId});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Column(
-      children: [
-        SafeArea(child: _ProductEditFormStateful(productId: productId)),
-      ],
+    final state = ref.watch(productEditProvider(productId));
+
+    final Widget content = state.when(
+      initial: () => Center(child: Text('Initial State')),
+      loading: (isLoading) => Center(child: CircularProgressIndicator()),
+      loaded: (product) => _ProductEditFormStateful(product: product),
+      error: (message) => Center(child: Text(message)),
     );
+
+    return Column(children: [SafeArea(child: content)]);
   }
 }
 
-class _ProductEditFormStateful extends ConsumerStatefulWidget {
-  final String? productId;
-  const _ProductEditFormStateful({required this.productId});
+class _ProductEditFormStateful extends ConsumerWidget {
+  late final AdminProductEntity product;
 
-  @override
-  ConsumerState<_ProductEditFormStateful> createState() =>
-      _ProductEditFormStatefulState();
-}
+  _ProductEditFormStateful({super.key, required this.product});
 
-class _ProductEditFormStatefulState
-    extends ConsumerState<_ProductEditFormStateful> {
   late final TextEditingController _idController = TextEditingController(
-    text: widget.productId ?? '',
+    text: product.id,
   );
-  late final TextEditingController _titleController = TextEditingController();
+  late final TextEditingController _titleController = TextEditingController(
+    text: product.title,
+  );
   late final TextEditingController _descriptionController =
-      TextEditingController();
-  late final TextEditingController _priceController = TextEditingController();
-  late final TextEditingController _imageUrlController =
-      TextEditingController();
-  late final TextEditingController _sizesController = TextEditingController();
-  late final TextEditingController _colorsController = TextEditingController();
-  late final TextEditingController _sectionsController =
-      TextEditingController();
+      TextEditingController(text: product.description);
+  late final TextEditingController _priceController = TextEditingController(
+    text: product.price.toString(),
+  );
+  late final TextEditingController _imageUrlController = TextEditingController(
+    text: product.image,
+  );
+  late final TextEditingController _sizesController = TextEditingController(
+    text: product.sizes?.join(', ') ?? '',
+  );
+  late final TextEditingController _colorsController = TextEditingController(
+    text: product.colors?.join(', ') ?? '',
+  );
+  late final TextEditingController _sectionsController = TextEditingController(
+    text: product.sections?.join(', ') ?? '',
+  );
 
   @override
-  Widget build(BuildContext context) {
-    final productState = ref.watch(productEditNotifierProvider.notifier);
-    final dynamic product;
-    if (widget.productId != null && widget.productId!.isNotEmpty) {
-      product = productState.getProductById(widget.productId!);
-    } else {
-      product = null;
-    }
-
-    if (product != null) {
-      _idController.text = product?.id ?? '';
-      _titleController.text = product?.title ?? '';
-      _descriptionController.text = product?.description ?? '';
-      _priceController.text = product?.price() ?? '';
-      _imageUrlController.text = product?.imageUrl ?? '';
-      _sizesController.text = product?.sizes.join(', ') ?? '';
-      _colorsController.text = product?.colors.join(', ') ?? '';
-      _sectionsController.text = product?.sections.join(', ') ?? '';
-    }
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: EdgeInsets.all(16.0),
       child: Column(

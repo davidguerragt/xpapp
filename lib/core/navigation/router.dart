@@ -155,8 +155,9 @@ final router = GoRouter(
     // Administrator Routes
     GoRoute(
       name: Routes.productEdit,
-      path: '/product-edit',
-      builder: (context, state) => const ProductEditView(productId: ''),
+      path: '/product-edit/:id',
+      builder: (context, state) =>
+          ProductEditView(productId: state.pathParameters['id']!),
     ),
   ],
 );

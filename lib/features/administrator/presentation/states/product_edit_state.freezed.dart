@@ -193,7 +193,7 @@ return error(_that.message);case _:
 
 
 class _Initial implements AdminProductState {
-  const _Initial();
+   _Initial();
   
 
 
@@ -225,7 +225,7 @@ String toString() {
 
 
 class _Loading implements AdminProductState {
-  const _Loading({required this.isLoading});
+   _Loading({required this.isLoading});
   
 
  final  bool isLoading;
@@ -291,7 +291,7 @@ as bool,
 
 
 class _Loaded implements AdminProductState {
-  const _Loaded({required this.product});
+   _Loaded({required this.product});
   
 
  final  AdminProductEntity product;
@@ -366,7 +366,7 @@ $AdminProductEntityCopyWith<$Res> get product {
 
 
 class _Error implements AdminProductState {
-  const _Error({required this.message});
+   _Error({required this.message});
   
 
  final  String message;

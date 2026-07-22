@@ -10,10 +10,10 @@ abstract class AdminProductModel with _$AdminProductModel {
     required String title,
     required String description,
     required double price,
-    required String imageUrl,
-    required List<String> sizes,
-    required List<String> colors,
-    required List<String> sections,
+    @JsonKey(defaultValue: '') required String image,
+    @JsonKey(defaultValue: []) required List<String> sizes,
+    @JsonKey(defaultValue: []) required List<String> colors,
+    @JsonKey(defaultValue: []) required List<String> sections,
   }) = _AdminProductModel;
 
   factory AdminProductModel.fromJson(Map<String, dynamic> json) =>
