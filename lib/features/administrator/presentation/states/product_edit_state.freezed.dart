@@ -55,14 +55,16 @@ extension AdminProductStatePatterns on AdminProductState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,TResult Function( _Saving value)?  saving,TResult Function( _Saved value)?  saved,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
 return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _Error() when error != null:
-return error(_that);case _:
+return error(_that);case _Saving() when saving != null:
+return saving(_that);case _Saved() when saved != null:
+return saved(_that);case _:
   return orElse();
 
 }
@@ -80,14 +82,16 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,required TResult Function( _Saving value)  saving,required TResult Function( _Saved value)  saved,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _Loading():
 return loading(_that);case _Loaded():
 return loaded(_that);case _Error():
-return error(_that);case _:
+return error(_that);case _Saving():
+return saving(_that);case _Saved():
+return saved(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -104,14 +108,16 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,TResult? Function( _Saving value)?  saving,TResult? Function( _Saved value)?  saved,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
 return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _Error() when error != null:
-return error(_that);case _:
+return error(_that);case _Saving() when saving != null:
+return saving(_that);case _Saved() when saved != null:
+return saved(_that);case _:
   return null;
 
 }
@@ -128,13 +134,15 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( bool isLoading)?  loading,TResult Function( AdminProductEntity product)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( bool isLoading)?  loading,TResult Function( AdminProductEntity product)?  loaded,TResult Function( String message)?  error,TResult Function( bool isSaving)?  saving,TResult Function( AdminProductEntity product)?  saved,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading(_that.isLoading);case _Loaded() when loaded != null:
 return loaded(_that.product);case _Error() when error != null:
-return error(_that.message);case _:
+return error(_that.message);case _Saving() when saving != null:
+return saving(_that.isSaving);case _Saved() when saved != null:
+return saved(_that.product);case _:
   return orElse();
 
 }
@@ -152,13 +160,15 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( bool isLoading)  loading,required TResult Function( AdminProductEntity product)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( bool isLoading)  loading,required TResult Function( AdminProductEntity product)  loaded,required TResult Function( String message)  error,required TResult Function( bool isSaving)  saving,required TResult Function( AdminProductEntity product)  saved,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading(_that.isLoading);case _Loaded():
 return loaded(_that.product);case _Error():
-return error(_that.message);case _:
+return error(_that.message);case _Saving():
+return saving(_that.isSaving);case _Saved():
+return saved(_that.product);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -175,13 +185,15 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( bool isLoading)?  loading,TResult? Function( AdminProductEntity product)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( bool isLoading)?  loading,TResult? Function( AdminProductEntity product)?  loaded,TResult? Function( String message)?  error,TResult? Function( bool isSaving)?  saving,TResult? Function( AdminProductEntity product)?  saved,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading(_that.isLoading);case _Loaded() when loaded != null:
 return loaded(_that.product);case _Error() when error != null:
-return error(_that.message);case _:
+return error(_that.message);case _Saving() when saving != null:
+return saving(_that.isSaving);case _Saved() when saved != null:
+return saved(_that.product);case _:
   return null;
 
 }
@@ -426,6 +438,147 @@ as String,
 }
 
 
+}
+
+/// @nodoc
+
+
+class _Saving implements AdminProductState {
+   _Saving({required this.isSaving});
+  
+
+ final  bool isSaving;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SavingCopyWith<_Saving> get copyWith => __$SavingCopyWithImpl<_Saving>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Saving&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,isSaving);
+
+@override
+String toString() {
+  return 'AdminProductState.saving(isSaving: $isSaving)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SavingCopyWith<$Res> implements $AdminProductStateCopyWith<$Res> {
+  factory _$SavingCopyWith(_Saving value, $Res Function(_Saving) _then) = __$SavingCopyWithImpl;
+@useResult
+$Res call({
+ bool isSaving
+});
+
+
+
+
+}
+/// @nodoc
+class __$SavingCopyWithImpl<$Res>
+    implements _$SavingCopyWith<$Res> {
+  __$SavingCopyWithImpl(this._self, this._then);
+
+  final _Saving _self;
+  final $Res Function(_Saving) _then;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? isSaving = null,}) {
+  return _then(_Saving(
+isSaving: null == isSaving ? _self.isSaving : isSaving // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _Saved implements AdminProductState {
+   _Saved({required this.product});
+  
+
+ final  AdminProductEntity product;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SavedCopyWith<_Saved> get copyWith => __$SavedCopyWithImpl<_Saved>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Saved&&(identical(other.product, product) || other.product == product));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,product);
+
+@override
+String toString() {
+  return 'AdminProductState.saved(product: $product)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SavedCopyWith<$Res> implements $AdminProductStateCopyWith<$Res> {
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) _then) = __$SavedCopyWithImpl;
+@useResult
+$Res call({
+ AdminProductEntity product
+});
+
+
+$AdminProductEntityCopyWith<$Res> get product;
+
+}
+/// @nodoc
+class __$SavedCopyWithImpl<$Res>
+    implements _$SavedCopyWith<$Res> {
+  __$SavedCopyWithImpl(this._self, this._then);
+
+  final _Saved _self;
+  final $Res Function(_Saved) _then;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? product = null,}) {
+  return _then(_Saved(
+product: null == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
+as AdminProductEntity,
+  ));
+}
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AdminProductEntityCopyWith<$Res> get product {
+  
+  return $AdminProductEntityCopyWith<$Res>(_self.product, (value) {
+    return _then(_self.copyWith(product: value));
+  });
+}
 }
 
 // dart format on

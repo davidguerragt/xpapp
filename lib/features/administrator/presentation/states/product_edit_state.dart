@@ -9,4 +9,9 @@ abstract class AdminProductState with _$AdminProductState {
   factory AdminProductState.loaded({required AdminProductEntity product}) =
       _Loaded;
   factory AdminProductState.error({required String message}) = _Error;
+
+  // Saving
+  factory AdminProductState.saving({required bool isSaving}) = _Saving;
+  factory AdminProductState.saved({required AdminProductEntity product}) =
+      _Saved;
 }

@@ -1,6 +1,7 @@
 import 'package:riverpod/legacy.dart';
 import 'product_edit_state.dart';
 import 'package:xpapp/features/administrator/domain/use_cases/get_admin_product_use_case.dart';
+import 'package:xpapp/features/administrator/domain/entities/admin_product_entity.dart';
 
 final productEditProvider =
     StateNotifierProvider.family<
@@ -33,6 +34,19 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
     } catch (e) {
       state = AdminProductState.error(
         message: 'Error al cargar el producto: ${e.toString()}',
+      );
+    }
+  }
+
+  Future<void> saveProduct(AdminProductEntity product) async {
+    try {
+      state = AdminProductState.saving(isSaving: true);
+      // Here you would call a use case to save the product
+      // For example: await _saveAdminProductUseCase.saveProduct(product);
+      state = AdminProductState.saved(product: product);
+    } catch (e) {
+      state = AdminProductState.error(
+        message: 'Error al guardar el producto: ${e.toString()}',
       );
     }
   }
