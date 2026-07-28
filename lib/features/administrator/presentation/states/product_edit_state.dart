@@ -18,4 +18,14 @@ abstract class AdminProductState with _$AdminProductState {
   // Deleting
   factory AdminProductState.deleting({required bool isDeleting}) = _Deleting;
   factory AdminProductState.deleted() = _Deleted;
+
+  // Picking image
+  factory AdminProductState.pickingImage({required bool isPicking}) =
+      _PickingImage;
+  factory AdminProductState.imagePicked({required Object image}) = _ImagePicked;
+
+  factory AdminProductState.capturingImage({required bool isCapturing}) =
+      _CapturingImage;
+  factory AdminProductState.imageCaptured({required Object image}) =
+      _ImageCaptured;
 }

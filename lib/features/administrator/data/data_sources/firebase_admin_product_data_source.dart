@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:xpapp/features/administrator/data/models/admin_product_model.dart';
 import 'package:xpapp/core/consts/api_consts.dart';
 
-class FirebaseProductAdminDataSource {
+class FirebaseAdminProductDataSource {
   final FirebaseFirestore _firestore;
 
-  FirebaseProductAdminDataSource({FirebaseFirestore? firestore})
+  FirebaseAdminProductDataSource({FirebaseFirestore? firestore})
     : _firestore = firestore ?? FirebaseFirestore.instance;
 
   Future<AdminProductModel> getProductById(String id) async {

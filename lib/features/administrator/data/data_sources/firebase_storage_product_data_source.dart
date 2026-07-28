@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 // import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:xpapp/core/consts/assets.dart';
 
 class FirebaseStorageProductDataSource {
   final FirebaseStorage _firebaseStorage;

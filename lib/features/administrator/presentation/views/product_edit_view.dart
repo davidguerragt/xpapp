@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/core/widgets/gemeral_widgets.dart';
 import 'package:xpapp/features/administrator/domain/entities/admin_product_entity.dart';
@@ -65,8 +68,15 @@ class _BodyWidget extends ConsumerWidget {
           });
           return Center(child: Text('Producto eliminado'));
         },
+        pickingImage: (bool isPicking) =>
+            Center(child: CircularProgressIndicator()),
+        imagePicked: (Object? image) =>
+            Center(child: Text('Imagen seleccionada')),
+        capturingImage: (bool isCapturing) =>
+            Center(child: CircularProgressIndicator()),
+        imageCaptured: (Object image) =>
+            Center(child: Text('Imagen capturada')),
       );
-
       return Column(children: [SafeArea(child: content)]);
     } else {
       final Widget content = _ProductEditFormStateful(
@@ -104,6 +114,7 @@ class _ProductEditFormStatefulState
   late TextEditingController _priceController;
   late TextEditingController _imageUrlController;
   late TextEditingController _sectionsController;
+  XFile? _imageFile;
   late List<String> _colors;
   late List<String> _sizes;
   late List<String> _sections;
@@ -120,6 +131,7 @@ class _ProductEditFormStatefulState
       text: widget.product.price.toString(),
     );
     _imageUrlController = TextEditingController(text: widget.product.image);
+    _imageFile = widget.product.imageFile;
     _sections = List<String>.from(widget.product.sections ?? []);
     _colors = List<String>.from(widget.product.colors ?? []);
     _sizes = List<String>.from(widget.product.sizes ?? []);
@@ -137,8 +149,8 @@ class _ProductEditFormStatefulState
     super.dispose();
   }
 
-  void _saveProduct() {
-    final updatedProduct = AdminProductEntity(
+  void _addProduct(XFile? imageFile) {
+    final product = AdminProductEntity(
       id: _idController.text,
       title: _titleController.text,
       description: _descriptionController.text,
@@ -146,16 +158,33 @@ class _ProductEditFormStatefulState
       image: _imageUrlController.text,
       sizes: _sizes,
       colors: _colors,
-      sections: _sections,
+      sections: _sectionsController.text
+          .split(',')
+          .map((s) => s.trim())
+          .toList(),
+      imageFile: imageFile,
     );
 
-    ref
-        .read(productEditProvider(widget.product.id).notifier)
-        .saveProduct(updatedProduct);
+    ref.read(productEditProvider(product.id).notifier).addProduct(product);
+  }
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Producto guardado')));
+  void _updateProduct(XFile? imageFile) {
+    final product = AdminProductEntity(
+      id: _idController.text,
+      title: _titleController.text,
+      description: _descriptionController.text,
+      price: double.tryParse(_priceController.text) ?? 0.0,
+      image: _imageUrlController.text,
+      sizes: _sizes,
+      colors: _colors,
+      sections: _sectionsController.text
+          .split(',')
+          .map((s) => s.trim())
+          .toList(),
+      imageFile: imageFile,
+    );
+
+    ref.read(productEditProvider(product.id).notifier).updateProduct(product);
   }
 
   @override
@@ -172,7 +201,9 @@ class _ProductEditFormStatefulState
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(color: Colors.grey, width: 0.5),
             ),
-            child: _imageUrlController.text.isNotEmpty
+            child: _imageFile != null
+                ? Image.file(File(_imageFile!.path), fit: BoxFit.cover)
+                : _imageUrlController.text.isNotEmpty
                 ? (_imageUrlController.text.contains('assets')
                       ? Image.asset(
                           _imageUrlController.text,
@@ -184,6 +215,44 @@ class _ProductEditFormStatefulState
                         ))
                 : Center(child: Text('No Image')),
           ),
+          SizedBox(height: 16.0),
+          Row(
+            children: [
+              ButtonWithIcon(
+                context: context,
+                icon: Icons.image,
+                text: 'Select Image',
+                onPressed: () async {
+                  final imageFile = await ref
+                      .read(productEditProvider(widget.product.id).notifier)
+                      .pickImage();
+                  if (imageFile != null) {
+                    setState(() {
+                      _imageFile = imageFile;
+                      _imageUrlController.text = imageFile.path;
+                    });
+                  }
+                },
+              ),
+              ButtonWithIcon(
+                context: context,
+                icon: Icons.image,
+                text: 'Capture Image',
+                onPressed: () async {
+                  final imageFile = await ref
+                      .read(productEditProvider(widget.product.id).notifier)
+                      .captureImage();
+                  if (imageFile != null) {
+                    setState(() {
+                      _imageFile = imageFile;
+                      _imageUrlController.text = imageFile.path;
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+
           // FormFieldLabel(label: 'Product ID:'),
           // FormField(
           //   controller: _idController,
@@ -268,24 +337,34 @@ class _ProductEditFormStatefulState
               ),
             ],
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: _sizes.length,
-            itemBuilder: (context, index) {
-              final size = _sizes[index];
-              return ListTile(
-                title: Text(size),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    setState(() {
-                      _sizes.removeAt(index);
-                    });
-                  },
+          Wrap(
+            spacing: 4,
+            children: _sizes.map((size) {
+              return GestureDetector(
+                onDoubleTap: () {
+                  setState(() {
+                    _sizes.remove(size);
+                  });
+                },
+                child: ChoiceChip(
+                  label: Text(
+                    size.trim(),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontFamily: 'Inter',
+                      height: 1.0,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                  selected: false,
+                  selectedColor: Colors.blueAccent,
+                  backgroundColor: Colors.white,
+                  side: BorderSide(color: Colors.black),
                 ),
               );
-            },
+            }).toList(),
           ),
           SizedBox(height: 16.0),
           Row(
@@ -331,24 +410,36 @@ class _ProductEditFormStatefulState
               ),
             ],
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: _colors.length,
-            itemBuilder: (context, index) {
-              final color = _colors[index];
-              return ListTile(
-                title: Text(color),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    setState(() {
-                      _colors.removeAt(index);
-                    });
-                  },
+          Wrap(
+            spacing: 4,
+            children: _colors.map((color) {
+              return GestureDetector(
+                onDoubleTap: () {
+                  setState(() {
+                    _colors.remove(color);
+                  });
+                },
+                child: ChoiceChip(
+                  label: Text(
+                    color.trim(),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: color.trim().toLowerCase() == 'black'
+                          ? Colors.white
+                          : Colors.black,
+                      fontFamily: 'Inter',
+                      height: 1.0,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                  selected: true,
+                  selectedColor: _getColorFromName(color),
+                  backgroundColor: Colors.white,
+                  side: BorderSide(color: Colors.black),
                 ),
               );
-            },
+            }).toList(),
           ),
           SizedBox(height: 16.0),
           Row(
@@ -401,32 +492,108 @@ class _ProductEditFormStatefulState
               ),
             ],
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: _sectionsController.text.split(',').length,
-            itemBuilder: (context, index) {
-              final section = _sectionsController.text.split(',')[index].trim();
-              return ListTile(
-                title: Text(section),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    setState(() {
-                      final sections = _sectionsController.text.split(',');
-                      sections.removeAt(index);
-                      _sectionsController.text = sections.join(', ');
-                    });
-                  },
+          Wrap(
+            spacing: 4,
+            children: _sections.map((section) {
+              return GestureDetector(
+                onDoubleTap: () {
+                  setState(() {
+                    _sections.remove(section);
+                  });
+                },
+                child: ChoiceChip(
+                  label: Text(
+                    section.trim(),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontFamily: 'Inter',
+                      height: 1.0,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                  selected: true,
+                  selectedColor: _getColorFromName(section),
+                  backgroundColor: Colors.white,
+                  side: BorderSide(color: Colors.black),
                 ),
               );
-            },
+            }).toList(),
           ),
 
           SizedBox(height: 16.0),
-          BlueBigButton(route: '', buttonText: 'Save', onTap: _saveProduct),
+          BlueBigButton(
+            route: '',
+            buttonText: 'Save',
+            onTap: () {
+              if (widget.product.id.isEmpty) {
+                _addProduct(_imageFile);
+              } else {
+                _updateProduct(_imageFile);
+              }
+            },
+          ),
         ],
       ),
+    );
+  }
+
+  Color? _getColorFromName(String color) {
+    switch (color.toLowerCase()) {
+      case 'red':
+        return Colors.red;
+      case 'green':
+        return Colors.green;
+      case 'blue':
+        return Colors.blue;
+      case 'yellow':
+        return Colors.yellow;
+      case 'orange':
+        return Colors.orange;
+      case 'purple':
+        return Colors.purple;
+      case 'pink':
+        return Colors.pink;
+      case 'brown':
+        return Colors.brown;
+      case 'grey':
+        return Colors.grey;
+      case 'black':
+        return Colors.black;
+      case 'white':
+        return Colors.white;
+      case 'DarkGray':
+        return Colors.grey[800];
+      case 'LightGray':
+        return Colors.grey[400];
+
+      default:
+        return null; // Return null if the color name is not recognized
+    }
+  }
+}
+
+class ButtonWithIcon extends StatelessWidget {
+  final BuildContext context;
+  final IconData icon;
+  final String text;
+  final VoidCallback onPressed;
+
+  const ButtonWithIcon({
+    super.key,
+    required this.context,
+    required this.icon,
+    required this.text,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: Icon(icon),
+      label: Text(text),
     );
   }
 }

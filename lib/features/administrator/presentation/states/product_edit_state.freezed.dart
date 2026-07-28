@@ -55,7 +55,7 @@ extension AdminProductStatePatterns on AdminProductState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,TResult Function( _Saving value)?  saving,TResult Function( _Saved value)?  saved,TResult Function( _Deleting value)?  deleting,TResult Function( _Deleted value)?  deleted,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,TResult Function( _Saving value)?  saving,TResult Function( _Saved value)?  saved,TResult Function( _Deleting value)?  deleting,TResult Function( _Deleted value)?  deleted,TResult Function( _PickingImage value)?  pickingImage,TResult Function( _ImagePicked value)?  imagePicked,TResult Function( _CapturingImage value)?  capturingImage,TResult Function( _ImageCaptured value)?  imageCaptured,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -66,7 +66,11 @@ return error(_that);case _Saving() when saving != null:
 return saving(_that);case _Saved() when saved != null:
 return saved(_that);case _Deleting() when deleting != null:
 return deleting(_that);case _Deleted() when deleted != null:
-return deleted(_that);case _:
+return deleted(_that);case _PickingImage() when pickingImage != null:
+return pickingImage(_that);case _ImagePicked() when imagePicked != null:
+return imagePicked(_that);case _CapturingImage() when capturingImage != null:
+return capturingImage(_that);case _ImageCaptured() when imageCaptured != null:
+return imageCaptured(_that);case _:
   return orElse();
 
 }
@@ -84,7 +88,7 @@ return deleted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,required TResult Function( _Saving value)  saving,required TResult Function( _Saved value)  saved,required TResult Function( _Deleting value)  deleting,required TResult Function( _Deleted value)  deleted,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,required TResult Function( _Saving value)  saving,required TResult Function( _Saved value)  saved,required TResult Function( _Deleting value)  deleting,required TResult Function( _Deleted value)  deleted,required TResult Function( _PickingImage value)  pickingImage,required TResult Function( _ImagePicked value)  imagePicked,required TResult Function( _CapturingImage value)  capturingImage,required TResult Function( _ImageCaptured value)  imageCaptured,}){
 final _that = this;
 switch (_that) {
 case _Initial():
@@ -95,7 +99,11 @@ return error(_that);case _Saving():
 return saving(_that);case _Saved():
 return saved(_that);case _Deleting():
 return deleting(_that);case _Deleted():
-return deleted(_that);case _:
+return deleted(_that);case _PickingImage():
+return pickingImage(_that);case _ImagePicked():
+return imagePicked(_that);case _CapturingImage():
+return capturingImage(_that);case _ImageCaptured():
+return imageCaptured(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -112,7 +120,7 @@ return deleted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,TResult? Function( _Saving value)?  saving,TResult? Function( _Saved value)?  saved,TResult? Function( _Deleting value)?  deleting,TResult? Function( _Deleted value)?  deleted,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,TResult? Function( _Saving value)?  saving,TResult? Function( _Saved value)?  saved,TResult? Function( _Deleting value)?  deleting,TResult? Function( _Deleted value)?  deleted,TResult? Function( _PickingImage value)?  pickingImage,TResult? Function( _ImagePicked value)?  imagePicked,TResult? Function( _CapturingImage value)?  capturingImage,TResult? Function( _ImageCaptured value)?  imageCaptured,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -123,7 +131,11 @@ return error(_that);case _Saving() when saving != null:
 return saving(_that);case _Saved() when saved != null:
 return saved(_that);case _Deleting() when deleting != null:
 return deleting(_that);case _Deleted() when deleted != null:
-return deleted(_that);case _:
+return deleted(_that);case _PickingImage() when pickingImage != null:
+return pickingImage(_that);case _ImagePicked() when imagePicked != null:
+return imagePicked(_that);case _CapturingImage() when capturingImage != null:
+return capturingImage(_that);case _ImageCaptured() when imageCaptured != null:
+return imageCaptured(_that);case _:
   return null;
 
 }
@@ -140,7 +152,7 @@ return deleted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( bool isLoading)?  loading,TResult Function( AdminProductEntity product)?  loaded,TResult Function( String message)?  error,TResult Function( bool isSaving)?  saving,TResult Function( AdminProductEntity product)?  saved,TResult Function( bool isDeleting)?  deleting,TResult Function()?  deleted,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( bool isLoading)?  loading,TResult Function( AdminProductEntity product)?  loaded,TResult Function( String message)?  error,TResult Function( bool isSaving)?  saving,TResult Function( AdminProductEntity product)?  saved,TResult Function( bool isDeleting)?  deleting,TResult Function()?  deleted,TResult Function( bool isPicking)?  pickingImage,TResult Function( Object image)?  imagePicked,TResult Function( bool isCapturing)?  capturingImage,TResult Function( Object image)?  imageCaptured,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -150,7 +162,11 @@ return error(_that.message);case _Saving() when saving != null:
 return saving(_that.isSaving);case _Saved() when saved != null:
 return saved(_that.product);case _Deleting() when deleting != null:
 return deleting(_that.isDeleting);case _Deleted() when deleted != null:
-return deleted();case _:
+return deleted();case _PickingImage() when pickingImage != null:
+return pickingImage(_that.isPicking);case _ImagePicked() when imagePicked != null:
+return imagePicked(_that.image);case _CapturingImage() when capturingImage != null:
+return capturingImage(_that.isCapturing);case _ImageCaptured() when imageCaptured != null:
+return imageCaptured(_that.image);case _:
   return orElse();
 
 }
@@ -168,7 +184,7 @@ return deleted();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( bool isLoading)  loading,required TResult Function( AdminProductEntity product)  loaded,required TResult Function( String message)  error,required TResult Function( bool isSaving)  saving,required TResult Function( AdminProductEntity product)  saved,required TResult Function( bool isDeleting)  deleting,required TResult Function()  deleted,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( bool isLoading)  loading,required TResult Function( AdminProductEntity product)  loaded,required TResult Function( String message)  error,required TResult Function( bool isSaving)  saving,required TResult Function( AdminProductEntity product)  saved,required TResult Function( bool isDeleting)  deleting,required TResult Function()  deleted,required TResult Function( bool isPicking)  pickingImage,required TResult Function( Object image)  imagePicked,required TResult Function( bool isCapturing)  capturingImage,required TResult Function( Object image)  imageCaptured,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
@@ -178,7 +194,11 @@ return error(_that.message);case _Saving():
 return saving(_that.isSaving);case _Saved():
 return saved(_that.product);case _Deleting():
 return deleting(_that.isDeleting);case _Deleted():
-return deleted();case _:
+return deleted();case _PickingImage():
+return pickingImage(_that.isPicking);case _ImagePicked():
+return imagePicked(_that.image);case _CapturingImage():
+return capturingImage(_that.isCapturing);case _ImageCaptured():
+return imageCaptured(_that.image);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,7 +215,7 @@ return deleted();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( bool isLoading)?  loading,TResult? Function( AdminProductEntity product)?  loaded,TResult? Function( String message)?  error,TResult? Function( bool isSaving)?  saving,TResult? Function( AdminProductEntity product)?  saved,TResult? Function( bool isDeleting)?  deleting,TResult? Function()?  deleted,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( bool isLoading)?  loading,TResult? Function( AdminProductEntity product)?  loaded,TResult? Function( String message)?  error,TResult? Function( bool isSaving)?  saving,TResult? Function( AdminProductEntity product)?  saved,TResult? Function( bool isDeleting)?  deleting,TResult? Function()?  deleted,TResult? Function( bool isPicking)?  pickingImage,TResult? Function( Object image)?  imagePicked,TResult? Function( bool isCapturing)?  capturingImage,TResult? Function( Object image)?  imageCaptured,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -205,7 +225,11 @@ return error(_that.message);case _Saving() when saving != null:
 return saving(_that.isSaving);case _Saved() when saved != null:
 return saved(_that.product);case _Deleting() when deleting != null:
 return deleting(_that.isDeleting);case _Deleted() when deleted != null:
-return deleted();case _:
+return deleted();case _PickingImage() when pickingImage != null:
+return pickingImage(_that.isPicking);case _ImagePicked() when imagePicked != null:
+return imagePicked(_that.image);case _CapturingImage() when capturingImage != null:
+return capturingImage(_that.isCapturing);case _ImageCaptured() when imageCaptured != null:
+return imageCaptured(_that.image);case _:
   return null;
 
 }
@@ -690,5 +714,267 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _PickingImage implements AdminProductState {
+   _PickingImage({required this.isPicking});
+  
+
+ final  bool isPicking;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PickingImageCopyWith<_PickingImage> get copyWith => __$PickingImageCopyWithImpl<_PickingImage>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PickingImage&&(identical(other.isPicking, isPicking) || other.isPicking == isPicking));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,isPicking);
+
+@override
+String toString() {
+  return 'AdminProductState.pickingImage(isPicking: $isPicking)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PickingImageCopyWith<$Res> implements $AdminProductStateCopyWith<$Res> {
+  factory _$PickingImageCopyWith(_PickingImage value, $Res Function(_PickingImage) _then) = __$PickingImageCopyWithImpl;
+@useResult
+$Res call({
+ bool isPicking
+});
+
+
+
+
+}
+/// @nodoc
+class __$PickingImageCopyWithImpl<$Res>
+    implements _$PickingImageCopyWith<$Res> {
+  __$PickingImageCopyWithImpl(this._self, this._then);
+
+  final _PickingImage _self;
+  final $Res Function(_PickingImage) _then;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? isPicking = null,}) {
+  return _then(_PickingImage(
+isPicking: null == isPicking ? _self.isPicking : isPicking // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _ImagePicked implements AdminProductState {
+   _ImagePicked({required this.image});
+  
+
+ final  Object image;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ImagePickedCopyWith<_ImagePicked> get copyWith => __$ImagePickedCopyWithImpl<_ImagePicked>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ImagePicked&&const DeepCollectionEquality().equals(other.image, image));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(image));
+
+@override
+String toString() {
+  return 'AdminProductState.imagePicked(image: $image)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ImagePickedCopyWith<$Res> implements $AdminProductStateCopyWith<$Res> {
+  factory _$ImagePickedCopyWith(_ImagePicked value, $Res Function(_ImagePicked) _then) = __$ImagePickedCopyWithImpl;
+@useResult
+$Res call({
+ Object image
+});
+
+
+
+
+}
+/// @nodoc
+class __$ImagePickedCopyWithImpl<$Res>
+    implements _$ImagePickedCopyWith<$Res> {
+  __$ImagePickedCopyWithImpl(this._self, this._then);
+
+  final _ImagePicked _self;
+  final $Res Function(_ImagePicked) _then;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? image = null,}) {
+  return _then(_ImagePicked(
+image: null == image ? _self.image : image ,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _CapturingImage implements AdminProductState {
+   _CapturingImage({required this.isCapturing});
+  
+
+ final  bool isCapturing;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$CapturingImageCopyWith<_CapturingImage> get copyWith => __$CapturingImageCopyWithImpl<_CapturingImage>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CapturingImage&&(identical(other.isCapturing, isCapturing) || other.isCapturing == isCapturing));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,isCapturing);
+
+@override
+String toString() {
+  return 'AdminProductState.capturingImage(isCapturing: $isCapturing)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$CapturingImageCopyWith<$Res> implements $AdminProductStateCopyWith<$Res> {
+  factory _$CapturingImageCopyWith(_CapturingImage value, $Res Function(_CapturingImage) _then) = __$CapturingImageCopyWithImpl;
+@useResult
+$Res call({
+ bool isCapturing
+});
+
+
+
+
+}
+/// @nodoc
+class __$CapturingImageCopyWithImpl<$Res>
+    implements _$CapturingImageCopyWith<$Res> {
+  __$CapturingImageCopyWithImpl(this._self, this._then);
+
+  final _CapturingImage _self;
+  final $Res Function(_CapturingImage) _then;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? isCapturing = null,}) {
+  return _then(_CapturingImage(
+isCapturing: null == isCapturing ? _self.isCapturing : isCapturing // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _ImageCaptured implements AdminProductState {
+   _ImageCaptured({required this.image});
+  
+
+ final  Object image;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ImageCapturedCopyWith<_ImageCaptured> get copyWith => __$ImageCapturedCopyWithImpl<_ImageCaptured>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ImageCaptured&&const DeepCollectionEquality().equals(other.image, image));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(image));
+
+@override
+String toString() {
+  return 'AdminProductState.imageCaptured(image: $image)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ImageCapturedCopyWith<$Res> implements $AdminProductStateCopyWith<$Res> {
+  factory _$ImageCapturedCopyWith(_ImageCaptured value, $Res Function(_ImageCaptured) _then) = __$ImageCapturedCopyWithImpl;
+@useResult
+$Res call({
+ Object image
+});
+
+
+
+
+}
+/// @nodoc
+class __$ImageCapturedCopyWithImpl<$Res>
+    implements _$ImageCapturedCopyWith<$Res> {
+  __$ImageCapturedCopyWithImpl(this._self, this._then);
+
+  final _ImageCaptured _self;
+  final $Res Function(_ImageCaptured) _then;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? image = null,}) {
+  return _then(_ImageCaptured(
+image: null == image ? _self.image : image ,
+  ));
+}
+
+
+}
 
 // dart format on
