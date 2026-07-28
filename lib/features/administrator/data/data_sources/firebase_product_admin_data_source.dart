@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:xpapp/features/ecommerce/data/models/product_model.dart';
 import 'package:xpapp/features/administrator/data/models/admin_product_model.dart';
 import 'package:xpapp/core/consts/api_consts.dart';
 

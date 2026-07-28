@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'admin_product_model.freezed.dart';
 part 'admin_product_model.g.dart';
@@ -14,6 +15,7 @@ abstract class AdminProductModel with _$AdminProductModel {
     @JsonKey(defaultValue: []) required List<String> sizes,
     @JsonKey(defaultValue: []) required List<String> colors,
     @JsonKey(defaultValue: []) required List<String> sections,
+    @JsonKey(includeToJson: false, includeFromJson: false) XFile? imageFile,
   }) = _AdminProductModel;
 
   factory AdminProductModel.fromJson(Map<String, dynamic> json) =>

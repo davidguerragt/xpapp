@@ -50,4 +50,17 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
       );
     }
   }
+
+  Future<void> deleteProduct(String id) async {
+    try {
+      state = AdminProductState.deleting(isDeleting: true);
+      // Here you would call a use case to delete the product
+      // For example: await _deleteAdminProductUseCase.deleteProduct(id);
+      state = AdminProductState.deleted();
+    } catch (e) {
+      state = AdminProductState.error(
+        message: 'Error al eliminar el producto: ${e.toString()}',
+      );
+    }
+  }
 }

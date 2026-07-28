@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AdminProductEntity {
 
- String get id; String? get title; String? get description; double? get price; String? get image; List<String>? get sizes; List<String>? get colors; List<String>? get sections;
+ String get id; String? get title; String? get description; double? get price; String? get image; List<String>? get sizes; List<String>? get colors; List<String>? get sections;@JsonKey(includeToJson: false, includeFromJson: false) XFile? get imageFile;
 /// Create a copy of AdminProductEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AdminProductEntityCopyWith<AdminProductEntity> get copyWith => _$AdminProductEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&const DeepCollectionEquality().equals(other.colors, colors)&&const DeepCollectionEquality().equals(other.sections, sections));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other.sizes, sizes)&&const DeepCollectionEquality().equals(other.colors, colors)&&const DeepCollectionEquality().equals(other.sections, sections)&&(identical(other.imageFile, imageFile) || other.imageFile == imageFile));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,price,image,const DeepCollectionEquality().hash(sizes),const DeepCollectionEquality().hash(colors),const DeepCollectionEquality().hash(sections));
+int get hashCode => Object.hash(runtimeType,id,title,description,price,image,const DeepCollectionEquality().hash(sizes),const DeepCollectionEquality().hash(colors),const DeepCollectionEquality().hash(sections),imageFile);
 
 @override
 String toString() {
-  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, image: $image, sizes: $sizes, colors: $colors, sections: $sections)';
+  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, image: $image, sizes: $sizes, colors: $colors, sections: $sections, imageFile: $imageFile)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AdminProductEntityCopyWith<$Res>  {
   factory $AdminProductEntityCopyWith(AdminProductEntity value, $Res Function(AdminProductEntity) _then) = _$AdminProductEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String? title, String? description, double? price, String? image, List<String>? sizes, List<String>? colors, List<String>? sections
+ String id, String? title, String? description, double? price, String? image, List<String>? sizes, List<String>? colors, List<String>? sections,@JsonKey(includeToJson: false, includeFromJson: false) XFile? imageFile
 });
 
 
@@ -62,7 +62,7 @@ class _$AdminProductEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdminProductEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? price = freezed,Object? image = freezed,Object? sizes = freezed,Object? colors = freezed,Object? sections = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? price = freezed,Object? image = freezed,Object? sizes = freezed,Object? colors = freezed,Object? sections = freezed,Object? imageFile = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -72,7 +72,8 @@ as double?,image: freezed == image ? _self.image : image // ignore: cast_nullabl
 as String?,sizes: freezed == sizes ? _self.sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>?,colors: freezed == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
 as List<String>?,sections: freezed == sections ? _self.sections : sections // ignore: cast_nullable_to_non_nullable
-as List<String>?,
+as List<String>?,imageFile: freezed == imageFile ? _self.imageFile : imageFile // ignore: cast_nullable_to_non_nullable
+as XFile?,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections, @JsonKey(includeToJson: false, includeFromJson: false)  XFile? imageFile)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AdminProductEntity() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections,_that.imageFile);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections, @JsonKey(includeToJson: false, includeFromJson: false)  XFile? imageFile)  $default,) {final _that = this;
 switch (_that) {
 case _AdminProductEntity():
-return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections,_that.imageFile);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? title,  String? description,  double? price,  String? image,  List<String>? sizes,  List<String>? colors,  List<String>? sections, @JsonKey(includeToJson: false, includeFromJson: false)  XFile? imageFile)?  $default,) {final _that = this;
 switch (_that) {
 case _AdminProductEntity() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_that.sizes,_that.colors,_that.sections,_that.imageFile);case _:
   return null;
 
 }
@@ -213,7 +214,7 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.image,_
 
 
 class _AdminProductEntity implements AdminProductEntity {
-  const _AdminProductEntity({required this.id, required this.title, required this.description, required this.price, required this.image, required final  List<String>? sizes, required final  List<String>? colors, required final  List<String>? sections}): _sizes = sizes,_colors = colors,_sections = sections;
+  const _AdminProductEntity({required this.id, required this.title, required this.description, required this.price, required this.image, required final  List<String>? sizes, required final  List<String>? colors, required final  List<String>? sections, @JsonKey(includeToJson: false, includeFromJson: false) this.imageFile}): _sizes = sizes,_colors = colors,_sections = sections;
   
 
 @override final  String id;
@@ -248,6 +249,7 @@ class _AdminProductEntity implements AdminProductEntity {
   return EqualUnmodifiableListView(value);
 }
 
+@override@JsonKey(includeToJson: false, includeFromJson: false) final  XFile? imageFile;
 
 /// Create a copy of AdminProductEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -259,16 +261,16 @@ _$AdminProductEntityCopyWith<_AdminProductEntity> get copyWith => __$AdminProduc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&const DeepCollectionEquality().equals(other._colors, _colors)&&const DeepCollectionEquality().equals(other._sections, _sections));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminProductEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other._sizes, _sizes)&&const DeepCollectionEquality().equals(other._colors, _colors)&&const DeepCollectionEquality().equals(other._sections, _sections)&&(identical(other.imageFile, imageFile) || other.imageFile == imageFile));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,price,image,const DeepCollectionEquality().hash(_sizes),const DeepCollectionEquality().hash(_colors),const DeepCollectionEquality().hash(_sections));
+int get hashCode => Object.hash(runtimeType,id,title,description,price,image,const DeepCollectionEquality().hash(_sizes),const DeepCollectionEquality().hash(_colors),const DeepCollectionEquality().hash(_sections),imageFile);
 
 @override
 String toString() {
-  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, image: $image, sizes: $sizes, colors: $colors, sections: $sections)';
+  return 'AdminProductEntity(id: $id, title: $title, description: $description, price: $price, image: $image, sizes: $sizes, colors: $colors, sections: $sections, imageFile: $imageFile)';
 }
 
 
@@ -279,7 +281,7 @@ abstract mixin class _$AdminProductEntityCopyWith<$Res> implements $AdminProduct
   factory _$AdminProductEntityCopyWith(_AdminProductEntity value, $Res Function(_AdminProductEntity) _then) = __$AdminProductEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? title, String? description, double? price, String? image, List<String>? sizes, List<String>? colors, List<String>? sections
+ String id, String? title, String? description, double? price, String? image, List<String>? sizes, List<String>? colors, List<String>? sections,@JsonKey(includeToJson: false, includeFromJson: false) XFile? imageFile
 });
 
 
@@ -296,7 +298,7 @@ class __$AdminProductEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdminProductEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? price = freezed,Object? image = freezed,Object? sizes = freezed,Object? colors = freezed,Object? sections = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = freezed,Object? description = freezed,Object? price = freezed,Object? image = freezed,Object? sizes = freezed,Object? colors = freezed,Object? sections = freezed,Object? imageFile = freezed,}) {
   return _then(_AdminProductEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -306,7 +308,8 @@ as double?,image: freezed == image ? _self.image : image // ignore: cast_nullabl
 as String?,sizes: freezed == sizes ? _self._sizes : sizes // ignore: cast_nullable_to_non_nullable
 as List<String>?,colors: freezed == colors ? _self._colors : colors // ignore: cast_nullable_to_non_nullable
 as List<String>?,sections: freezed == sections ? _self._sections : sections // ignore: cast_nullable_to_non_nullable
-as List<String>?,
+as List<String>?,imageFile: freezed == imageFile ? _self.imageFile : imageFile // ignore: cast_nullable_to_non_nullable
+as XFile?,
   ));
 }
 

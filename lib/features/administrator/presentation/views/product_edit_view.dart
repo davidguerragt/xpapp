@@ -40,7 +40,7 @@ class ProductEditView extends ConsumerWidget {
 
 class _BodyWidget extends ConsumerWidget {
   final String productId;
-  const _BodyWidget({super.key, required this.productId});
+  const _BodyWidget({required this.productId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,6 +54,17 @@ class _BodyWidget extends ConsumerWidget {
         error: (message) => Center(child: Text(message)),
         saving: (isSaving) => Center(child: CircularProgressIndicator()),
         saved: (product) => Center(child: Text('Producto guardado')),
+        deleting: (isDeleting) => Center(child: CircularProgressIndicator()),
+        deleted: () {
+          // Handle the deleted state, e.g., navigate back or show a message
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Producto eliminado')));
+            router.goNamed(Routes.productABC);
+          });
+          return Center(child: Text('Producto eliminado'));
+        },
       );
 
       return Column(children: [SafeArea(child: content)]);
@@ -78,7 +89,7 @@ class _BodyWidget extends ConsumerWidget {
 class _ProductEditFormStateful extends ConsumerStatefulWidget {
   final AdminProductEntity product;
 
-  const _ProductEditFormStateful({super.key, required this.product});
+  const _ProductEditFormStateful({required this.product});
 
   @override
   ConsumerState<_ProductEditFormStateful> createState() =>
@@ -122,13 +133,11 @@ class _ProductEditFormStatefulState
     _descriptionController.dispose();
     _priceController.dispose();
     _imageUrlController.dispose();
-    // No need to dispose _sections as it's a List<String>
     _sectionsController.dispose();
     super.dispose();
   }
 
   void _saveProduct() {
-    // TODO: Implement save logic
     final updatedProduct = AdminProductEntity(
       id: _idController.text,
       title: _titleController.text,
@@ -156,15 +165,34 @@ class _ProductEditFormStatefulState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FormFieldLabel(label: 'Product ID:'),
-          FormField(
-            controller: _idController,
-            hintText: 'Product ID',
-            icon: Icons.lock,
-            iconColor: Colors.grey,
-            locked: true,
+          Container(
+            width: double.infinity,
+            height: 200.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
+              border: Border.all(color: Colors.grey, width: 0.5),
+            ),
+            child: _imageUrlController.text.isNotEmpty
+                ? (_imageUrlController.text.contains('assets')
+                      ? Image.asset(
+                          _imageUrlController.text,
+                          fit: BoxFit.contain,
+                        )
+                      : Image.network(
+                          _imageUrlController.text,
+                          fit: BoxFit.cover,
+                        ))
+                : Center(child: Text('No Image')),
           ),
-          SizedBox(height: 16.0),
+          // FormFieldLabel(label: 'Product ID:'),
+          // FormField(
+          //   controller: _idController,
+          //   hintText: 'Product ID',
+          //   icon: Icons.lock,
+          //   iconColor: Colors.grey,
+          //   locked: true,
+          // ),
+          // SizedBox(height: 16.0),
           FormFieldLabel(label: 'Title:'),
           FormField(
             controller: _titleController,
@@ -189,13 +217,13 @@ class _ProductEditFormStatefulState
             iconColor: Colors.grey,
           ),
           SizedBox(height: 16.0),
-          FormFieldLabel(label: 'Image URL:'),
-          FormField(
-            controller: _imageUrlController,
-            hintText: 'Image URL',
-            icon: Icons.image,
-            iconColor: Colors.grey,
-          ),
+          // FormFieldLabel(label: 'Image URL:'),
+          // FormField(
+          //   controller: _imageUrlController,
+          //   hintText: 'Image URL',
+          //   icon: Icons.image,
+          //   iconColor: Colors.grey,
+          // ),
           SizedBox(height: 16.0),
           Row(
             children: [

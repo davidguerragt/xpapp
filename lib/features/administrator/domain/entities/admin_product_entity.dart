@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:xpapp/features/administrator/data/models/admin_product_model.dart';
 part 'admin_product_entity.freezed.dart';
 
@@ -13,6 +14,7 @@ abstract class AdminProductEntity with _$AdminProductEntity {
     required List<String>? sizes,
     required List<String>? colors,
     required List<String>? sections,
+    @JsonKey(includeToJson: false, includeFromJson: false) XFile? imageFile,
   }) = _AdminProductEntity;
 
   factory AdminProductEntity.fromModel(AdminProductModel model) =>

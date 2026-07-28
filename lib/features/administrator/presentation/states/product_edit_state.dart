@@ -14,4 +14,8 @@ abstract class AdminProductState with _$AdminProductState {
   factory AdminProductState.saving({required bool isSaving}) = _Saving;
   factory AdminProductState.saved({required AdminProductEntity product}) =
       _Saved;
+
+  // Deleting
+  factory AdminProductState.deleting({required bool isDeleting}) = _Deleting;
+  factory AdminProductState.deleted() = _Deleted;
 }

@@ -55,7 +55,7 @@ extension AdminProductStatePatterns on AdminProductState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,TResult Function( _Saving value)?  saving,TResult Function( _Saved value)?  saved,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,TResult Function( _Saving value)?  saving,TResult Function( _Saved value)?  saved,TResult Function( _Deleting value)?  deleting,TResult Function( _Deleted value)?  deleted,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -64,7 +64,9 @@ return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _Error() when error != null:
 return error(_that);case _Saving() when saving != null:
 return saving(_that);case _Saved() when saved != null:
-return saved(_that);case _:
+return saved(_that);case _Deleting() when deleting != null:
+return deleting(_that);case _Deleted() when deleted != null:
+return deleted(_that);case _:
   return orElse();
 
 }
@@ -82,7 +84,7 @@ return saved(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,required TResult Function( _Saving value)  saving,required TResult Function( _Saved value)  saved,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,required TResult Function( _Saving value)  saving,required TResult Function( _Saved value)  saved,required TResult Function( _Deleting value)  deleting,required TResult Function( _Deleted value)  deleted,}){
 final _that = this;
 switch (_that) {
 case _Initial():
@@ -91,7 +93,9 @@ return loading(_that);case _Loaded():
 return loaded(_that);case _Error():
 return error(_that);case _Saving():
 return saving(_that);case _Saved():
-return saved(_that);case _:
+return saved(_that);case _Deleting():
+return deleting(_that);case _Deleted():
+return deleted(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -108,7 +112,7 @@ return saved(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,TResult? Function( _Saving value)?  saving,TResult? Function( _Saved value)?  saved,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,TResult? Function( _Saving value)?  saving,TResult? Function( _Saved value)?  saved,TResult? Function( _Deleting value)?  deleting,TResult? Function( _Deleted value)?  deleted,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -117,7 +121,9 @@ return loading(_that);case _Loaded() when loaded != null:
 return loaded(_that);case _Error() when error != null:
 return error(_that);case _Saving() when saving != null:
 return saving(_that);case _Saved() when saved != null:
-return saved(_that);case _:
+return saved(_that);case _Deleting() when deleting != null:
+return deleting(_that);case _Deleted() when deleted != null:
+return deleted(_that);case _:
   return null;
 
 }
@@ -134,7 +140,7 @@ return saved(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( bool isLoading)?  loading,TResult Function( AdminProductEntity product)?  loaded,TResult Function( String message)?  error,TResult Function( bool isSaving)?  saving,TResult Function( AdminProductEntity product)?  saved,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( bool isLoading)?  loading,TResult Function( AdminProductEntity product)?  loaded,TResult Function( String message)?  error,TResult Function( bool isSaving)?  saving,TResult Function( AdminProductEntity product)?  saved,TResult Function( bool isDeleting)?  deleting,TResult Function()?  deleted,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -142,7 +148,9 @@ return loading(_that.isLoading);case _Loaded() when loaded != null:
 return loaded(_that.product);case _Error() when error != null:
 return error(_that.message);case _Saving() when saving != null:
 return saving(_that.isSaving);case _Saved() when saved != null:
-return saved(_that.product);case _:
+return saved(_that.product);case _Deleting() when deleting != null:
+return deleting(_that.isDeleting);case _Deleted() when deleted != null:
+return deleted();case _:
   return orElse();
 
 }
@@ -160,7 +168,7 @@ return saved(_that.product);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( bool isLoading)  loading,required TResult Function( AdminProductEntity product)  loaded,required TResult Function( String message)  error,required TResult Function( bool isSaving)  saving,required TResult Function( AdminProductEntity product)  saved,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( bool isLoading)  loading,required TResult Function( AdminProductEntity product)  loaded,required TResult Function( String message)  error,required TResult Function( bool isSaving)  saving,required TResult Function( AdminProductEntity product)  saved,required TResult Function( bool isDeleting)  deleting,required TResult Function()  deleted,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
@@ -168,7 +176,9 @@ return loading(_that.isLoading);case _Loaded():
 return loaded(_that.product);case _Error():
 return error(_that.message);case _Saving():
 return saving(_that.isSaving);case _Saved():
-return saved(_that.product);case _:
+return saved(_that.product);case _Deleting():
+return deleting(_that.isDeleting);case _Deleted():
+return deleted();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -185,7 +195,7 @@ return saved(_that.product);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( bool isLoading)?  loading,TResult? Function( AdminProductEntity product)?  loaded,TResult? Function( String message)?  error,TResult? Function( bool isSaving)?  saving,TResult? Function( AdminProductEntity product)?  saved,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( bool isLoading)?  loading,TResult? Function( AdminProductEntity product)?  loaded,TResult? Function( String message)?  error,TResult? Function( bool isSaving)?  saving,TResult? Function( AdminProductEntity product)?  saved,TResult? Function( bool isDeleting)?  deleting,TResult? Function()?  deleted,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -193,7 +203,9 @@ return loading(_that.isLoading);case _Loaded() when loaded != null:
 return loaded(_that.product);case _Error() when error != null:
 return error(_that.message);case _Saving() when saving != null:
 return saving(_that.isSaving);case _Saved() when saved != null:
-return saved(_that.product);case _:
+return saved(_that.product);case _Deleting() when deleting != null:
+return deleting(_that.isDeleting);case _Deleted() when deleted != null:
+return deleted();case _:
   return null;
 
 }
@@ -580,5 +592,103 @@ $AdminProductEntityCopyWith<$Res> get product {
   });
 }
 }
+
+/// @nodoc
+
+
+class _Deleting implements AdminProductState {
+   _Deleting({required this.isDeleting});
+  
+
+ final  bool isDeleting;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeletingCopyWith<_Deleting> get copyWith => __$DeletingCopyWithImpl<_Deleting>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Deleting&&(identical(other.isDeleting, isDeleting) || other.isDeleting == isDeleting));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,isDeleting);
+
+@override
+String toString() {
+  return 'AdminProductState.deleting(isDeleting: $isDeleting)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeletingCopyWith<$Res> implements $AdminProductStateCopyWith<$Res> {
+  factory _$DeletingCopyWith(_Deleting value, $Res Function(_Deleting) _then) = __$DeletingCopyWithImpl;
+@useResult
+$Res call({
+ bool isDeleting
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeletingCopyWithImpl<$Res>
+    implements _$DeletingCopyWith<$Res> {
+  __$DeletingCopyWithImpl(this._self, this._then);
+
+  final _Deleting _self;
+  final $Res Function(_Deleting) _then;
+
+/// Create a copy of AdminProductState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? isDeleting = null,}) {
+  return _then(_Deleting(
+isDeleting: null == isDeleting ? _self.isDeleting : isDeleting // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _Deleted implements AdminProductState {
+   _Deleted();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Deleted);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AdminProductState.deleted()';
+}
+
+
+}
+
+
+
 
 // dart format on
