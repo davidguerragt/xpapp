@@ -61,13 +61,14 @@ class FirebaseLoginDataSource {
     }
   }
 
-  Future<void> logout() async {
+  Future<bool> logout() async {
     try {
       await _firebaseAuth.signOut();
+      return true;
     } catch (e) {
       // ignore: avoid_print
       print(e);
-      throw Exception('Error al cerrar sesión: $e');
+      return false;
     }
   }
 

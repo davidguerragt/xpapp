@@ -11,14 +11,15 @@ import 'package:xpapp/features/ecommerce/presentation/views/product_abc_view.dar
 import 'package:xpapp/features/ecommerce/presentation/views/section_abc_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
-import 'package:xpapp/features/login/domain/use_cases/get_user_role_use_case.dart';
+import 'package:xpapp/features/login/domain/use_cases/get_user_info_use_case.dart';
 import 'package:xpapp/features/login/presemtation/views/login_view.dart';
+import 'package:xpapp/features/login/presemtation/views/logout_view.dart';
 import 'package:xpapp/features/login/presemtation/views/register_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/personalise_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/subscription_view.dart';
 
-final _getUserRoleUseCase = GetUserRoleUseCase();
+final _getUserRoleUseCase = GetUserInfoUseCase();
 final _routerAuthRefresh = _AuthRouterRefreshNotifier();
 
 class _AuthRouterRefreshNotifier extends ChangeNotifier {
@@ -78,8 +79,8 @@ final router = GoRouter(
       }
 
       try {
-        final userRole = await _getUserRoleUseCase.getUserRole(email);
-        if (userRole.role != 'admin') {
+        final userInfo = await _getUserRoleUseCase.getUserInfo(email);
+        if (userInfo.role != 'admin') {
           return '/';
         }
       } catch (_) {
@@ -94,6 +95,11 @@ final router = GoRouter(
       name: Routes.login,
       path: '/login',
       builder: (context, state) => const LoginView(),
+    ),
+    GoRoute(
+      name: Routes.logout,
+      path: '/logout',
+      builder: (context, state) => const LogoutView(),
     ),
     GoRoute(
       name: Routes.register,
@@ -180,6 +186,7 @@ abstract class Routes {
   static const String settings = '/settings';
   static const String login = '/login';
   static const String register = '/register';
+  static const String logout = '/logout';
 
   // ABC
   static const String sectionABC = '/section-abc';

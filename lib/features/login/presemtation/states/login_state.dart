@@ -1,4 +1,5 @@
 import 'package:xpapp/features/login/domain/entities/user_entity.dart';
+import 'package:xpapp/features/login/domain/entities/user_info_entity.dart';
 
 abstract base class LoginState {
   final String? errorMessage;
@@ -17,7 +18,8 @@ final class LoginLoadingState extends LoginState {
 
 final class LoginSuccessState extends LoginState {
   final UserEntity user;
-  const LoginSuccessState(this.user);
+  final UserInfoEntity? userInfo;
+  const LoginSuccessState(this.user, this.userInfo);
 }
 
 final class LoginRegisterSuccessState extends LoginState {

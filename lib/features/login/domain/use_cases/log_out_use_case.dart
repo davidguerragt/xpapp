@@ -7,7 +7,7 @@ class LogOutUseCase {
   LogOutUseCase({AuthenticationRepository? repository})
     : _repository = repository ?? AuthenticationImplRepository();
 
-  Future<void> call() async {
-    await _repository.logout();
+  Future<bool> call() async {
+    return await _repository.logout();
   }
 }

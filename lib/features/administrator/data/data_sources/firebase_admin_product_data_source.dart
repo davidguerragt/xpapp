@@ -13,7 +13,8 @@ class FirebaseAdminProductDataSource {
     final docSnapshot = await docRef.get();
 
     if (docSnapshot.exists) {
-      return AdminProductModel.fromJson(docSnapshot.data()!);
+      final data = docSnapshot.data()!;
+      return AdminProductModel.fromJson({...data, 'id': docSnapshot.id});
     } else {
       throw Exception('Product not found');
     }
@@ -23,7 +24,7 @@ class FirebaseAdminProductDataSource {
     final collectionRef = _firestore.collection(FireStoreCollections.products);
     final result = await collectionRef.get();
     return result.docs
-        .map((doc) => AdminProductModel.fromJson(doc.data()))
+        .map((doc) => AdminProductModel.fromJson({...doc.data(), 'id': doc.id}))
         .toList();
   }
 
@@ -33,6 +34,7 @@ class FirebaseAdminProductDataSource {
         FireStoreCollections.products,
       );
       final docRef = await collectionRef.add(productData.toJson());
+      await docRef.update({'id': docRef.id});
       return docRef.id;
     } catch (e) {
       // ignore: avoid_print

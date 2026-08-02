@@ -1,12 +1,13 @@
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:xpapp/features/login/domain/use_cases/local_user_info_use_case.dart';
 import 'package:xpapp/features/login/domain/entities/user_entity.dart';
-import 'package:xpapp/features/login/domain/entities/user_role_entity.dart';
-import 'package:xpapp/features/login/domain/use_cases/get_user_role_use_case.dart';
+import 'package:xpapp/features/login/domain/entities/user_info_entity.dart';
+import 'package:xpapp/features/login/domain/use_cases/get_user_info_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/is_logged_in_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/log_out_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/login_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/register_use_case.dart';
-import 'package:xpapp/features/login/domain/use_cases/save_user_role_use_case.dart';
+import 'package:xpapp/features/login/domain/use_cases/save_user_info_use_case.dart';
 import 'package:xpapp/features/login/presemtation/states/login_state.dart';
 
 final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>(
@@ -18,30 +19,48 @@ class LoginNotifier extends StateNotifier<LoginState> {
   final LogOutUseCase _logoutUseCase;
   final IsLoggedInUseCase _isLoggedInUseCase;
   final LoginRegisterUseCase _registerUseCase;
-  final GetUserRoleUseCase _userRoleUseCase;
-  final SaveUserRoleUseCase _saveUserRoleUseCase;
+  final GetUserInfoUseCase _getUserInfoUseCase;
+  final SaveUserInfoUseCase _saveUserInfoUseCase;
+  final LocalUserInfoUseCase _localUserInfoUseCase = LocalUserInfoUseCase();
 
   LoginNotifier({
     LoginUseCase? loginUseCase,
     IsLoggedInUseCase? isLoggedInUseCase,
     LogOutUseCase? logoutUseCase,
     LoginRegisterUseCase? registerUseCase,
-    GetUserRoleUseCase? userRoleUseCase,
-    SaveUserRoleUseCase? saveUserRoleUseCase,
+    GetUserInfoUseCase? userInfoUseCase,
+    SaveUserInfoUseCase? saveUserInfoUseCase,
   }) : _loginUseCase = loginUseCase ?? LoginUseCase(),
        _isLoggedInUseCase = isLoggedInUseCase ?? IsLoggedInUseCase(),
        _logoutUseCase = logoutUseCase ?? LogOutUseCase(),
        _registerUseCase = registerUseCase ?? LoginRegisterUseCase(),
-       _userRoleUseCase = userRoleUseCase ?? GetUserRoleUseCase(),
-       _saveUserRoleUseCase = saveUserRoleUseCase ?? SaveUserRoleUseCase(),
+       _getUserInfoUseCase = userInfoUseCase ?? GetUserInfoUseCase(),
+       _saveUserInfoUseCase = saveUserInfoUseCase ?? SaveUserInfoUseCase(),
        super(const LoginInitialState());
 
   Future<bool> login(String email, String password) async {
     state = LoginLoadingState();
     try {
+      final bool isLoggedIn = await _isLoggedInUseCase();
+      if (isLoggedIn) {
+        final currentUser = await _isLoggedInUseCase.getCurrentUser();
+        if (currentUser != null) {
+          try {
+            final userInfo = await _localUserInfoUseCase
+                .getUserInfoFromLocalStorage();
+            state = LoginSuccessState(
+              currentUser.copyWith(role: userInfo?.role),
+              userInfo,
+            );
+          } catch (_) {
+            state = LoginSuccessState(currentUser, null);
+          }
+          return true;
+        }
+      }
       final UserEntity user = await _loginUseCase(email, password);
-      final UserRoleEntity ur = await _userRoleUseCase.getUserRole(email);
-      state = LoginSuccessState(user.copyWith(role: ur.role));
+      final UserInfoEntity ur = await _getUserInfoUseCase.getUserInfo(email);
+      state = LoginSuccessState(user.copyWith(role: ur.role), ur);
       return true;
     } catch (e) {
       state = LoginErrorState(e.toString());
@@ -64,14 +83,15 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
         if (currentUser != null) {
           try {
-            final userRole = await _userRoleUseCase.getUserRole(
+            final userInfo = await _getUserInfoUseCase.getUserInfo(
               currentUser.email,
             );
             state = LoginSuccessState(
-              currentUser.copyWith(role: userRole.role),
+              currentUser.copyWith(role: userInfo.role),
+              userInfo,
             );
           } catch (_) {
-            state = LoginSuccessState(currentUser);
+            state = LoginSuccessState(currentUser, null);
           }
           return true;
         }
@@ -104,8 +124,14 @@ class LoginNotifier extends StateNotifier<LoginState> {
     try {
       final userRole = role ?? 'client';
       final UserEntity user = await _registerUseCase(email, password);
-      await _saveUserRoleUseCase.saveUserRole(
-        UserRoleEntity(user: email, role: userRole),
+      await _saveUserInfoUseCase.saveUserInfo(
+        UserInfoEntity(
+          user: email,
+          firstName: '',
+          surname: '',
+          fullName: '',
+          role: userRole,
+        ),
       );
       state = LoginRegisterSuccessState(user);
       return true;
@@ -117,8 +143,10 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   Future<bool> isAdmin(String email) async {
     try {
-      final UserRoleEntity userRole = await _userRoleUseCase.getUserRole(email);
-      final isAdmin = (userRole.role == 'admin');
+      final UserInfoEntity userInfo = await _getUserInfoUseCase.getUserInfo(
+        email,
+      );
+      final isAdmin = (userInfo.role == 'admin');
       state = LoginAdminState(isAdmin);
       return isAdmin;
     } catch (e) {

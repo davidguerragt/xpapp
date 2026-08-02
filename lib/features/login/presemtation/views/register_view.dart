@@ -27,6 +27,9 @@ class _BodyWidget extends ConsumerStatefulWidget {
 class _BodyWidgetState extends ConsumerState<_BodyWidget> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController fullNameController;
   String selectedRole = 'client';
   final List<String> roles = ['client', 'admin'];
 
@@ -35,12 +38,18 @@ class _BodyWidgetState extends ConsumerState<_BodyWidget> {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
+    fullNameController = TextEditingController();
   }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    fullNameController.dispose();
     super.dispose();
   }
 
@@ -90,6 +99,7 @@ class _BodyWidgetState extends ConsumerState<_BodyWidget> {
                 style: TextStyle(fontSize: 12, color: Colors.black54),
               ),
               SizedBox(height: 24),
+
               TextField(
                 controller: emailController,
                 decoration: InputDecoration(
@@ -97,7 +107,30 @@ class _BodyWidgetState extends ConsumerState<_BodyWidget> {
                   border: OutlineInputBorder(),
                 ),
               ),
+
+              TextField(
+                controller: firstNameController,
+                decoration: InputDecoration(
+                  labelText: 'First Name',
+                  border: OutlineInputBorder(),
+                ),
+              ),
               SizedBox(height: 16),
+              TextField(
+                controller: lastNameController,
+                decoration: InputDecoration(
+                  labelText: 'Last Name',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: fullNameController,
+                decoration: InputDecoration(
+                  labelText: 'Full Name',
+                  border: OutlineInputBorder(),
+                ),
+              ),
               // Password
               TextField(
                 controller: passwordController,

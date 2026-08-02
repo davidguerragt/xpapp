@@ -8,6 +8,7 @@ import 'package:xpapp/core/widgets/gemeral_widgets.dart';
 import 'package:xpapp/features/administrator/domain/entities/admin_product_entity.dart';
 import 'package:xpapp/features/administrator/presentation/states/product_edit_notifier.dart';
 import 'package:xpapp/features/administrator/presentation/states/product_edit_state.dart';
+import 'package:xpapp/features/administrator/presentation/widgets/appbar_widgets.dart';
 
 class ProductEditView extends ConsumerWidget {
   final String productId;
@@ -17,17 +18,8 @@ class ProductEditView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                router.goNamed(Routes.productABC);
-              },
-            ),
-            Text('Product Edit'),
-          ],
-        ),
+        leading: const AdminAppBarBackButton(),
+        title: const Text('Product Edit'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -56,7 +48,15 @@ class _BodyWidget extends ConsumerWidget {
         loaded: (product) => _ProductEditFormStateful(product: product),
         error: (message) => Center(child: Text(message)),
         saving: (isSaving) => Center(child: CircularProgressIndicator()),
-        saved: (product) => Center(child: Text('Producto guardado')),
+        saved: (product) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Producto guardado')));
+            router.goNamed(Routes.productABC);
+          });
+          return Center(child: Text('Producto guardado'));
+        },
         deleting: (isDeleting) => Center(child: CircularProgressIndicator()),
         deleted: () {
           // Handle the deleted state, e.g., navigate back or show a message
@@ -268,6 +268,7 @@ class _ProductEditFormStatefulState
             hintText: 'Product Title',
             icon: Icons.title,
             iconColor: Colors.grey,
+            keyboardType: TextInputType.text,
           ),
           SizedBox(height: 16.0),
           FormFieldLabel(label: 'Description:'),
@@ -276,6 +277,7 @@ class _ProductEditFormStatefulState
             hintText: 'Product Description',
             icon: Icons.description,
             iconColor: Colors.grey,
+            keyboardType: TextInputType.text,
           ),
           SizedBox(height: 16.0),
           FormFieldLabel(label: 'Price:'),
@@ -284,6 +286,7 @@ class _ProductEditFormStatefulState
             hintText: 'Product Price',
             icon: Icons.attach_money,
             iconColor: Colors.grey,
+            keyboardType: TextInputType.number,
           ),
           SizedBox(height: 16.0),
           // FormFieldLabel(label: 'Image URL:'),
@@ -309,7 +312,13 @@ class _ProductEditFormStatefulState
                           TextEditingController();
                       return AlertDialog(
                         title: Text('Add Size'),
-                        content: FormField(controller: newSizeController),
+                        content: FormField(
+                          controller: newSizeController,
+                          hintText: 'Size',
+                          icon: Icons.straighten,
+                          iconColor: Colors.grey,
+                          keyboardType: TextInputType.text,
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -341,7 +350,7 @@ class _ProductEditFormStatefulState
             spacing: 4,
             children: _sizes.map((size) {
               return GestureDetector(
-                onDoubleTap: () {
+                onVerticalDragEnd: (details) {
                   setState(() {
                     _sizes.remove(size);
                   });
@@ -359,7 +368,7 @@ class _ProductEditFormStatefulState
                     ),
                   ),
                   selected: false,
-                  selectedColor: Colors.blueAccent,
+                  selectedColor: const Color.fromRGBO(68, 138, 255, 1),
                   backgroundColor: Colors.white,
                   side: BorderSide(color: Colors.black),
                 ),
@@ -382,7 +391,13 @@ class _ProductEditFormStatefulState
                           TextEditingController();
                       return AlertDialog(
                         title: Text('Add Color'),
-                        content: FormField(controller: newColorController),
+                        content: FormField(
+                          controller: newColorController,
+                          hintText: 'Color',
+                          icon: Icons.color_lens,
+                          iconColor: Colors.grey,
+                          keyboardType: TextInputType.text,
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -414,7 +429,7 @@ class _ProductEditFormStatefulState
             spacing: 4,
             children: _colors.map((color) {
               return GestureDetector(
-                onDoubleTap: () {
+                onPanUpdate: (details) {
                   setState(() {
                     _colors.remove(color);
                   });
@@ -425,16 +440,14 @@ class _ProductEditFormStatefulState
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: color.trim().toLowerCase() == 'black'
-                          ? Colors.white
-                          : Colors.black,
+                      color: Colors.black,
                       fontFamily: 'Inter',
                       height: 1.0,
                       letterSpacing: 0,
                     ),
                   ),
                   selected: true,
-                  selectedColor: _getColorFromName(color),
+                  selectedColor: Colors.white,
                   backgroundColor: Colors.white,
                   side: BorderSide(color: Colors.black),
                 ),
@@ -457,7 +470,9 @@ class _ProductEditFormStatefulState
                           TextEditingController();
                       return AlertDialog(
                         title: Text('Add Section'),
-                        content: FormField(controller: newSectionController),
+                        content: TextFormField(
+                          controller: newSectionController,
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -496,7 +511,7 @@ class _ProductEditFormStatefulState
             spacing: 4,
             children: _sections.map((section) {
               return GestureDetector(
-                onDoubleTap: () {
+                onVerticalDragEnd: (details) {
                   setState(() {
                     _sections.remove(section);
                   });
@@ -622,14 +637,16 @@ class FormField extends StatelessWidget {
   final IconData? icon;
   final Color? iconColor;
   final bool locked;
+  final TextInputType? keyboardType;
 
   const FormField({
     super.key,
     required this.controller,
-    this.hintText,
+    required this.hintText,
     this.icon,
     this.iconColor,
     this.locked = false,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -656,10 +673,14 @@ class FormField extends StatelessWidget {
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
         filled: true,
-        fillColor: Colors.white, // Set the background color to light blue
+        fillColor: Colors.white, // Set the background color to light blue++
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide(color: Colors.grey, width: 0.5),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.transparent, width: 0.5),
+          borderSide: BorderSide(color: Colors.black, width: 0.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -668,6 +689,7 @@ class FormField extends StatelessWidget {
       ),
       controller: controller,
       enabled: !locked,
+      keyboardType: keyboardType,
     );
   }
 }

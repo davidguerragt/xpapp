@@ -29,8 +29,8 @@ class AuthenticationImplRepository implements AuthenticationRepository {
   }
 
   @override
-  Future<void> logout() async {
-    await _dataSource.logout();
+  Future<bool> logout() async {
+    return await _dataSource.logout();
   }
 
   @override

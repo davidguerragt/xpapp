@@ -39,7 +39,9 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
            deleteAdminProductUseCase ?? AdminProductDelUseCase(),
        _pickImageUseCase = pickImageUseCase ?? PickImageUseCase(),
        super(AdminProductState.initial()) {
-    getProductById(id);
+    if (id.trim().isNotEmpty && id != 'new') {
+      getProductById(id);
+    }
   }
 
   Future<void> getProductById(String id) async {
@@ -61,8 +63,10 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
   Future<void> addProduct(AdminProductEntity product) async {
     try {
       state = AdminProductState.saving(isSaving: true);
-      await _addAdminProductUseCase.addAdminProduct(product);
-      state = AdminProductState.saved(product: product);
+      final createdProduct = await _addAdminProductUseCase.addAdminProduct(
+        product,
+      );
+      state = AdminProductState.saved(product: createdProduct);
     } catch (e) {
       state = AdminProductState.error(
         message: 'Error al guardar el producto: ${e.toString()}',
@@ -73,8 +77,10 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
   Future<void> updateProduct(AdminProductEntity product) async {
     try {
       state = AdminProductState.saving(isSaving: true);
-      await _updAdminProductUseCase.updateAdminProduct(product);
-      state = AdminProductState.saved(product: product);
+      final updatedProduct = await _updAdminProductUseCase.updateAdminProduct(
+        product,
+      );
+      state = AdminProductState.saved(product: updatedProduct);
     } catch (e) {
       state = AdminProductState.error(
         message: 'Error al actualizar el producto: ${e.toString()}',
@@ -95,16 +101,11 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
   }
 
   Future<XFile?> pickImage() async {
-    state = AdminProductState.pickingImage(isPicking: true);
     try {
       final pickedFile = await _pickImageUseCase.call();
       if (pickedFile != null) {
-        state = AdminProductState.imagePicked(image: pickedFile);
         return pickedFile;
       } else {
-        state = AdminProductState.error(
-          message: 'No se seleccionó ninguna imagen',
-        );
         return null;
       }
     } catch (e) {
@@ -116,18 +117,13 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
   }
 
   Future<XFile?> captureImage() async {
-    state = AdminProductState.capturingImage(isCapturing: true);
     try {
       final capturedFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
       );
       if (capturedFile != null) {
-        state = AdminProductState.imageCaptured(image: capturedFile);
         return capturedFile;
       } else {
-        state = AdminProductState.error(
-          message: 'No se capturó ninguna imagen',
-        );
         return null;
       }
     } catch (e) {

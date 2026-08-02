@@ -19,24 +19,12 @@ class AdminProductRepositoryImpl implements AdminProductRepository {
   @override
   Future<List<AdminProductEntity>> getAdminProducts() async {
     final products = await _adminProductDataSource.getAllProducts();
-    return Future.wait(
-      products.map((product) async {
-        if (product.id == products.first.id) {
-          final imageFile = await _firebaseStorageProductDataSource
-              .downloadProductImage(product.image);
-          product = product.copyWith(imageFile: imageFile);
-        }
-        return AdminProductEntity.fromModel(product);
-      }).toList(),
-    );
+    return products.map(AdminProductEntity.fromModel).toList();
   }
 
   @override
   Future<AdminProductEntity> getAdminProductById(String id) async {
-    var product = await _adminProductDataSource.getProductById(id);
-    final imageFile = await _firebaseStorageProductDataSource
-        .downloadProductImage(product.image);
-    product = product.copyWith(imageFile: imageFile);
+    final product = await _adminProductDataSource.getProductById(id);
     return AdminProductEntity.fromModel(product);
   }
 
@@ -45,27 +33,32 @@ class AdminProductRepositoryImpl implements AdminProductRepository {
     final productId = await _adminProductDataSource.addProduct(
       product.toModel(),
     );
+    var persistedProduct = product.copyWith(id: productId);
+
     if (product.imageFile != null) {
       final imageUrl = await _firebaseStorageProductDataSource
           .uploadProductImage(productId, product.imageFile!);
-      product = product.copyWith(image: imageUrl);
+      persistedProduct = persistedProduct.copyWith(image: imageUrl);
+      await _adminProductDataSource.updateProduct(persistedProduct.toModel());
     }
-    return product.copyWith(id: productId);
+
+    return persistedProduct;
   }
 
   @override
   Future<AdminProductEntity> updateAdminProduct(
     AdminProductEntity product,
   ) async {
-    final productId = await _adminProductDataSource.updateProduct(
-      product.toModel(),
-    );
+    var persistedProduct = product;
+
     if (product.imageFile != null) {
       final imageUrl = await _firebaseStorageProductDataSource
-          .uploadProductImage(productId, product.imageFile!);
-      product = product.copyWith(image: imageUrl);
+          .uploadProductImage(product.id, product.imageFile!);
+      persistedProduct = product.copyWith(image: imageUrl);
     }
-    return product.copyWith(id: productId);
+
+    await _adminProductDataSource.updateProduct(persistedProduct.toModel());
+    return persistedProduct;
   }
 
   @override

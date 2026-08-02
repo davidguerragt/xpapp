@@ -19,8 +19,26 @@ class AppbarWidgets extends StatelessWidget {
         // AppBarSectionABCButton(visibility: !activeSession),
         // AppBarProductABCButton(visibility: !activeSession),
         AppBarTransactionListButton(visibility: !activeSession),
+        AppBarLogoutButton(visibility: activeSession),
       ],
     );
+  }
+}
+
+class AppBarLogoutButton extends StatelessWidget {
+  final bool visibility;
+  const AppBarLogoutButton({super.key, required this.visibility});
+
+  @override
+  Widget build(BuildContext context) {
+    return visibility
+        ? IconButton(
+            onPressed: () {
+              router.goNamed(Routes.logout);
+            },
+            icon: const Icon(Icons.logout, color: Colors.black),
+          )
+        : const SizedBox();
   }
 }
 

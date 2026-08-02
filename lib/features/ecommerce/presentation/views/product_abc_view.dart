@@ -29,7 +29,9 @@ class _ProductABCViewState extends ConsumerState<ProductABCView> {
         title: const Text('Product Management'),
         actions: const [_AddProductButton()],
       ),
-      body: const SafeArea(child: _BodyWidget()),
+      body: const SafeArea(
+        child: Padding(padding: EdgeInsets.all(16.0), child: _BodyWidget()),
+      ),
     );
   }
 }
