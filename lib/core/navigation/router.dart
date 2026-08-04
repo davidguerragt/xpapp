@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:xpapp/features/administrator/presentation/views/product_edit_view.dart';
+import 'package:xpapp/features/administrator/presentation/views/section_edit_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/checkout_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
@@ -165,6 +166,12 @@ final router = GoRouter(
       builder: (context, state) =>
           ProductEditView(productId: state.pathParameters['id']!),
     ),
+    GoRoute(
+      name: Routes.sectionEdit,
+      path: '/section-edit/:id',
+      builder: (context, state) =>
+          SectionEditView(sectionId: state.pathParameters['id']!),
+    ),
   ],
 );
 
@@ -194,4 +201,5 @@ abstract class Routes {
 
   // Administrator routes
   static const String productEdit = '/product-edit';
+  static const String sectionEdit = '/section-edit';
 }

@@ -19,6 +19,12 @@ class AdminSectionRepositoryImpl implements AdminSectionRepository {
   }
 
   @override
+  Future<AdminSectionEntity?> getAdminSectionById(String sectionId) async {
+    final section = await _adminSectionDataSource.getSectionById(sectionId);
+    return AdminSectionEntity.fromModel(section);
+  }
+
+  @override
   Future<void> addAdminSection(AdminSectionEntity section) async {
     await _adminSectionDataSource.addSection(section.toModel());
   }

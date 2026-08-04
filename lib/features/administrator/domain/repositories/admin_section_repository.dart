@@ -2,6 +2,7 @@ import 'package:xpapp/features/administrator/domain/entities/admin_section_entit
 
 abstract class AdminSectionRepository {
   Future<List<AdminSectionEntity>> getAdminSections();
+  Future<AdminSectionEntity?> getAdminSectionById(String sectionId);
   Future<void> addAdminSection(AdminSectionEntity section);
   Future<void> updateAdminSection(AdminSectionEntity section);
   Future<void> deleteAdminSection(String sectionId);

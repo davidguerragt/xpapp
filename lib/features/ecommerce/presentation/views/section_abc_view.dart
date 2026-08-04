@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/section_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/section_abc_notifier.dart';
@@ -16,7 +17,8 @@ class SectionABCView extends ConsumerWidget {
         title: const Text('Section ABC'),
         actions: [_AddSectionButton()],
       ),
-      body: SafeArea(child: SingleChildScrollView(child: _BodyWidget())),
+      body: Padding(padding: EdgeInsets.all(16.0), child: _BodyWidget()),
+      // SafeArea(child: SingleChildScrollView(child: _BodyWidget())),
     );
   }
 }
@@ -137,18 +139,33 @@ class _SectionListArea extends ConsumerWidget {
       );
     }
 
-    return ListView.builder(
+    return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: sectionsGet.length,
       itemBuilder: (context, index) {
         final section = sectionsGet[index];
-        return ListTile(
-          leading: const CircleAvatar(child: Icon(Icons.abc)),
-          title: Text(section.title),
-          subtitle: Text(section.description),
+        return InkWell(
+          onDoubleTap: () {
+            // ref.read(selectedProductProvider.notifier).state = product;
+            // ref.read(selectedSizeProvider.notifier).state =
+            //     product.sizes.isNotEmpty ? product.sizes.first : null;
+            // ref.read(selectedColorProvider.notifier).state =
+            //     product.colors.isNotEmpty ? product.colors.first : null;
+            router.goNamed(
+              Routes.sectionEdit,
+              pathParameters: {'sectionId': section.id},
+            );
+            //router.goNamed(Routes.itemView, pathParameters: {'id': product.id});
+          },
+          child: ListTile(
+            leading: const CircleAvatar(child: Icon(Icons.abc)),
+            title: Text(section.title),
+            subtitle: Text(section.description),
+          ),
         );
       },
+      separatorBuilder: (context, index) => const Divider(),
     );
   }
 }

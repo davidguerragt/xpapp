@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AdminSectionEntity {
 
- String get id; String get name; String get description; String get imageUrl;
+ String get id; String get name; String get description; String get imageUrl;@JsonKey(ignore: true) XFile? get imageFile;
 /// Create a copy of AdminSectionEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AdminSectionEntityCopyWith<AdminSectionEntity> get copyWith => _$AdminSectionEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminSectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminSectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.imageFile, imageFile) || other.imageFile == imageFile));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,imageUrl);
+int get hashCode => Object.hash(runtimeType,id,name,description,imageUrl,imageFile);
 
 @override
 String toString() {
-  return 'AdminSectionEntity(id: $id, name: $name, description: $description, imageUrl: $imageUrl)';
+  return 'AdminSectionEntity(id: $id, name: $name, description: $description, imageUrl: $imageUrl, imageFile: $imageFile)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AdminSectionEntityCopyWith<$Res>  {
   factory $AdminSectionEntityCopyWith(AdminSectionEntity value, $Res Function(AdminSectionEntity) _then) = _$AdminSectionEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String description, String imageUrl
+ String id, String name, String description, String imageUrl,@JsonKey(ignore: true) XFile? imageFile
 });
 
 
@@ -65,13 +65,14 @@ class _$AdminSectionEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdminSectionEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? imageUrl = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? imageUrl = null,Object? imageFile = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,
+as String,imageFile: freezed == imageFile ? _self.imageFile : imageFile // ignore: cast_nullable_to_non_nullable
+as XFile?,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String imageUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String imageUrl, @JsonKey(ignore: true)  XFile? imageFile)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AdminSectionEntity() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.imageUrl);case _:
+return $default(_that.id,_that.name,_that.description,_that.imageUrl,_that.imageFile);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.name,_that.description,_that.imageUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String imageUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String imageUrl, @JsonKey(ignore: true)  XFile? imageFile)  $default,) {final _that = this;
 switch (_that) {
 case _AdminSectionEntity():
-return $default(_that.id,_that.name,_that.description,_that.imageUrl);case _:
+return $default(_that.id,_that.name,_that.description,_that.imageUrl,_that.imageFile);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.name,_that.description,_that.imageUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  String imageUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  String imageUrl, @JsonKey(ignore: true)  XFile? imageFile)?  $default,) {final _that = this;
 switch (_that) {
 case _AdminSectionEntity() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.imageUrl);case _:
+return $default(_that.id,_that.name,_that.description,_that.imageUrl,_that.imageFile);case _:
   return null;
 
 }
@@ -212,13 +213,14 @@ return $default(_that.id,_that.name,_that.description,_that.imageUrl);case _:
 @JsonSerializable()
 
 class _AdminSectionEntity implements AdminSectionEntity {
-   _AdminSectionEntity({required this.id, required this.name, required this.description, required this.imageUrl});
+   _AdminSectionEntity({required this.id, required this.name, required this.description, required this.imageUrl, @JsonKey(ignore: true) this.imageFile});
   factory _AdminSectionEntity.fromJson(Map<String, dynamic> json) => _$AdminSectionEntityFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String description;
 @override final  String imageUrl;
+@override@JsonKey(ignore: true) final  XFile? imageFile;
 
 /// Create a copy of AdminSectionEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminSectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminSectionEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.imageFile, imageFile) || other.imageFile == imageFile));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,imageUrl);
+int get hashCode => Object.hash(runtimeType,id,name,description,imageUrl,imageFile);
 
 @override
 String toString() {
-  return 'AdminSectionEntity(id: $id, name: $name, description: $description, imageUrl: $imageUrl)';
+  return 'AdminSectionEntity(id: $id, name: $name, description: $description, imageUrl: $imageUrl, imageFile: $imageFile)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$AdminSectionEntityCopyWith<$Res> implements $AdminSection
   factory _$AdminSectionEntityCopyWith(_AdminSectionEntity value, $Res Function(_AdminSectionEntity) _then) = __$AdminSectionEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String description, String imageUrl
+ String id, String name, String description, String imageUrl,@JsonKey(ignore: true) XFile? imageFile
 });
 
 
@@ -270,13 +272,14 @@ class __$AdminSectionEntityCopyWithImpl<$Res>
 
 /// Create a copy of AdminSectionEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? imageUrl = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? imageUrl = null,Object? imageFile = freezed,}) {
   return _then(_AdminSectionEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,
+as String,imageFile: freezed == imageFile ? _self.imageFile : imageFile // ignore: cast_nullable_to_non_nullable
+as XFile?,
   ));
 }
 

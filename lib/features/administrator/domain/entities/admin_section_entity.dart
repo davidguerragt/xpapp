@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:xpapp/features/administrator/data/models/admin_section_model.dart';
 
 part 'admin_section_entity.freezed.dart';
@@ -11,6 +12,7 @@ abstract class AdminSectionEntity with _$AdminSectionEntity {
     required String name,
     required String description,
     required String imageUrl,
+    @JsonKey(ignore: true) XFile? imageFile,
   }) = _AdminSectionEntity;
 
   factory AdminSectionEntity.fromJson(Map<String, dynamic> json) =>

@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
-// import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class FirebaseStorageProductDataSource {
   final FirebaseStorage _firebaseStorage;
@@ -10,14 +9,14 @@ class FirebaseStorageProductDataSource {
     : _firebaseStorage = firebaseStorage ?? FirebaseStorage.instance;
 
   Future<String> uploadProductImage(String fileName, XFile imageFile) async {
-    final ref = _firebaseStorage.ref().child('products/$fileName');
+    final ref = _firebaseStorage.ref().child('products/$fileName.jpg');
     final uploadTask = ref.putFile(File(imageFile.path));
     final snapshot = await uploadTask;
     return await snapshot.ref.getDownloadURL();
   }
 
   Future<String?> getProductImageUrl(String fileName) async {
-    final ref = _firebaseStorage.ref().child('products/$fileName');
+    final ref = _firebaseStorage.ref().child('products/$fileName.jpg');
     try {
       return await ref.getDownloadURL();
     } catch (e) {
@@ -29,7 +28,7 @@ class FirebaseStorageProductDataSource {
     if (fileName.contains('assets')) {
       return XFile(fileName);
     }
-    final ref = _firebaseStorage.ref().child('products/$fileName');
+    final ref = _firebaseStorage.ref().child('products/$fileName.jpg');
     try {
       final url = await ref.getDownloadURL();
       final response = await HttpClient().getUrl(Uri.parse(url));
@@ -46,7 +45,7 @@ class FirebaseStorageProductDataSource {
   }
 
   Future<void> deleteProductImage(String fileName) async {
-    final ref = _firebaseStorage.ref().child('products/$fileName');
+    final ref = _firebaseStorage.ref().child('products/$fileName.jpg');
     try {
       await ref.delete();
     } catch (e) {
