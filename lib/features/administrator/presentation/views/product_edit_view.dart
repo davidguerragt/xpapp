@@ -39,13 +39,14 @@ class _BodyWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (productId != 'new') {
-      final state = ref.watch(productEditProvider(productId));
+    final state = ref.watch(productEditProvider(productId));
 
+    if (productId != 'new') {
       final Widget content = state.when(
         initial: () => Center(child: Text('Initial State')),
         loading: (isLoading) => Center(child: CircularProgressIndicator()),
-        loaded: (product) => _ProductEditFormStateful(product: product),
+        loaded: (product) =>
+            _ProductEditFormStateful(product: product, providerId: productId),
         error: (message) => Center(child: Text(message)),
         saving: (isSaving) => Center(child: CircularProgressIndicator()),
         saved: (product) {
@@ -79,17 +80,52 @@ class _BodyWidget extends ConsumerWidget {
       );
       return Column(children: [SafeArea(child: content)]);
     } else {
-      final Widget content = _ProductEditFormStateful(
-        product: AdminProductEntity(
-          id: '',
-          title: '',
-          description: '',
-          price: 0.0,
-          image: '',
-          sizes: [],
-          colors: [],
-          sections: [],
+      final Widget content = state.when(
+        initial: () => _ProductEditFormStateful(
+          product: AdminProductEntity(
+            id: '',
+            title: '',
+            description: '',
+            price: 0.0,
+            image: '',
+            sizes: [],
+            colors: [],
+            sections: [],
+          ),
+          providerId: productId,
         ),
+        loading: (isLoading) => Center(child: CircularProgressIndicator()),
+        loaded: (product) =>
+            _ProductEditFormStateful(product: product, providerId: productId),
+        error: (message) => Center(child: Text(message)),
+        saving: (isSaving) => Center(child: CircularProgressIndicator()),
+        saved: (product) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Producto guardado')));
+            router.goNamed(Routes.productABC);
+          });
+          return Center(child: Text('Producto guardado'));
+        },
+        deleting: (isDeleting) => Center(child: CircularProgressIndicator()),
+        deleted: () {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Producto eliminado')));
+            router.goNamed(Routes.productABC);
+          });
+          return Center(child: Text('Producto eliminado'));
+        },
+        pickingImage: (bool isPicking) =>
+            Center(child: CircularProgressIndicator()),
+        imagePicked: (Object? image) =>
+            Center(child: Text('Imagen seleccionada')),
+        capturingImage: (bool isCapturing) =>
+            Center(child: CircularProgressIndicator()),
+        imageCaptured: (Object image) =>
+            Center(child: Text('Imagen capturada')),
       );
       return Column(children: [SafeArea(child: content)]);
     }
@@ -98,8 +134,12 @@ class _BodyWidget extends ConsumerWidget {
 
 class _ProductEditFormStateful extends ConsumerStatefulWidget {
   final AdminProductEntity product;
+  final String providerId;
 
-  const _ProductEditFormStateful({required this.product});
+  const _ProductEditFormStateful({
+    required this.product,
+    required this.providerId,
+  });
 
   @override
   ConsumerState<_ProductEditFormStateful> createState() =>
@@ -165,7 +205,9 @@ class _ProductEditFormStatefulState
       imageFile: imageFile,
     );
 
-    ref.read(productEditProvider(product.id).notifier).addProduct(product);
+    ref
+        .read(productEditProvider(widget.providerId).notifier)
+        .addProduct(product);
   }
 
   void _updateProduct(XFile? imageFile) {
@@ -184,7 +226,9 @@ class _ProductEditFormStatefulState
       imageFile: imageFile,
     );
 
-    ref.read(productEditProvider(product.id).notifier).updateProduct(product);
+    ref
+        .read(productEditProvider(widget.providerId).notifier)
+        .updateProduct(product);
   }
 
   @override
@@ -224,7 +268,7 @@ class _ProductEditFormStatefulState
                 text: 'Select Image',
                 onPressed: () async {
                   final imageFile = await ref
-                      .read(productEditProvider(widget.product.id).notifier)
+                      .read(productEditProvider(widget.providerId).notifier)
                       .pickImage();
                   if (imageFile != null) {
                     setState(() {
@@ -240,7 +284,7 @@ class _ProductEditFormStatefulState
                 text: 'Capture Image',
                 onPressed: () async {
                   final imageFile = await ref
-                      .read(productEditProvider(widget.product.id).notifier)
+                      .read(productEditProvider(widget.providerId).notifier)
                       .captureImage();
                   if (imageFile != null) {
                     setState(() {

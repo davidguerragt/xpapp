@@ -30,7 +30,7 @@ class Env {
 
   static Map<String, dynamic> _values = {};
 
-  static late final Environment environment;
+  static Environment environment = Environment.development;
 
   static Future<void> initialize() async {
     String fileName;

@@ -53,9 +53,16 @@ class _AddProductButton extends ConsumerWidget {
 class _BodyWidget extends ConsumerWidget {
   const _BodyWidget();
 
+  String _withCacheBuster(String imageUrl, int imageVersion) {
+    final separator = imageUrl.contains('?') ? '&' : '?';
+    return '$imageUrl${separator}v=$imageVersion';
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allProducts = ref.watch(homeProvider).products;
+    final homeState = ref.watch(homeProvider);
+    final allProducts = homeState.products;
+    final imageVersion = homeState.imageVersion;
 
     if (allProducts.isEmpty) {
       return const Center(child: Text('No hay productos registrados.'));
@@ -89,10 +96,21 @@ class _BodyWidget extends ConsumerWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  product.image,
-                  errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
-                ),
+                child: product.image.contains('http')
+                    ? Image.network(
+                        _withCacheBuster(product.image, imageVersion),
+                        key: ValueKey(
+                          '${product.id}-${product.image}-$imageVersion',
+                        ),
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, _, _) =>
+                            const Icon(Icons.broken_image),
+                      )
+                    : Image.asset(
+                        product.image,
+                        errorBuilder: (_, _, _) =>
+                            const Icon(Icons.broken_image),
+                      ),
               ),
             ),
             title: Text(

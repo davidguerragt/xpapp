@@ -1,5 +1,5 @@
 import 'package:image_picker/image_picker.dart';
-import 'package:xpapp/features/administrator/data/data_sources/local_product_storage_data_source.dart';
+import 'package:xpapp/features/administrator/data/data_sources/local_pick_image_data_source.dart';
 import 'package:xpapp/features/administrator/domain/repositories/pick_image_repository.dart';
 
 class PickImageRepositoryImpl implements PickImageRepository {

@@ -51,7 +51,17 @@ class _ItemImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(product.image);
+    return product.image.contains('http')
+        ? Image.network(
+            product.image,
+            fit: BoxFit.cover,
+            errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+          )
+        : Image.asset(
+            product.image,
+            fit: BoxFit.cover,
+            errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+          );
   }
 }
 

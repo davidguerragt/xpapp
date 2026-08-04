@@ -42,7 +42,11 @@ class HomeNotifier extends StateNotifier<HomeState> {
       }),
     );
 
-    state = state.copyWith(sections: sectionsWithProducts, products: []);
+    state = state.copyWith(
+      sections: sectionsWithProducts,
+      products: [],
+      imageVersion: state.imageVersion + 1,
+    );
   }
 
   Future<void> loadProductsBySection(int sectionId) async {
@@ -58,7 +62,10 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
   Future<void> loadAllProducts() async {
     final products = await _getProductosUseCase.getAllProducts();
-    state = state.copyWith(products: products);
+    state = state.copyWith(
+      products: products,
+      imageVersion: state.imageVersion + 1,
+    );
   }
 
   void addProduct(ProductEntity product) {

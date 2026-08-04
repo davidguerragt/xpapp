@@ -9,11 +9,24 @@ import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dar
 import 'package:xpapp/features/login/presemtation/states/login_notifier.dart';
 import 'package:xpapp/features/login/presemtation/states/login_state.dart';
 
-class ECommerceHomeView extends ConsumerWidget {
+class ECommerceHomeView extends ConsumerStatefulWidget {
   const ECommerceHomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ECommerceHomeView> createState() => _ECommerceHomeViewState();
+}
+
+class _ECommerceHomeViewState extends ConsumerState<ECommerceHomeView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(homeProvider.notifier).loadSections();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final bagProductsNumber = ref.watch(yourBagProvider).bagProducts.length;
     final loginState = ref.watch(loginProvider);
     if (loginState is LoginInitialState) {
@@ -144,6 +157,7 @@ class _SuggerencesSection extends ConsumerWidget {
               ? _ProductSection(
                   title: section.title,
                   products: section.products,
+                  imageVersion: homeState.imageVersion,
                 )
               : const SizedBox.shrink(),
         ),
@@ -155,7 +169,17 @@ class _SuggerencesSection extends ConsumerWidget {
 class _ProductSection extends ConsumerWidget {
   final String title;
   final List<ProductEntity> products;
-  const _ProductSection({required this.title, required this.products});
+  final int imageVersion;
+  const _ProductSection({
+    required this.title,
+    required this.products,
+    required this.imageVersion,
+  });
+
+  String _withCacheBuster(String imageUrl) {
+    final separator = imageUrl.contains('?') ? '&' : '?';
+    return '$imageUrl${separator}v=$imageVersion';
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -227,10 +251,22 @@ class _ProductSection extends ConsumerWidget {
                           child: SizedBox(
                             width: 200,
                             height: 120,
-                            child: Image.asset(
-                              product.image,
-                              fit: BoxFit.cover,
-                            ),
+                            child: product.image.contains('http')
+                                ? Image.network(
+                                    _withCacheBuster(product.image),
+                                    key: ValueKey(
+                                      '${product.id}-${product.image}-$imageVersion',
+                                    ),
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, _, _) =>
+                                        const Icon(Icons.broken_image),
+                                  )
+                                : Image.asset(
+                                    product.image,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, _, _) =>
+                                        const Icon(Icons.broken_image),
+                                  ),
                           ),
                         ),
 

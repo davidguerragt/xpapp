@@ -4,16 +4,15 @@ import 'package:xpapp/features/administrator/domain/use_cases/admin_product_add_
 import 'package:xpapp/features/administrator/domain/use_cases/admin_product_del_use_case.dart';
 import 'package:xpapp/features/administrator/domain/use_cases/admin_product_upd_use_case.dart';
 import 'package:xpapp/features/administrator/domain/use_cases/admin_product_get_use_case.dart';
+import 'package:xpapp/features/administrator/domain/use_cases/capture_image_use_case.dart';
 import 'package:xpapp/features/administrator/domain/use_cases/pick_image_use_case.dart';
 import 'product_edit_state.dart';
 import 'package:xpapp/features/administrator/domain/entities/admin_product_entity.dart';
 
-final productEditProvider =
-    StateNotifierProvider.family<
-      ProductEditNotifier,
-      AdminProductState,
-      String
-    >((ref, id) => ProductEditNotifier(id: id));
+final productEditProvider = StateNotifierProvider.autoDispose
+    .family<ProductEditNotifier, AdminProductState, String>(
+      (ref, id) => ProductEditNotifier(id: id),
+    );
 
 class ProductEditNotifier extends StateNotifier<AdminProductState> {
   final AdminProductGetUseCase _getAdminProductsUseCase;
@@ -21,6 +20,7 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
   final AdminProductAddUseCase _addAdminProductUseCase;
   final AdminProductDelUseCase _delAdminProductUseCase;
   final PickImageUseCase _pickImageUseCase;
+  final CaptureImageUseCase _captureImageUseCase;
 
   ProductEditNotifier({
     required String id,
@@ -29,6 +29,7 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
     AdminProductAddUseCase? saveAdminProductUseCase,
     AdminProductDelUseCase? deleteAdminProductUseCase,
     PickImageUseCase? pickImageUseCase,
+    CaptureImageUseCase? captureImageUseCase,
   }) : _getAdminProductsUseCase =
            getAdminProductsUseCase ?? AdminProductGetUseCase(),
        _updAdminProductUseCase =
@@ -38,6 +39,7 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
        _delAdminProductUseCase =
            deleteAdminProductUseCase ?? AdminProductDelUseCase(),
        _pickImageUseCase = pickImageUseCase ?? PickImageUseCase(),
+       _captureImageUseCase = captureImageUseCase ?? CaptureImageUseCase(),
        super(AdminProductState.initial()) {
     if (id.trim().isNotEmpty && id != 'new') {
       getProductById(id);
@@ -118,9 +120,7 @@ class ProductEditNotifier extends StateNotifier<AdminProductState> {
 
   Future<XFile?> captureImage() async {
     try {
-      final capturedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera,
-      );
+      final capturedFile = await _captureImageUseCase.call();
       if (capturedFile != null) {
         return capturedFile;
       } else {
