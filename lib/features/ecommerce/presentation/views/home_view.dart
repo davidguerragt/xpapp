@@ -372,8 +372,8 @@ class _WelcomeGreeting extends ConsumerWidget {
     String userName = 'Guest';
 
     if (loginState is LoginSuccessState) {
-      userName = loginState.user.name.isNotEmpty
-          ? loginState.user.name
+      userName = (loginState.userInfo?.fullName.isNotEmpty ?? false)
+          ? loginState.userInfo!.fullName
           : loginState.user.email.split('@')[0];
     }
 
