@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
-import 'package:xpapp/features/login/presemtation/states/logout_notifier.dart';
+import 'package:xpapp/features/login/presentation/states/logout_notifier.dart';
 
 class LogoutView extends ConsumerWidget {
   const LogoutView({super.key});

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/consts/assets.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/core/widgets/gemeral_widgets.dart';
-import 'package:xpapp/features/login/presemtation/states/login_notifier.dart';
-import 'package:xpapp/features/login/presemtation/states/login_state.dart';
+import 'package:xpapp/features/login/presentation/states/login_notifier.dart';
+import 'package:xpapp/features/login/presentation/states/login_state.dart';
 
 class RegisterView extends ConsumerWidget {
   const RegisterView({super.key});

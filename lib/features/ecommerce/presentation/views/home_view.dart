@@ -6,8 +6,8 @@ import 'package:xpapp/features/ecommerce/domain/entities/product_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/home_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/appbar_widgets.dart';
-import 'package:xpapp/features/login/presemtation/states/login_notifier.dart';
-import 'package:xpapp/features/login/presemtation/states/login_state.dart';
+import 'package:xpapp/features/login/presentation/states/login_notifier.dart';
+import 'package:xpapp/features/login/presentation/states/login_state.dart';
 
 class ECommerceHomeView extends ConsumerStatefulWidget {
   const ECommerceHomeView({super.key});

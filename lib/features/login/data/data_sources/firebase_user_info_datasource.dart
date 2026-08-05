@@ -18,7 +18,6 @@ class FirebaseUserInfoDatasource {
       return ur;
     } on Exception catch (e) {
       throw Exception('Error al obtener información del usuario: $e');
-      // TODO
     }
   }
 

@@ -6,8 +6,8 @@ import 'package:xpapp/features/ecommerce/domain/entities/payment_process_entity.
 import 'package:xpapp/features/ecommerce/presentation/states/checkout_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/payment_method_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
-import 'package:xpapp/features/login/presemtation/states/login_notifier.dart';
-import 'package:xpapp/features/login/presemtation/states/login_state.dart';
+import 'package:xpapp/features/login/presentation/states/login_notifier.dart';
+import 'package:xpapp/features/login/presentation/states/login_state.dart';
 
 class CheckoutView extends ConsumerWidget {
   const CheckoutView({super.key});

@@ -1,12 +1,12 @@
-import 'package:xpapp/features/ecommerce/data/repositories/transactions_repository_imp.dart';
+import 'package:xpapp/features/ecommerce/data/repositories/transaction_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/repositories/transaction_repository.dart';
 
-class SaveTransactionUseCase {
+class TransactionSaveUseCase {
   final TransactionRepository _repository;
 
-  SaveTransactionUseCase({TransactionRepository? repository})
-    : _repository = repository ?? TransactionRepositoryImp();
+  TransactionSaveUseCase({TransactionRepository? repository})
+    : _repository = repository ?? TransactionRepositoryImpl();
 
   Future<String> saveTransaction(TransactionEntity transaction) {
     return _repository.saveTransaction(transaction);

@@ -10,12 +10,13 @@ import 'package:xpapp/features/ecommerce/presentation/views/home_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/item_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/product_abc_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/section_abc_view.dart';
-import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_view.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_paged_view.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_stream_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
 import 'package:xpapp/features/login/domain/use_cases/get_user_info_use_case.dart';
-import 'package:xpapp/features/login/presemtation/views/login_view.dart';
-import 'package:xpapp/features/login/presemtation/views/logout_view.dart';
-import 'package:xpapp/features/login/presemtation/views/register_view.dart';
+import 'package:xpapp/features/login/presentation/views/login_view.dart';
+import 'package:xpapp/features/login/presentation/views/logout_view.dart';
+import 'package:xpapp/features/login/presentation/views/register_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/personalise_view.dart';
 import 'package:xpapp/features/onboarding/presentation/views/subscription_view.dart';
@@ -157,7 +158,12 @@ final router = GoRouter(
     GoRoute(
       name: Routes.transactionList,
       path: '/ecommerce/transaction-list',
-      builder: (context, state) => const TransactionListView(),
+      builder: (context, state) => const TransactionListStreamView(),
+    ),
+    GoRoute(
+      name: Routes.transactionListPaged,
+      path: '/ecommerce/transaction-list-paged',
+      builder: (context, state) => const TransactionListPagedView(),
     ),
     // Administrator Routes
     GoRoute(
@@ -186,6 +192,8 @@ abstract class Routes {
   static const String yourBag = '/ecommerce/your-bag';
   static const String checkout = '/ecommerce/checkout';
   static const String transactionList = '/ecommerce/transaction-list';
+  static const String transactionListPaged =
+      '/ecommerce/transaction-list-paged';
 
   // Navigation destinations
   static const String explore = '/explore';

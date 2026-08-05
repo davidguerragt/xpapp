@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
-import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_notifier.dart';
-import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_state.dart';
-import 'package:xpapp/features/login/presemtation/states/login_notifier.dart';
-import 'package:xpapp/features/login/presemtation/states/login_state.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_stream_notifier.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_stream_state.dart';
+import 'package:xpapp/features/login/presentation/states/login_notifier.dart';
+import 'package:xpapp/features/login/presentation/states/login_state.dart';
 
-class TransactionListView extends ConsumerWidget {
-  const TransactionListView({super.key});
+class TransactionListStreamView extends ConsumerWidget {
+  const TransactionListStreamView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,20 +24,21 @@ class TransactionListView extends ConsumerWidget {
           ],
         ),
       ),
-      body: const SafeArea(child: TransactionListBody()),
+      body: const SafeArea(child: TransactionListStreamBody()),
     );
   }
 }
 
-class TransactionListBody extends ConsumerStatefulWidget {
-  const TransactionListBody({super.key});
+class TransactionListStreamBody extends ConsumerStatefulWidget {
+  const TransactionListStreamBody({super.key});
 
   @override
-  ConsumerState<TransactionListBody> createState() =>
-      _TransactionListBodyState();
+  ConsumerState<TransactionListStreamBody> createState() =>
+      _TransactionListStreamBodyState();
 }
 
-class _TransactionListBodyState extends ConsumerState<TransactionListBody> {
+class _TransactionListStreamBodyState
+    extends ConsumerState<TransactionListStreamBody> {
   @override
   void initState() {
     super.initState();
@@ -59,7 +60,7 @@ class _TransactionListBodyState extends ConsumerState<TransactionListBody> {
       return Column(
         children: [
           const SizedBox(height: 20),
-          const TransactionListArea(),
+          const TransactionListStreamArea(),
           InkWell(
             onTap: () {
               router.goNamed(Routes.ecommerceHome);
@@ -107,8 +108,8 @@ class _TransactionListBodyState extends ConsumerState<TransactionListBody> {
   }
 }
 
-class TransactionListArea extends ConsumerWidget {
-  const TransactionListArea({super.key});
+class TransactionListStreamArea extends ConsumerWidget {
+  const TransactionListStreamArea({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -160,7 +161,7 @@ class TransactionListArea extends ConsumerWidget {
                             itemCount: transactionList.length,
                             itemBuilder: (context, index) {
                               final transaction = transactionList[index];
-                              return TransactionListItem(
+                              return TransactionListStreamItem(
                                 transactionId: transaction.id,
                                 date: transaction.date,
                                 user: transaction.user,
@@ -182,7 +183,7 @@ class TransactionListArea extends ConsumerWidget {
   }
 }
 
-class TransactionListItem extends StatelessWidget {
+class TransactionListStreamItem extends StatelessWidget {
   final String transactionId;
   final String date;
   final String user;
@@ -190,7 +191,7 @@ class TransactionListItem extends StatelessWidget {
   final String holderName;
   final String cardNumber;
 
-  const TransactionListItem({
+  const TransactionListStreamItem({
     super.key,
     required this.transactionId,
     required this.date,

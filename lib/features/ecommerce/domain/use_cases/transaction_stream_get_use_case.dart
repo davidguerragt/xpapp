@@ -1,12 +1,12 @@
-import 'package:xpapp/features/ecommerce/data/repositories/transactions_repository_imp.dart';
+import 'package:xpapp/features/ecommerce/data/repositories/transaction_repository_impl.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/repositories/transaction_repository.dart';
 
-class GetTransactionsUseCase {
+class TransactionsStreamGetUseCase {
   final TransactionRepository _repository;
 
-  GetTransactionsUseCase({TransactionRepository? repository})
-    : _repository = repository ?? TransactionRepositoryImp();
+  TransactionsStreamGetUseCase({TransactionRepository? repository})
+    : _repository = repository ?? TransactionRepositoryImpl();
 
   Stream<List<TransactionEntity>> getTransactions(String user) {
     return _repository.getTransactions(user);

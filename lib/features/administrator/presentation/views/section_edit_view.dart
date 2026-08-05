@@ -11,7 +11,7 @@ import 'package:xpapp/features/administrator/domain/entities/admin_section_entit
 class SectionEditView extends ConsumerWidget {
   final String sectionId;
 
-  const SectionEditView({Key? key, required this.sectionId}) : super(key: key);
+  const SectionEditView({super.key, required this.sectionId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +33,7 @@ class SectionEditView extends ConsumerWidget {
 class _BodyWidget extends ConsumerWidget {
   final String sectionId;
 
-  const _BodyWidget({super.key, required this.sectionId});
+  const _BodyWidget({required this.sectionId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,6 +77,7 @@ class _BodyWidget extends ConsumerWidget {
   }
 }
 
+// ignore: must_be_immutable
 class _SectionForm extends ConsumerWidget {
   final AdminSectionEntity section;
 
@@ -85,7 +86,7 @@ class _SectionForm extends ConsumerWidget {
   XFile? _imageFile;
   late TextEditingController _imageUrlController;
 
-  _SectionForm({super.key, required this.section}) {
+  _SectionForm({required this.section}) {
     _nameController = TextEditingController(text: section.name);
     _descriptionController = TextEditingController(text: section.description);
     _imageFile = section.imageFile;

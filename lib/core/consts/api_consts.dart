@@ -18,4 +18,5 @@ abstract class FireStoreCollections {
   static final String products = "products";
   static final String sections = "sections";
   static final String transactions = "transactions";
+  static final int transactionsLimit = 2;
 }

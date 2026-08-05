@@ -1,7 +1,7 @@
 import 'package:riverpod/legacy.dart';
 import 'package:xpapp/features/login/domain/use_cases/is_logged_in_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/log_out_use_case.dart';
-import 'package:xpapp/features/login/presemtation/states/logout_state.dart';
+import 'package:xpapp/features/login/presentation/states/logout_state.dart';
 
 final logoutProvider = StateNotifierProvider<LogoutNotifier, LogoutState>(
   (ref) => LogoutNotifier(),

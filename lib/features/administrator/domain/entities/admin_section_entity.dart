@@ -12,6 +12,7 @@ abstract class AdminSectionEntity with _$AdminSectionEntity {
     required String name,
     required String description,
     required String imageUrl,
+    // ignore: deprecated_member_use
     @JsonKey(ignore: true) XFile? imageFile,
   }) = _AdminSectionEntity;
 

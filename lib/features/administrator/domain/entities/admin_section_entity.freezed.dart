@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AdminSectionEntity {
 
- String get id; String get name; String get description; String get imageUrl;@JsonKey(ignore: true) XFile? get imageFile;
+ String get id; String get name; String get description; String get imageUrl;// ignore: deprecated_member_use
+@JsonKey(ignore: true) XFile? get imageFile;
 /// Create a copy of AdminSectionEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -220,6 +221,7 @@ class _AdminSectionEntity implements AdminSectionEntity {
 @override final  String name;
 @override final  String description;
 @override final  String imageUrl;
+// ignore: deprecated_member_use
 @override@JsonKey(ignore: true) final  XFile? imageFile;
 
 /// Create a copy of AdminSectionEntity

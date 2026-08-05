@@ -8,7 +8,7 @@ import 'package:xpapp/features/login/domain/use_cases/log_out_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/login_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/register_use_case.dart';
 import 'package:xpapp/features/login/domain/use_cases/save_user_info_use_case.dart';
-import 'package:xpapp/features/login/presemtation/states/login_state.dart';
+import 'package:xpapp/features/login/presentation/states/login_state.dart';
 
 final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>(
   (ref) => LoginNotifier(),

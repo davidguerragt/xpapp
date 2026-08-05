@@ -7,7 +7,7 @@ class FirebaseTransactionDataSource {
   FirebaseTransactionDataSource({FirebaseFirestore? firestore})
     : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Stream<List<TransactionModel>> getTransactions(String user) {
+  Stream<List<TransactionModel>> getTransactionsStream(String user) {
     return _firestore
         .collection('transactions')
         .where('user', isEqualTo: user)
@@ -18,6 +18,30 @@ class FirebaseTransactionDataSource {
               .map((e) => TransactionModel.fromJson(e.data()))
               .toList(),
         );
+  }
+
+  Future<List<TransactionModel>> getTransactionsByPage(
+    String user, {
+    int limit = 10,
+    String? id,
+  }) async {
+    try {
+      Query<Map<String, dynamic>> query = _firestore
+          .collection('transactions')
+          .where('user', isEqualTo: user)
+          .orderBy('id', descending: true);
+
+      if (id != null && id.trim().isNotEmpty && id != '0') {
+        query = query.startAfter([id]);
+      }
+
+      final snapshot = await query.limit(limit).get();
+      return snapshot.docs
+          .map((e) => TransactionModel.fromJson(e.data()))
+          .toList();
+    } on Exception catch (e) {
+      throw Exception('Error fetching transactions: $e');
+    }
   }
 
   Future<String> saveTransaction(TransactionModel transaction) async {

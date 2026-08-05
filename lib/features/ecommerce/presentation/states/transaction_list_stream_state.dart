@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
 
-part 'transaction_list_state.freezed.dart';
+part 'transaction_list_stream_state.freezed.dart';
 
 @freezed
 abstract class TransactionListState with _$TransactionListState {

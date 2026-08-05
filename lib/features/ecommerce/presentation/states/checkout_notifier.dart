@@ -6,7 +6,7 @@ import 'package:xpapp/features/ecommerce/domain/entities/payment_process_respons
 import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/checkout_payment_use_case.dart';
 import 'package:xpapp/features/ecommerce/domain/use_cases/get_payment_methods_use_case.dart';
-import 'package:xpapp/features/ecommerce/domain/use_cases/save_transaction_use_case.dart';
+import 'package:xpapp/features/ecommerce/domain/use_cases/transaction_save_use_case.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/checkout_state.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 
@@ -17,20 +17,20 @@ final checkoutProvider = StateNotifierProvider<CheckoutNotifier, CheckoutState>(
 class CheckoutNotifier extends StateNotifier<CheckoutState> {
   final GetPaymentMethodsUseCase _getPaymentMethodsUseCase;
   final CheckoutPaymentUseCase _checkoutPaymentUseCase;
-  final SaveTransactionUseCase _saveTransactionUseCase;
+  final TransactionSaveUseCase _saveTransactionUseCase;
   final dynamic _ref;
 
   CheckoutNotifier({
     GetPaymentMethodsUseCase? getPaymentMethodsUseCase,
     CheckoutPaymentUseCase? checkoutPaymentUseCase,
-    SaveTransactionUseCase? saveTransactionUseCase,
+    TransactionSaveUseCase? saveTransactionUseCase,
     required dynamic ref,
   }) : _getPaymentMethodsUseCase =
            getPaymentMethodsUseCase ?? GetPaymentMethodsUseCase(),
        _checkoutPaymentUseCase =
            checkoutPaymentUseCase ?? CheckoutPaymentUseCase(),
        _saveTransactionUseCase =
-           saveTransactionUseCase ?? SaveTransactionUseCase(),
+           saveTransactionUseCase ?? TransactionSaveUseCase(),
        _ref = ref,
        super(CheckoutState.initial());
 

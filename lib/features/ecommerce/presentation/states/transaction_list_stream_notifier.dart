@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod/legacy.dart';
-import 'package:xpapp/features/ecommerce/domain/use_cases/get_transactions_use_case.dart';
-import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_state.dart';
+import 'package:xpapp/features/ecommerce/domain/use_cases/transaction_stream_get_use_case.dart';
+import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_stream_state.dart';
 
 final transactionListProvider =
     StateNotifierProvider<TransactionListNotifier, TransactionListState>(
@@ -11,13 +11,14 @@ final transactionListProvider =
     );
 
 class TransactionListNotifier extends StateNotifier<TransactionListState> {
-  final GetTransactionsUseCase _getTransactionsUseCase;
+  final TransactionsStreamGetUseCase _getTransactionsUseCase;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  TransactionListNotifier({GetTransactionsUseCase? getTransactionsUseCase})
-    : _getTransactionsUseCase =
-          getTransactionsUseCase ?? GetTransactionsUseCase(),
-      super(TransactionListState.initial()) {
+  TransactionListNotifier({
+    TransactionsStreamGetUseCase? getTransactionsUseCase,
+  }) : _getTransactionsUseCase =
+           getTransactionsUseCase ?? TransactionsStreamGetUseCase(),
+       super(TransactionListState.initial()) {
     _initializeTransactions();
   }
 
