@@ -13,6 +13,7 @@ import 'package:xpapp/features/ecommerce/presentation/views/section_abc_view.dar
 import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_paged_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/transaction_list_stream_view.dart';
 import 'package:xpapp/features/ecommerce/presentation/views/your_bag_view.dart';
+import 'package:xpapp/features/ecommerce/presentation/views/trasaction_detail_view.dart';
 import 'package:xpapp/features/login/domain/use_cases/get_user_info_use_case.dart';
 import 'package:xpapp/features/login/presentation/views/login_view.dart';
 import 'package:xpapp/features/login/presentation/views/logout_view.dart';
@@ -165,6 +166,12 @@ final router = GoRouter(
       path: '/ecommerce/transaction-list-paged',
       builder: (context, state) => const TransactionListPagedView(),
     ),
+    GoRoute(
+      name: Routes.transactionDetail,
+      path: '/ecommerce/transaction-detail/:id',
+      builder: (context, state) =>
+          TransactionDetailView(transactionId: state.pathParameters['id']!),
+    ),
     // Administrator Routes
     GoRoute(
       name: Routes.productEdit,
@@ -194,6 +201,7 @@ abstract class Routes {
   static const String transactionList = '/ecommerce/transaction-list';
   static const String transactionListPaged =
       '/ecommerce/transaction-list-paged';
+  static const String transactionDetail = '/ecommerce/transaction-detail';
 
   // Navigation destinations
   static const String explore = '/explore';

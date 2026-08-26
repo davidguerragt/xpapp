@@ -23,10 +23,19 @@ class CheckoutView extends ConsumerWidget {
             children: [
               _StageButtonSection(),
               const SizedBox(height: 20),
-              _TextAreaSection(),
-              const SizedBox(height: 20),
+
               Expanded(
-                child: SingleChildScrollView(child: _PaymentMethodsSection()),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _BagDetailsSection(),
+                      const SizedBox(height: 20),
+                      _TextAreaSection(),
+                      const SizedBox(height: 20),
+                      _PaymentMethodsSection(),
+                    ],
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
@@ -35,6 +44,68 @@ class CheckoutView extends ConsumerWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _BagDetailsSection extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bagState = ref.watch(yourBagProvider);
+    final totalPrice = bagState.totalPrice;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.grey.shade300),
+        boxShadow: [
+          const BoxShadow(
+            color: Color(0x0A000000),
+            blurRadius: 16,
+            offset: Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Your Bag',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          for (final product in bagState.bagProducts) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(product.name),
+                Text('\$${product.price.toStringAsFixed(2)}'),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+          const Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '\$${totalPrice.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -570,6 +641,7 @@ class _PaymentConfirmationSectionState
         cardHolderName: selectedMethod.holder,
         amount: totalPrice,
         currency: 'USD',
+        bagProducts: ref.read(yourBagProvider).bagProducts,
       );
 
       try {
@@ -580,7 +652,11 @@ class _PaymentConfirmationSectionState
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(response.message)));
-        router.goNamed(Routes.ecommerceHome);
+        router.goNamed(
+          Routes.transactionDetail,
+          pathParameters: {'id': response.transactionId},
+        );
+        //router.goNamed(Routes.ecommerceHome);
       } catch (error) {
         if (!mounted) return;
         final message = error.toString().replaceFirst('Exception: ', '');

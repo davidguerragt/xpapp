@@ -20,6 +20,7 @@ class AppbarWidgets extends StatelessWidget {
         // AppBarProductABCButton(visibility: !activeSession),
         AppBarTransactionListButton(visibility: !activeSession),
         AppBarTransactionListPagedButton(visibility: !activeSession),
+        AppBarTransactionDetailButton(visibility: !activeSession),
         AppBarLogoutButton(visibility: activeSession),
       ],
     );
@@ -73,6 +74,26 @@ class AppBarTransactionListPagedButton extends StatelessWidget {
               router.goNamed(Routes.transactionListPaged);
             },
             icon: const Icon(Icons.pages_rounded, color: Colors.black),
+          );
+  }
+}
+
+class AppBarTransactionDetailButton extends StatelessWidget {
+  final bool visibility;
+  const AppBarTransactionDetailButton({super.key, required this.visibility});
+
+  @override
+  Widget build(BuildContext context) {
+    return visibility
+        ? const SizedBox()
+        : IconButton(
+            onPressed: () {
+              router.goNamed(
+                Routes.transactionDetail,
+                pathParameters: {'id': 'By5caRbvEwpUb7vypq9t'},
+              );
+            },
+            icon: const Icon(Icons.receipt_long, color: Colors.black),
           );
   }
 }

@@ -14,6 +14,9 @@ _TransactionModel _$TransactionModelFromJson(Map<String, dynamic> json) =>
       amount: (json['amount'] as num).toDouble(),
       holderName: json['holderName'] as String,
       cardNumber: json['cardNumber'] as String,
+      bagProducts: (json['bagProducts'] as List<dynamic>)
+          .map((e) => BagProductModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$TransactionModelToJson(_TransactionModel instance) =>
@@ -24,4 +27,5 @@ Map<String, dynamic> _$TransactionModelToJson(_TransactionModel instance) =>
       'amount': instance.amount,
       'holderName': instance.holderName,
       'cardNumber': instance.cardNumber,
+      'bagProducts': instance.bagProducts,
     };

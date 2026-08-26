@@ -47,12 +47,30 @@ class FirebaseTransactionDataSource {
   Future<String> saveTransaction(TransactionModel transaction) async {
     try {
       final collectionRef = _firestore.collection('transactions');
-      final docRef = await collectionRef.add(transaction.toJson());
+      final docRef = await collectionRef.add(transaction.toJsonX());
       return docRef.id;
     } catch (e) {
       // ignore: avoid_print
       print('Error al subir la transacción: $e');
       throw Exception('Error al subir la transacción: $e');
+    }
+  }
+
+  Future<TransactionModel?> getTransactionById(String transactionId) async {
+    try {
+      final docSnapshot = await _firestore
+          .collection('transactions')
+          .doc(transactionId)
+          .get();
+      if (docSnapshot.exists) {
+        return TransactionModel.fromJson(docSnapshot.data()!);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error fetching transaction by ID: $e');
+      throw Exception('Error fetching transaction by ID: $e');
     }
   }
 }

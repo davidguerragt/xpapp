@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:xpapp/core/navigation/router.dart';
-import 'package:xpapp/core/widgets/gemeral_widgets.dart';
+import 'package:xpapp/core/widgets/general_widgets.dart';
 import 'package:xpapp/features/administrator/domain/entities/admin_product_entity.dart';
 import 'package:xpapp/features/administrator/presentation/states/product_edit_notifier.dart';
 import 'package:xpapp/features/administrator/presentation/states/product_edit_state.dart';

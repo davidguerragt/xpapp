@@ -13,6 +13,9 @@ _UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
       firstName: json['first_name'] as String,
       fullName: json['full_name'] as String,
       role: json['role'] as String,
+      tokens: (json['tokens'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$UserInfoModelToJson(_UserInfoModel instance) =>
@@ -22,4 +25,5 @@ Map<String, dynamic> _$UserInfoModelToJson(_UserInfoModel instance) =>
       'first_name': instance.firstName,
       'full_name': instance.fullName,
       'role': instance.role,
+      'tokens': instance.tokens,
     };

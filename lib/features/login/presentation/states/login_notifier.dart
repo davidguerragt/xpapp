@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:xpapp/features/login/domain/use_cases/local_user_info_use_case.dart';
 import 'package:xpapp/features/login/domain/entities/user_entity.dart';
@@ -22,6 +23,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
   final GetUserInfoUseCase _getUserInfoUseCase;
   final SaveUserInfoUseCase _saveUserInfoUseCase;
   final LocalUserInfoUseCase _localUserInfoUseCase = LocalUserInfoUseCase();
+  final FirebaseMessaging _firebaseMessaging;
 
   LoginNotifier({
     LoginUseCase? loginUseCase,
@@ -30,12 +32,14 @@ class LoginNotifier extends StateNotifier<LoginState> {
     LoginRegisterUseCase? registerUseCase,
     GetUserInfoUseCase? userInfoUseCase,
     SaveUserInfoUseCase? saveUserInfoUseCase,
+    FirebaseMessaging? firebaseMessaging,
   }) : _loginUseCase = loginUseCase ?? LoginUseCase(),
        _isLoggedInUseCase = isLoggedInUseCase ?? IsLoggedInUseCase(),
        _logoutUseCase = logoutUseCase ?? LogOutUseCase(),
        _registerUseCase = registerUseCase ?? LoginRegisterUseCase(),
        _getUserInfoUseCase = userInfoUseCase ?? GetUserInfoUseCase(),
        _saveUserInfoUseCase = saveUserInfoUseCase ?? SaveUserInfoUseCase(),
+       _firebaseMessaging = firebaseMessaging ?? FirebaseMessaging.instance,
        super(const LoginInitialState());
 
   Future<bool> login(String email, String password) async {
@@ -46,8 +50,22 @@ class LoginNotifier extends StateNotifier<LoginState> {
         final currentUser = await _isLoggedInUseCase.getCurrentUser();
         if (currentUser != null) {
           try {
+            // ignore: avoid_print
+            print('Fetching user info for ${currentUser.email}');
             final userInfo = await _localUserInfoUseCase
                 .getUserInfoFromLocalStorage();
+            final token = await _firebaseMessaging.getToken();
+
+            if (userInfo != null && token != null) {
+              // Update the tokens list
+              final updatedTokens = userInfo.tokens ?? [];
+              if (!updatedTokens.contains(token)) {
+                updatedTokens.add(token);
+              }
+              final updatedUserInfo = userInfo.copyWith(tokens: updatedTokens);
+              await _saveUserInfoUseCase.saveUserInfo(updatedUserInfo);
+            }
+
             state = LoginSuccessState(
               currentUser.copyWith(role: userInfo?.role),
               userInfo,
@@ -83,9 +101,20 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
         if (currentUser != null) {
           try {
+            final token = await _firebaseMessaging.getToken();
             final userInfo = await _getUserInfoUseCase.getUserInfo(
               currentUser.email,
             );
+            if (userInfo != null && token != null) {
+              // Update the tokens list
+              final updatedTokens = userInfo.tokens ?? [];
+              if (!updatedTokens.contains(token)) {
+                updatedTokens.add(token);
+              }
+              final updatedUserInfo = userInfo.copyWith(tokens: updatedTokens);
+              await _saveUserInfoUseCase.saveUserInfo(updatedUserInfo);
+            }
+
             state = LoginSuccessState(
               currentUser.copyWith(role: userInfo.role),
               userInfo,

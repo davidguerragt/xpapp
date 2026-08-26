@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserInfoEntity {
 
- String get user; String get surname; String get firstName; String get fullName; String get role;
+ String get user; String get surname; String get firstName; String get fullName; String get role; List<String>? get tokens;
 /// Create a copy of UserInfoEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $UserInfoEntityCopyWith<UserInfoEntity> get copyWith => _$UserInfoEntityCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoEntity&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoEntity&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&const DeepCollectionEquality().equals(other.tokens, tokens));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role);
+int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role,const DeepCollectionEquality().hash(tokens));
 
 @override
 String toString() {
-  return 'UserInfoEntity(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role)';
+  return 'UserInfoEntity(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role, tokens: $tokens)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $UserInfoEntityCopyWith<$Res>  {
   factory $UserInfoEntityCopyWith(UserInfoEntity value, $Res Function(UserInfoEntity) _then) = _$UserInfoEntityCopyWithImpl;
 @useResult
 $Res call({
- String user, String surname, String firstName, String fullName, String role
+ String user, String surname, String firstName, String fullName, String role, List<String>? tokens
 });
 
 
@@ -62,14 +62,15 @@ class _$UserInfoEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserInfoEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,Object? tokens = freezed,}) {
   return _then(_self.copyWith(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as String,surname: null == surname ? _self.surname : surname // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
-as String,
+as String,tokens: freezed == tokens ? _self.tokens : tokens // ignore: cast_nullable_to_non_nullable
+as List<String>?,
   ));
 }
 
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String user,  String surname,  String firstName,  String fullName,  String role)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String user,  String surname,  String firstName,  String fullName,  String role,  List<String>? tokens)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserInfoEntity() when $default != null:
-return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role);case _:
+return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role,_that.tokens);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.ro
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String user,  String surname,  String firstName,  String fullName,  String role)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String user,  String surname,  String firstName,  String fullName,  String role,  List<String>? tokens)  $default,) {final _that = this;
 switch (_that) {
 case _UserInfoEntity():
-return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role);case _:
+return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role,_that.tokens);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.ro
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String user,  String surname,  String firstName,  String fullName,  String role)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String user,  String surname,  String firstName,  String fullName,  String role,  List<String>? tokens)?  $default,) {final _that = this;
 switch (_that) {
 case _UserInfoEntity() when $default != null:
-return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role);case _:
+return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role,_that.tokens);case _:
   return null;
 
 }
@@ -210,7 +211,7 @@ return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.ro
 
 
 class _UserInfoEntity implements UserInfoEntity {
-  const _UserInfoEntity({required this.user, required this.surname, required this.firstName, required this.fullName, required this.role});
+  const _UserInfoEntity({required this.user, required this.surname, required this.firstName, required this.fullName, required this.role, final  List<String>? tokens}): _tokens = tokens;
   
 
 @override final  String user;
@@ -218,6 +219,15 @@ class _UserInfoEntity implements UserInfoEntity {
 @override final  String firstName;
 @override final  String fullName;
 @override final  String role;
+ final  List<String>? _tokens;
+@override List<String>? get tokens {
+  final value = _tokens;
+  if (value == null) return null;
+  if (_tokens is EqualUnmodifiableListView) return _tokens;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of UserInfoEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +239,16 @@ _$UserInfoEntityCopyWith<_UserInfoEntity> get copyWith => __$UserInfoEntityCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserInfoEntity&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserInfoEntity&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&const DeepCollectionEquality().equals(other._tokens, _tokens));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role);
+int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role,const DeepCollectionEquality().hash(_tokens));
 
 @override
 String toString() {
-  return 'UserInfoEntity(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role)';
+  return 'UserInfoEntity(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role, tokens: $tokens)';
 }
 
 
@@ -249,7 +259,7 @@ abstract mixin class _$UserInfoEntityCopyWith<$Res> implements $UserInfoEntityCo
   factory _$UserInfoEntityCopyWith(_UserInfoEntity value, $Res Function(_UserInfoEntity) _then) = __$UserInfoEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String user, String surname, String firstName, String fullName, String role
+ String user, String surname, String firstName, String fullName, String role, List<String>? tokens
 });
 
 
@@ -266,14 +276,15 @@ class __$UserInfoEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserInfoEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,Object? tokens = freezed,}) {
   return _then(_UserInfoEntity(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as String,surname: null == surname ? _self.surname : surname // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
-as String,
+as String,tokens: freezed == tokens ? _self._tokens : tokens // ignore: cast_nullable_to_non_nullable
+as List<String>?,
   ));
 }
 

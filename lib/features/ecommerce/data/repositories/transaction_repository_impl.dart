@@ -40,4 +40,15 @@ class TransactionRepositoryImpl implements TransactionRepository {
     final TransactionModel m = TransactionModel.fromEntity(transaction);
     return _dataSource.saveTransaction(m);
   }
+
+  @override
+  Future<TransactionEntity?> getTransactionById(String transactionId) async {
+    final transactionModel = await _dataSource.getTransactionById(
+      transactionId,
+    );
+    if (transactionModel != null) {
+      return TransactionEntity.fromModel(transactionModel);
+    }
+    return null;
+  }
 }

@@ -8,4 +8,5 @@ abstract class TransactionRepository {
     int limit = 10,
     String? id,
   });
+  Future<TransactionEntity?> getTransactionById(String transactionId);
 }

@@ -12,6 +12,7 @@ abstract class UserInfoModel with _$UserInfoModel {
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'full_name') required String fullName,
     @JsonKey(name: 'role') required String role,
+    @JsonKey(name: 'tokens') List<String>? tokens,
   }) = _UserInfoModel;
 
   factory UserInfoModel.fromJson(Map<String, Object?> json) =>
@@ -23,6 +24,7 @@ abstract class UserInfoModel with _$UserInfoModel {
     firstName: e.firstName,
     fullName: e.fullName,
     role: e.role,
+    tokens: e.tokens,
   );
 }
 
@@ -34,6 +36,7 @@ extension UserInfoModelX on UserInfoModel {
       firstName: firstName,
       fullName: fullName,
       role: role,
+      tokens: tokens,
     );
   }
 }

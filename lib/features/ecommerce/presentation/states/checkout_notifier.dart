@@ -67,6 +67,7 @@ class CheckoutNotifier extends StateNotifier<CheckoutState> {
           amount: payment.amount,
           holderName: payment.cardHolderName,
           cardNumber: payment.cardNumber,
+          bagProducts: payment.bagProducts,
         ),
       );
 

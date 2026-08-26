@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/consts/api_consts.dart';
 import 'package:xpapp/core/consts/assets.dart';
 import 'package:xpapp/core/navigation/router.dart';
-import 'package:xpapp/core/widgets/gemeral_widgets.dart';
+import 'package:xpapp/core/widgets/general_widgets.dart';
 import 'package:xpapp/features/login/presentation/states/login_notifier.dart';
 
 class LoginView extends ConsumerWidget {

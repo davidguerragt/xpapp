@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TransactionModel {
 
- String get id; String get date; String get user; double get amount; String get holderName; String get cardNumber;
+ String get id; String get date; String get user; double get amount; String get holderName; String get cardNumber; List<BagProductModel> get bagProducts;
 /// Create a copy of TransactionModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TransactionModelCopyWith<TransactionModel> get copyWith => _$TransactionModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.user, user) || other.user == user)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.holderName, holderName) || other.holderName == holderName)&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TransactionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.user, user) || other.user == user)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.holderName, holderName) || other.holderName == holderName)&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber)&&const DeepCollectionEquality().equals(other.bagProducts, bagProducts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,date,user,amount,holderName,cardNumber);
+int get hashCode => Object.hash(runtimeType,id,date,user,amount,holderName,cardNumber,const DeepCollectionEquality().hash(bagProducts));
 
 @override
 String toString() {
-  return 'TransactionModel(id: $id, date: $date, user: $user, amount: $amount, holderName: $holderName, cardNumber: $cardNumber)';
+  return 'TransactionModel(id: $id, date: $date, user: $user, amount: $amount, holderName: $holderName, cardNumber: $cardNumber, bagProducts: $bagProducts)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TransactionModelCopyWith<$Res>  {
   factory $TransactionModelCopyWith(TransactionModel value, $Res Function(TransactionModel) _then) = _$TransactionModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String date, String user, double amount, String holderName, String cardNumber
+ String id, String date, String user, double amount, String holderName, String cardNumber, List<BagProductModel> bagProducts
 });
 
 
@@ -65,7 +65,7 @@ class _$TransactionModelCopyWithImpl<$Res>
 
 /// Create a copy of TransactionModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? date = null,Object? user = null,Object? amount = null,Object? holderName = null,Object? cardNumber = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? date = null,Object? user = null,Object? amount = null,Object? holderName = null,Object? cardNumber = null,Object? bagProducts = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,8 @@ as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,holderName: null == holderName ? _self.holderName : holderName // ignore: cast_nullable_to_non_nullable
 as String,cardNumber: null == cardNumber ? _self.cardNumber : cardNumber // ignore: cast_nullable_to_non_nullable
-as String,
+as String,bagProducts: null == bagProducts ? _self.bagProducts : bagProducts // ignore: cast_nullable_to_non_nullable
+as List<BagProductModel>,
   ));
 }
 
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String date,  String user,  double amount,  String holderName,  String cardNumber)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String date,  String user,  double amount,  String holderName,  String cardNumber,  List<BagProductModel> bagProducts)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TransactionModel() when $default != null:
-return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_that.cardNumber);case _:
+return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_that.cardNumber,_that.bagProducts);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String date,  String user,  double amount,  String holderName,  String cardNumber)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String date,  String user,  double amount,  String holderName,  String cardNumber,  List<BagProductModel> bagProducts)  $default,) {final _that = this;
 switch (_that) {
 case _TransactionModel():
-return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_that.cardNumber);case _:
+return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_that.cardNumber,_that.bagProducts);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String date,  String user,  double amount,  String holderName,  String cardNumber)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String date,  String user,  double amount,  String holderName,  String cardNumber,  List<BagProductModel> bagProducts)?  $default,) {final _that = this;
 switch (_that) {
 case _TransactionModel() when $default != null:
-return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_that.cardNumber);case _:
+return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_that.cardNumber,_that.bagProducts);case _:
   return null;
 
 }
@@ -214,7 +215,7 @@ return $default(_that.id,_that.date,_that.user,_that.amount,_that.holderName,_th
 @JsonSerializable()
 
 class _TransactionModel implements TransactionModel {
-   _TransactionModel({required this.id, required this.date, required this.user, required this.amount, required this.holderName, required this.cardNumber});
+   _TransactionModel({required this.id, required this.date, required this.user, required this.amount, required this.holderName, required this.cardNumber, required final  List<BagProductModel> bagProducts}): _bagProducts = bagProducts;
   factory _TransactionModel.fromJson(Map<String, dynamic> json) => _$TransactionModelFromJson(json);
 
 @override final  String id;
@@ -223,6 +224,13 @@ class _TransactionModel implements TransactionModel {
 @override final  double amount;
 @override final  String holderName;
 @override final  String cardNumber;
+ final  List<BagProductModel> _bagProducts;
+@override List<BagProductModel> get bagProducts {
+  if (_bagProducts is EqualUnmodifiableListView) return _bagProducts;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_bagProducts);
+}
+
 
 /// Create a copy of TransactionModel
 /// with the given fields replaced by the non-null parameter values.
@@ -237,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.user, user) || other.user == user)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.holderName, holderName) || other.holderName == holderName)&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TransactionModel&&(identical(other.id, id) || other.id == id)&&(identical(other.date, date) || other.date == date)&&(identical(other.user, user) || other.user == user)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.holderName, holderName) || other.holderName == holderName)&&(identical(other.cardNumber, cardNumber) || other.cardNumber == cardNumber)&&const DeepCollectionEquality().equals(other._bagProducts, _bagProducts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,date,user,amount,holderName,cardNumber);
+int get hashCode => Object.hash(runtimeType,id,date,user,amount,holderName,cardNumber,const DeepCollectionEquality().hash(_bagProducts));
 
 @override
 String toString() {
-  return 'TransactionModel(id: $id, date: $date, user: $user, amount: $amount, holderName: $holderName, cardNumber: $cardNumber)';
+  return 'TransactionModel(id: $id, date: $date, user: $user, amount: $amount, holderName: $holderName, cardNumber: $cardNumber, bagProducts: $bagProducts)';
 }
 
 
@@ -257,7 +265,7 @@ abstract mixin class _$TransactionModelCopyWith<$Res> implements $TransactionMod
   factory _$TransactionModelCopyWith(_TransactionModel value, $Res Function(_TransactionModel) _then) = __$TransactionModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String date, String user, double amount, String holderName, String cardNumber
+ String id, String date, String user, double amount, String holderName, String cardNumber, List<BagProductModel> bagProducts
 });
 
 
@@ -274,7 +282,7 @@ class __$TransactionModelCopyWithImpl<$Res>
 
 /// Create a copy of TransactionModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? date = null,Object? user = null,Object? amount = null,Object? holderName = null,Object? cardNumber = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? date = null,Object? user = null,Object? amount = null,Object? holderName = null,Object? cardNumber = null,Object? bagProducts = null,}) {
   return _then(_TransactionModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
@@ -282,7 +290,8 @@ as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,holderName: null == holderName ? _self.holderName : holderName // ignore: cast_nullable_to_non_nullable
 as String,cardNumber: null == cardNumber ? _self.cardNumber : cardNumber // ignore: cast_nullable_to_non_nullable
-as String,
+as String,bagProducts: null == bagProducts ? _self._bagProducts : bagProducts // ignore: cast_nullable_to_non_nullable
+as List<BagProductModel>,
   ));
 }
 

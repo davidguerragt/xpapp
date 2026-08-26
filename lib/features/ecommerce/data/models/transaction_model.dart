@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:xpapp/features/ecommerce/data/models/bag_product_model.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
 
 part 'transaction_model.freezed.dart';
@@ -13,6 +14,7 @@ abstract class TransactionModel with _$TransactionModel {
     required double amount,
     required String holderName,
     required String cardNumber,
+    required List<BagProductModel> bagProducts,
   }) = _TransactionModel;
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +28,25 @@ abstract class TransactionModel with _$TransactionModel {
       amount: e.amount,
       holderName: e.holderName,
       cardNumber: e.cardNumber,
+      bagProducts: e.bagProducts
+          .map((bagProduct) => BagProductModel.fromEntity(bagProduct))
+          .toList(),
     );
+  }
+}
+
+extension TransactionModelX on TransactionModel {
+  Map<String, dynamic> toJsonX() {
+    return {
+      'id': id,
+      'date': date,
+      'user': user,
+      'amount': amount,
+      'holderName': holderName,
+      'cardNumber': cardNumber,
+      'bagProducts': bagProducts
+          .map((bagProduct) => bagProduct.toJson())
+          .toList(),
+    };
   }
 }

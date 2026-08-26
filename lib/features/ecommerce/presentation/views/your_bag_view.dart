@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
-import 'package:xpapp/core/widgets/gemeral_widgets.dart';
+import 'package:xpapp/core/widgets/general_widgets.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/your_bag_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/widgets/bag_item_widget.dart';
 
@@ -63,12 +63,28 @@ class _BagItemsArea extends ConsumerWidget {
             itemCount: bagProducts.length,
             itemBuilder: (context, index) {
               final product = bagProducts[index];
+              final imageWidget = product.imageUrl.contains('http')
+                  ? Image.network(
+                      product.imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+                    )
+                  : Image.asset(
+                      product.imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+                    );
+
               return BagItemWidget(
                 title: product.name,
                 subtitle: 'Size: ${product.size}, Color: ${product.color}',
                 price: product.price,
                 quantity: product.quantity,
-                image: Image.asset(product.imageUrl),
+                image: imageWidget,
                 onIncrement: () {
                   // Implement increment logic
                 },

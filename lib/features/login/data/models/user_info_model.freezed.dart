@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserInfoModel {
 
-@JsonKey(name: 'user') String get user;@JsonKey(name: 'surname') String get surname;@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'full_name') String get fullName;@JsonKey(name: 'role') String get role;
+@JsonKey(name: 'user') String get user;@JsonKey(name: 'surname') String get surname;@JsonKey(name: 'first_name') String get firstName;@JsonKey(name: 'full_name') String get fullName;@JsonKey(name: 'role') String get role;@JsonKey(name: 'tokens') List<String>? get tokens;
 /// Create a copy of UserInfoModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserInfoModelCopyWith<UserInfoModel> get copyWith => _$UserInfoModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoModel&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserInfoModel&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&const DeepCollectionEquality().equals(other.tokens, tokens));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role);
+int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role,const DeepCollectionEquality().hash(tokens));
 
 @override
 String toString() {
-  return 'UserInfoModel(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role)';
+  return 'UserInfoModel(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role, tokens: $tokens)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserInfoModelCopyWith<$Res>  {
   factory $UserInfoModelCopyWith(UserInfoModel value, $Res Function(UserInfoModel) _then) = _$UserInfoModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'user') String user,@JsonKey(name: 'surname') String surname,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'full_name') String fullName,@JsonKey(name: 'role') String role
+@JsonKey(name: 'user') String user,@JsonKey(name: 'surname') String surname,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'full_name') String fullName,@JsonKey(name: 'role') String role,@JsonKey(name: 'tokens') List<String>? tokens
 });
 
 
@@ -65,14 +65,15 @@ class _$UserInfoModelCopyWithImpl<$Res>
 
 /// Create a copy of UserInfoModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,Object? tokens = freezed,}) {
   return _then(_self.copyWith(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as String,surname: null == surname ? _self.surname : surname // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
-as String,
+as String,tokens: freezed == tokens ? _self.tokens : tokens // ignore: cast_nullable_to_non_nullable
+as List<String>?,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user')  String user, @JsonKey(name: 'surname')  String surname, @JsonKey(name: 'first_name')  String firstName, @JsonKey(name: 'full_name')  String fullName, @JsonKey(name: 'role')  String role)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user')  String user, @JsonKey(name: 'surname')  String surname, @JsonKey(name: 'first_name')  String firstName, @JsonKey(name: 'full_name')  String fullName, @JsonKey(name: 'role')  String role, @JsonKey(name: 'tokens')  List<String>? tokens)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserInfoModel() when $default != null:
-return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role);case _:
+return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role,_that.tokens);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.ro
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user')  String user, @JsonKey(name: 'surname')  String surname, @JsonKey(name: 'first_name')  String firstName, @JsonKey(name: 'full_name')  String fullName, @JsonKey(name: 'role')  String role)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user')  String user, @JsonKey(name: 'surname')  String surname, @JsonKey(name: 'first_name')  String firstName, @JsonKey(name: 'full_name')  String fullName, @JsonKey(name: 'role')  String role, @JsonKey(name: 'tokens')  List<String>? tokens)  $default,) {final _that = this;
 switch (_that) {
 case _UserInfoModel():
-return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role);case _:
+return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role,_that.tokens);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.ro
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user')  String user, @JsonKey(name: 'surname')  String surname, @JsonKey(name: 'first_name')  String firstName, @JsonKey(name: 'full_name')  String fullName, @JsonKey(name: 'role')  String role)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user')  String user, @JsonKey(name: 'surname')  String surname, @JsonKey(name: 'first_name')  String firstName, @JsonKey(name: 'full_name')  String fullName, @JsonKey(name: 'role')  String role, @JsonKey(name: 'tokens')  List<String>? tokens)?  $default,) {final _that = this;
 switch (_that) {
 case _UserInfoModel() when $default != null:
-return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role);case _:
+return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.role,_that.tokens);case _:
   return null;
 
 }
@@ -213,7 +214,7 @@ return $default(_that.user,_that.surname,_that.firstName,_that.fullName,_that.ro
 @JsonSerializable()
 
 class _UserInfoModel implements UserInfoModel {
-   _UserInfoModel({@JsonKey(name: 'user') required this.user, @JsonKey(name: 'surname') required this.surname, @JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'full_name') required this.fullName, @JsonKey(name: 'role') required this.role});
+   _UserInfoModel({@JsonKey(name: 'user') required this.user, @JsonKey(name: 'surname') required this.surname, @JsonKey(name: 'first_name') required this.firstName, @JsonKey(name: 'full_name') required this.fullName, @JsonKey(name: 'role') required this.role, @JsonKey(name: 'tokens') final  List<String>? tokens}): _tokens = tokens;
   factory _UserInfoModel.fromJson(Map<String, dynamic> json) => _$UserInfoModelFromJson(json);
 
 @override@JsonKey(name: 'user') final  String user;
@@ -221,6 +222,15 @@ class _UserInfoModel implements UserInfoModel {
 @override@JsonKey(name: 'first_name') final  String firstName;
 @override@JsonKey(name: 'full_name') final  String fullName;
 @override@JsonKey(name: 'role') final  String role;
+ final  List<String>? _tokens;
+@override@JsonKey(name: 'tokens') List<String>? get tokens {
+  final value = _tokens;
+  if (value == null) return null;
+  if (_tokens is EqualUnmodifiableListView) return _tokens;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of UserInfoModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserInfoModel&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserInfoModel&&(identical(other.user, user) || other.user == user)&&(identical(other.surname, surname) || other.surname == surname)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&const DeepCollectionEquality().equals(other._tokens, _tokens));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role);
+int get hashCode => Object.hash(runtimeType,user,surname,firstName,fullName,role,const DeepCollectionEquality().hash(_tokens));
 
 @override
 String toString() {
-  return 'UserInfoModel(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role)';
+  return 'UserInfoModel(user: $user, surname: $surname, firstName: $firstName, fullName: $fullName, role: $role, tokens: $tokens)';
 }
 
 
@@ -255,7 +265,7 @@ abstract mixin class _$UserInfoModelCopyWith<$Res> implements $UserInfoModelCopy
   factory _$UserInfoModelCopyWith(_UserInfoModel value, $Res Function(_UserInfoModel) _then) = __$UserInfoModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'user') String user,@JsonKey(name: 'surname') String surname,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'full_name') String fullName,@JsonKey(name: 'role') String role
+@JsonKey(name: 'user') String user,@JsonKey(name: 'surname') String surname,@JsonKey(name: 'first_name') String firstName,@JsonKey(name: 'full_name') String fullName,@JsonKey(name: 'role') String role,@JsonKey(name: 'tokens') List<String>? tokens
 });
 
 
@@ -272,14 +282,15 @@ class __$UserInfoModelCopyWithImpl<$Res>
 
 /// Create a copy of UserInfoModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? surname = null,Object? firstName = null,Object? fullName = null,Object? role = null,Object? tokens = freezed,}) {
   return _then(_UserInfoModel(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as String,surname: null == surname ? _self.surname : surname // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
-as String,
+as String,tokens: freezed == tokens ? _self._tokens : tokens // ignore: cast_nullable_to_non_nullable
+as List<String>?,
   ));
 }
 

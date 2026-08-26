@@ -74,11 +74,17 @@ class _ECommerceHomeViewState extends ConsumerState<ECommerceHomeView> {
 class _MainCarrouselSection extends ConsumerWidget {
   const _MainCarrouselSection();
 
+  String _withCacheBuster(String imageUrl, int imageVersion) {
+    final separator = imageUrl.contains('?') ? '&' : '?';
+    return '$imageUrl${separator}v=$imageVersion';
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentBanner = ref.watch(bannerProvider);
     final homeState = ref.watch(homeProvider);
     final sections = homeState.sections;
+    final imageVersion = homeState.imageVersion;
 
     return Stack(
       alignment: Alignment.center,
@@ -92,9 +98,25 @@ class _MainCarrouselSection extends ConsumerWidget {
             },
             itemBuilder: (context, index) {
               final section = sections.isNotEmpty ? sections[index] : null;
-              final imageAsset = section != null && section.image.isNotEmpty
+              final imageUrl = section != null && section.image.isNotEmpty
                   ? section.image
                   : Assets.placeholder;
+
+              final imageWidget = imageUrl.contains('http')
+                  ? Image.network(
+                      _withCacheBuster(imageUrl, imageVersion),
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+                    )
+                  : Image.asset(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      errorBuilder: (_, _, _) => const Icon(Icons.broken_image),
+                    );
 
               return Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -103,12 +125,7 @@ class _MainCarrouselSection extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 clipBehavior: Clip.antiAlias,
-                child: Image.asset(
-                  imageAsset,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
+                child: imageWidget,
               );
             },
           ),

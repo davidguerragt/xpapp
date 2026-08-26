@@ -10,5 +10,6 @@ abstract class UserInfoEntity with _$UserInfoEntity {
     required String firstName,
     required String fullName,
     required String role,
+    List<String>? tokens,
   }) = _UserInfoEntity;
 }

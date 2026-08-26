@@ -15,6 +15,9 @@ _PaymentProcessEntity _$PaymentProcessEntityFromJson(
   cardHolderName: json['cardHolderName'] as String,
   amount: (json['amount'] as num).toDouble(),
   currency: json['currency'] as String,
+  bagProducts: (json['bagProducts'] as List<dynamic>)
+      .map((e) => BagProductEntity.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$PaymentProcessEntityToJson(
@@ -26,4 +29,5 @@ Map<String, dynamic> _$PaymentProcessEntityToJson(
   'cardHolderName': instance.cardHolderName,
   'amount': instance.amount,
   'currency': instance.currency,
+  'bagProducts': instance.bagProducts,
 };

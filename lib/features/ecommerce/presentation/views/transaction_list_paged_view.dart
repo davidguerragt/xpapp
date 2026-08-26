@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xpapp/core/navigation/router.dart';
+import 'package:xpapp/features/ecommerce/domain/entities/bag_product_entity.dart';
 import 'package:xpapp/features/ecommerce/domain/entities/transaction_entity.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_paged_notifier.dart';
 import 'package:xpapp/features/ecommerce/presentation/states/transaction_list_paged_state.dart';
@@ -199,6 +200,78 @@ class NextPageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(onPressed: onPressed, child: const Text('Next Page'));
+  }
+}
+
+class _BagDetailsSection extends ConsumerWidget {
+  final List<BagProductEntity> bagProducts;
+  final double totalPrice;
+  const _BagDetailsSection({
+    super.key,
+    required this.bagProducts,
+    required this.totalPrice,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // final totalPrice = bagProducts.fold<double>(
+    //   0,
+    //   (previousValue, product) => previousValue + product.price,
+    // );
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.grey.shade300),
+        boxShadow: [
+          const BoxShadow(
+            color: Color(0x0A000000),
+            blurRadius: 16,
+            offset: Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Your Bag',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          for (final product in bagProducts) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(product.name),
+                Text('\$${product.price.toStringAsFixed(2)}'),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ],
+          const Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Total',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '\$${totalPrice.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
 
