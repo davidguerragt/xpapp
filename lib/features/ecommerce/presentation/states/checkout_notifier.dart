@@ -74,7 +74,7 @@ class CheckoutNotifier extends StateNotifier<CheckoutState> {
       // Limpiar la carreta después de pago exitoso
       await _ref.read(yourBagProvider.notifier).clearBag();
 
-      return response;
+      return response.copyWith(transactionId: saveTransaction);
     } catch (e) {
       state = CheckoutState.error(
         error: 'Error processing checkout payment: ${e.toString()}',
